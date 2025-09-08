@@ -1,0 +1,342 @@
+src/app/api/crisis/reports/route.ts(302,39): error TS2339: Property 'REPORT_CREATED' does not exist on type '{ ALERT_UPDATED: string; INTERVENTION_STARTED: string; INTERVENTION_COMPLETED: string; }'.
+src/app/api/therapist/sessions/route.ts(135,21): error TS2339: Property 'notes' does not exist on type '{ client: { status: ClientStatus; id: string; clientNumber: string; firstName: string; lastName: string; email: string; phone: string; riskLevel: RiskLevel; }; sessionNotes: { ...; }[]; ... 14 more ...; notesEncrypted: JsonValue; }'.
+src/app/api/therapist/sessions/route.ts(138,21): error TS2339: Property 'notes' does not exist on type '{ client: { status: ClientStatus; id: string; clientNumber: string; firstName: string; lastName: string; email: string; phone: string; riskLevel: RiskLevel; }; sessionNotes: { ...; }[]; ... 14 more ...; notesEncrypted: JsonValue; }'.
+src/app/api/therapy/assessments/route.ts(145,60): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(154,29): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(239,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(280,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(313,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(352,28): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(381,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(439,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(456,43): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(471,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(488,38): error TS2339: Property 'updatedAt' does not exist on type '{ id: string; userId: string; createdAt: Date; moodScore: number; anxietyLevel: number | null; energyLevel: number | null; encryptedNotes: JsonValue; encryptedTags: JsonValue; }'.
+src/app/api/therapy/assessments/route.ts(531,38): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/assessments/route.ts(545,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(131,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(216,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(270,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(299,26): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(324,25): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(345,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(405,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(405,67): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(424,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(435,29): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(461,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(474,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(490,71): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/billing/route.ts(506,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(86,25): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(149,41): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(205,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(254,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(272,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(281,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(308,32): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(316,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(333,35): error TS2339: Property 'User_SupportSession_userIdToUser' does not exist on type '{ status: string; id: string; userId: string | null; createdAt: Date; rating: number | null; helperId: string | null; sessionType: string; encryptedNotes: JsonValue; startedAt: Date | null; endedAt: Date | null; }'.
+src/app/api/therapy/clients/route.ts(333,99): error TS2339: Property 'User_SupportSession_userIdToUser' does not exist on type '{ status: string; id: string; userId: string | null; createdAt: Date; rating: number | null; helperId: string | null; sessionType: string; encryptedNotes: JsonValue; startedAt: Date | null; endedAt: Date | null; }'.
+src/app/api/therapy/clients/route.ts(361,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(370,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(393,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(407,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(450,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(459,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/clients/route.ts(474,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(46,32): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(62,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(83,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(107,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(120,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(131,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(222,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(254,57): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(279,23): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/dashboard/route.ts(327,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(141,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(185,36): error TS2339: Property 'sortOrder' does not exist on type '{ page: number; limit: number; clientId: string; sessionId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; noteType?: "crisis" | "progress" | "intake" | "discharge" | "treatment_plan" | undefined; }'.
+src/app/api/therapy/notes/route.ts(221,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(262,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(300,61): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(313,38): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(328,28): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(334,41): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(351,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(407,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(428,28): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(445,17): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(472,31): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(478,39): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(504,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(565,34): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/notes/route.ts(581,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(98,31): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(104,60): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(181,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(218,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(226,33): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(255,34): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(262,37): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(296,32): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(303,35): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(330,36): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(339,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(395,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(436,29): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(463,32): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(481,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(542,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(555,34): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/sessions/route.ts(580,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(118,60): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(186,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(223,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(255,26): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(286,32): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(295,27): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(312,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(367,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(381,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(387,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(405,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(459,58): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/therapy/treatment-plans/route.ts(475,15): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/user/preferences/route.ts(51,28): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/preferences/route.ts(52,36): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/preferences/route.ts(55,27): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/preferences/route.ts(56,27): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/preferences/route.ts(66,33): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(70,31): error TS2339: Property 'fullName' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(74,30): error TS2339: Property 'address' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(75,43): error TS2339: Property 'emergencyContactInfo' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(79,30): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(80,39): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(81,36): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(82,34): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(83,38): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(84,34): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(182,35): error TS2339: Property 'fullName' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(186,34): error TS2339: Property 'address' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(187,47): error TS2339: Property 'emergencyContactInfo' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(188,34): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(189,43): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(190,40): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(191,38): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(192,42): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/user/profile/route.ts(193,38): error TS2339: Property 'profile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/app/api/websocket/route.ts(27,32): error TS2339: Property 'handleUpgrade' does not exist on type 'WebSocketServer'.
+src/app/dashboard/page.tsx(72,19): error TS2339: Property 'user' does not exist on type '{ update: UpdateSession; data: Session; status: "authenticated"; } | { update: UpdateSession; data: null; status: "loading"; } | { update: UpdateSession; data: Session; status: "authenticated"; } | { ...; }'.
+src/app/dashboard/page.tsx(119,16): error TS2339: Property 'user' does not exist on type '{ update: UpdateSession; data: Session; status: "authenticated"; } | { update: UpdateSession; data: null; status: "loading"; } | { update: UpdateSession; data: Session; status: "authenticated"; } | { ...; }'.
+src/contexts/AuthContext.tsx(92,25): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(93,40): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(97,27): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(101,25): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(113,47): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(124,26): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(125,37): error TS2339: Property 'isEmailVerified' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(126,41): error TS2339: Property 'onboardingCompleted' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/hooks/useWebSocket.ts(203,26): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/lib/api-middleware.ts(26,17): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(35,26): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(50,24): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(54,25): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(59,29): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(85,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(88,25): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(93,29): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(145,56): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/lib/api-middleware.ts(155,31): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/lib/api-utils.ts(114,45): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/lib/audit/audit-service.ts(362,39): error TS2339: Property 'auditEvent' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/audit/audit-service.ts(365,35): error TS2339: Property 'auditEvent' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/audit/audit-service.ts(478,20): error TS2339: Property 'auditEvent' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth.ts(184,50): error TS2339: Property 'userProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth.ts(185,52): error TS2339: Property 'helperProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth.ts(186,55): error TS2339: Property 'helperProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth.ts(187,62): error TS2339: Property 'helperProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth.ts(188,51): error TS2339: Property 'adminProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth.ts(189,57): error TS2339: Property 'adminProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth/mfa-service.ts(118,32): error TS2339: Property 'mfaSettings' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/auth/mfa-service.ts(153,20): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(239,20): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(321,40): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(360,22): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(388,44): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(440,40): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(495,22): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(523,20): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(578,40): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(659,20): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa-service.ts(759,20): error TS2339: Property 'mFASettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(96,18): error TS2339: Property 'mfaSetup' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(144,32): error TS2339: Property 'mfaSetup' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(192,14): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(200,14): error TS2339: Property 'mfaSetup' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(240,18): error TS2339: Property 'mfaSMSCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(288,34): error TS2339: Property 'mfaLockout' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(321,20): error TS2339: Property 'mfaAttempt' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(345,37): error TS2339: Property 'mfaAttempt' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(354,22): error TS2339: Property 'mfaLockout' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(416,32): error TS2339: Property 'mfaSMSCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(430,16): error TS2339: Property 'mfaSMSCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(444,35): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(457,16): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(507,31): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(518,18): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(540,16): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(561,18): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(598,36): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(605,39): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(644,16): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(653,16): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(686,14): error TS2339: Property 'mfaBackupCode' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(690,14): error TS2339: Property 'trustedDevice' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/mfa.ts(720,16): error TS2339: Property 'mfaAttempt' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(299,33): error TS2339: Property 'permissionGrant' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(323,39): error TS2339: Property 'permissionGrantUse' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(333,22): error TS2339: Property 'permissionGrantUse' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(438,30): error TS2339: Property 'permissionGrant' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(477,16): error TS2339: Property 'permissionGrant' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/auth/rbac.ts(627,18): error TS2339: Property 'emergencyAccess' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/cache/cache-middleware.ts(190,16): error TS2339: Property 'private' does not exist on type '{ readonly ttl: 3600; readonly compression: true; readonly etag: true; } | { readonly ttl: 7200; readonly compression: true; readonly etag: true; } | { readonly ttl: 1800; readonly compression: true; readonly etag: true; } | ... 7 more ... | { ...; }'.
+src/lib/cache/redis-cache.ts(92,29): error TS2339: Property 'GCM' does not exist on type 'typeof mode'.
+src/lib/cache/redis-cache.ts(118,29): error TS2339: Property 'GCM' does not exist on type 'typeof mode'.
+src/lib/crisis-alert-system.ts(39,34): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(58,22): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(118,27): error TS2339: Property 'assignedCrisisReports' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/crisis-alert-system.ts(118,60): error TS2339: Property 'assignedCrisisReports' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/crisis-alert-system.ts(119,40): error TS2339: Property 'assignedCrisisReports' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/crisis-alert-system.ts(140,30): error TS2339: Property 'sendToUser' does not exist on type 'WebSocketServer'.
+src/lib/crisis-alert-system.ts(191,20): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(210,36): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(234,34): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(243,20): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(260,30): error TS2339: Property 'sendToUser' does not exist on type 'WebSocketServer'.
+src/lib/crisis-alert-system.ts(303,50): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(310,20): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(325,30): error TS2339: Property 'sendToUser' does not exist on type 'WebSocketServer'.
+src/lib/crisis-alert-system.ts(362,20): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/crisis-alert-system.ts(371,34): error TS2339: Property 'crisisAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/optimization.ts(28,10): error TS2339: Property '$use' does not exist on type 'OptimizedPrismaClient'.
+src/lib/database/optimization.ts(29,10): error TS2339: Property '$use' does not exist on type 'OptimizedPrismaClient'.
+src/lib/database/query-optimization.ts(255,18): error TS2339: Property 'wellnessGoal' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimization.ts(263,18): error TS2339: Property 'wellnessMetric' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimization.ts(299,20): error TS2339: Property 'crisisResource' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimizer.ts(126,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimizer.ts(127,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimizer.ts(128,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/encryption/prisma-middleware.ts(170,54): error TS2339: Property 'data' does not exist on type 'object'.
+src/lib/error-handling/error-handler.ts(293,20): error TS2339: Property 'errorLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/error-handling/error-handler.ts(350,59): error TS2339: Property 'HIPAA_VIOLATION' does not exist on type 'typeof AuditEventCategory'.
+src/lib/error-handling/error-handler.ts(351,55): error TS2339: Property 'DATA_BREACH' does not exist on type 'typeof AuditEventCategory'.
+src/lib/error-handling/error-handler.ts(356,52): error TS2339: Property 'SYSTEM_ERROR' does not exist on type 'typeof AuditEventCategory'.
+src/lib/error-handling/error-handler.ts(476,20): error TS2339: Property 'incidentReport' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/error-handling/error-handler.ts(508,36): error TS2339: Property 'HIPAA_VIOLATION' does not exist on type 'typeof AuditEventCategory'.
+src/lib/error-handling/error-handler.ts(526,18): error TS2339: Property 'complianceTask' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/error-handling/error-handler.ts(568,20): error TS2339: Property 'errorLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/error-handling/logger.ts(373,20): error TS2339: Property 'systemLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/file-utils.ts(142,23): error TS2339: Property 'getAuthTag' does not exist on type 'Cipher'.
+src/lib/file-utils.ts(153,14): error TS2339: Property 'setAuthTag' does not exist on type 'Decipher'.
+src/lib/monitoring/health-check.ts(348,15): error TS2339: Property 'neonDb' does not exist on type 'typeof import("H:/Astral Core/NEW CORE/AstralCoreV5/src/lib/neon-database")'.
+src/lib/monitoring/monitoring-integration.ts(54,16): error TS2339: Property 'on' does not exist on type 'NextResponse<unknown>'.
+src/lib/notification-utils.ts(455,56): error TS2339: Property 'metadata' does not exist on type '{ id: string; userId: string; timezone: string; createdAt: Date; updatedAt: Date; frequency: string; categories: JsonValue; language: string; emailEnabled: boolean; smsEnabled: boolean; pushEnabled: boolean; inAppEnabled: boolean; quietHoursStart: string | null; quietHoursEnd: string | null; }'.
+src/lib/notifications/notification-service.ts(64,13): error TS2339: Property 'on' does not exist on type 'Server'.
+src/lib/notifications/notification-service.ts(274,24): error TS2339: Property 'name' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/notifications/notification-service.ts(319,42): error TS2339: Property 'pushSubscription' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/notifications/notification-service.ts(344,26): error TS2339: Property 'pushSubscription' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/notifications/notification-service.ts(367,22): error TS2339: Property 'template' does not exist on type '{ name: string; id: string; isActive: boolean; createdAt: Date; updatedAt: Date; category: string; priority: string; channels: string[]; subject: string | null; contentTemplate: string; variables: JsonValue; }'.
+src/lib/rbac/rbac-middleware.ts(120,38): error TS2339: Property 'SYSTEM_ERROR' does not exist on type 'typeof AuditEventCategory'.
+src/lib/rbac/rbac-service.ts(160,38): error TS2339: Property 'SYSTEM_ERROR' does not exist on type 'typeof AuditEventCategory'.
+src/lib/rbac/rbac-service.ts(271,36): error TS2339: Property 'PERMISSION_CHANGE' does not exist on type 'typeof AuditEventCategory'.
+src/lib/rbac/rbac-service.ts(311,36): error TS2339: Property 'PERMISSION_CHANGE' does not exist on type 'typeof AuditEventCategory'.
+src/lib/rbac/rbac-service.ts(399,38): error TS2339: Property 'PERMISSION_CHANGE' does not exist on type 'typeof AuditEventCategory'.
+src/lib/search/search-service.ts(100,32): error TS2339: Property 'post' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/search/search-service.ts(158,36): error TS2339: Property 'resource' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/search/search-service.ts(185,37): error TS2339: Property 'therapistProfile' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/search/search-service.ts(506,20): error TS2339: Property 'searchAnalytics' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/search/search-service.ts(533,41): error TS2339: Property 'searchAnalytics' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/search/search-service.ts(545,42): error TS2339: Property 'searchAnalytics' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/audit.ts(573,18): error TS2339: Property 'securityAlert' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/encryption.ts(93,33): error TS2339: Property 'encryptionKey' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/encryption.ts(127,18): error TS2339: Property 'encryptionKey' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/encryption.ts(221,18): error TS2339: Property 'encryptionKey' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/file-security.ts(144,24): error TS2339: Property 'getAuthTag' does not exist on type 'Cipher'.
+src/lib/security/file-security.ts(172,14): error TS2339: Property 'setAuthTag' does not exist on type 'Decipher'.
+src/lib/security/mfa.ts(101,17): error TS2339: Property 'mfaRequired' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/security/mfa.ts(136,18): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(174,35): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(203,18): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(242,35): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(262,20): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(304,35): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(334,18): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(370,35): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(463,20): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(504,18): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(530,35): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(564,18): error TS2339: Property 'mfaSettings' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(666,18): error TS2339: Property 'mfaBypass' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(696,33): error TS2339: Property 'mfaBypass' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/mfa.ts(715,20): error TS2339: Property 'mfaBypass' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rate-limiter.ts(385,37): error TS2339: Property 'rateLimitLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rate-limiter.ts(413,20): error TS2339: Property 'rateLimitLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rate-limiter.ts(463,20): error TS2339: Property 'rateLimitLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rate-limiter.ts(487,20): error TS2339: Property 'rateLimitLog' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(465,42): error TS2339: Property 'userPermission' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(503,18): error TS2339: Property 'userPermission' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(535,18): error TS2339: Property 'userPermission' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(706,16): error TS2339: Property 'counselorId' does not exist on type '{ id: string; userId: string | null; createdAt: Date; updatedAt: Date; responseTime: number; severityLevel: number; triggerType: string; interventionType: string; encryptedDetails: JsonValue; resolved: boolean; resolvedAt: Date | null; emergencyContactUsed: boolean; }'.
+src/lib/security/rbac.ts(711,16): error TS2339: Property 'patientId' does not exist on type '{ id: string; userId: string | null; createdAt: Date; updatedAt: Date; responseTime: number; severityLevel: number; triggerType: string; interventionType: string; encryptedDetails: JsonValue; resolved: boolean; resolvedAt: Date | null; emergencyContactUsed: boolean; }'.
+src/lib/security/rbac.ts(716,68): error TS2339: Property 'status' does not exist on type '{ id: string; userId: string | null; createdAt: Date; updatedAt: Date; responseTime: number; severityLevel: number; triggerType: string; interventionType: string; encryptedDetails: JsonValue; resolved: boolean; resolvedAt: Date | null; emergencyContactUsed: boolean; }'.
+src/lib/security/rbac.ts(727,31): error TS2339: Property 'treatmentPlan' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(736,35): error TS2339: Property 'careTeamMember' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(780,41): error TS2339: Property 'patientAssignment' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/security/rbac.ts(790,39): error TS2339: Property 'careTeamMember' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/session/session-manager.ts(143,41): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(144,43): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(145,48): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(146,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(147,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(148,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(599,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(600,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(601,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(602,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(603,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(604,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/socket-server.ts(21,62): error TS2339: Property 'default' does not exist on type 'typeof import("H:/Astral Core/NEW CORE/AstralCoreV5/node_modules/bad-words/dist/esm/index")'.
+src/lib/socket-server.ts(193,14): error TS2339: Property 'isProfane' does not exist on type 'Promise<any>'.
+src/lib/socket-server.ts(195,30): error TS2339: Property 'clean' does not exist on type 'Promise<any>'.
+src/lib/validation/validation-middleware.ts(379,59): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/lib/websocket.ts(61,19): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/websocket.ts(66,38): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/websocket.ts(67,40): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/websocket.ts(109,6): error TS2339: Property 'use' does not exist on type 'Server'.
+src/lib/websocket.ts(112,6): error TS2339: Property 'on' does not exist on type 'Server'.
+src/lib/websocket.ts(296,28): error TS2339: Property 'in' does not exist on type 'Server'.
+src/lib/websocket.ts(308,28): error TS2339: Property 'in' does not exist on type 'Server'.
+src/lib/websocket/client.ts(175,32): error TS2339: Property 'COUNSELOR_ASSIGNED' does not exist on type 'typeof CrisisEvent'.
+src/lib/websocket/client.ts(177,32): error TS2339: Property 'RESOLVED' does not exist on type 'typeof CrisisEvent'.
+src/lib/websocket/client.ts(181,38): error TS2339: Property 'CLEAR' does not exist on type 'typeof NotificationEvent'.
+src/lib/websocket/crisis-manager.ts(107,25): error TS2339: Property 'location' does not exist on type 'CrisisAlertPayload'.
+src/lib/websocket/crisis-manager.ts(108,30): error TS2339: Property 'contactMethod' does not exist on type 'CrisisAlertPayload'.
+src/lib/websocket/crisis-manager.ts(156,37): error TS2339: Property 'NONE' does not exist on type 'typeof CrisisSeverity'.
+src/lib/websocket/crisis-manager.ts(193,43): error TS2339: Property 'ACTIVE' does not exist on type 'typeof CrisisStatus'.
+src/lib/websocket/crisis-manager.ts(278,42): error TS2339: Property 'COUNSELOR_ASSIGNED' does not exist on type 'typeof CrisisEvent'.
+src/lib/websocket/crisis-manager.ts(376,15): error TS2339: Property 'UserProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/websocket/crisis-manager.ts(378,34): error TS2339: Property 'UserProfile' does not exist on type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }'.
+src/lib/websocket/crisis-manager.ts(420,11): error TS2339: Property 'resolvedAt' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(421,11): error TS2339: Property 'notes' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(450,42): error TS2339: Property 'RESOLVED' does not exist on type 'typeof CrisisEvent'.
+src/lib/websocket/crisis-manager.ts(589,42): error TS2339: Property 'UPDATED' does not exist on type 'typeof CrisisEvent'.
+src/lib/websocket/crisis-manager.ts(610,34): error TS2339: Property 'contactMethod' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(629,28): error TS2339: Property 'resolvedAt' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(633,34): error TS2339: Property 'contactMethod' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(635,26): error TS2339: Property 'notes' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(636,34): error TS2339: Property 'interventions' does not exist on type 'CrisisAlert'.
+src/lib/websocket/server.ts(322,12): error TS2339: Property 'emit' does not exist on type 'AuthenticatedSocket'.
+src/lib/websocket/server.ts(371,12): error TS2339: Property 'emit' does not exist on type 'AuthenticatedSocket'.
+src/lib/websocket/server.ts(973,12): error TS2339: Property 'to' does not exist on type 'AuthenticatedSocket'.
+src/lib/websocket/server.ts(983,12): error TS2339: Property 'to' does not exist on type 'AuthenticatedSocket'.

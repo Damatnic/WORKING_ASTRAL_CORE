@@ -1,0 +1,260 @@
+  private async deliverQueuedMessages(socket: AuthenticatedSocket): Promise<void> {
+    const messages = await this.messageQueue.getQueuedMessages(socket.userId!);
+    messages.forEach(message => {
+      socket.emit(MessageEvent.RECEIVE, message);
+    });
+  }
+
+  private broadcastPresence(userId: string, status: PresenceStatus): void {
+    this.io.emit(PresenceEvent.UPDATE, {
+      userId,
+      status,
+      timestamp: new Date(),
+    });
+  }
+
+  // Database Operations (stubs - implement with Prisma)
+  private async storeMessage(message: Message): Promise<void> {
+    // Store in database
+    await prisma.chatMessage.create({
+      data: {
+        id: message.id,
+        roomId: message.roomId,
+        authorId: message.authorId,
+        content: message.content,
+        type: message.type,
+        metadata: message.metadata,
+        reactions: message.reactions || [],
+      },
+    });
+  }
+
+  private async getMessage(messageId: string): Promise<Message | null> {
+    const message = await prisma.chatMessage.findUnique({
+      where: { id: messageId },
+    });
+    
+    if (!message) return null;
+    
+    return {
+      id: message.id,
+      roomId: message.roomId,
+      authorId: message.authorId,
+      content: message.content,
+      type: message.type as MessageType,
+      timestamp: message.createdAt,
+      edited: message.edited,
+      editedAt: message.editedAt || undefined,
+      reactions: message.reactions as any[],
+      metadata: message.metadata as any,
+      delivered: false,
+      read: false,
+    };
+  }
+
+  private async updateMessage(message: Message): Promise<void> {
+    await prisma.chatMessage.update({
+      where: { id: message.id },
+      data: {
+        content: message.content,
+        edited: message.edited,
+        editedAt: message.editedAt,
+        reactions: message.reactions || [],
+      },
+    });
+  }
+
+  private async deleteMessage(messageId: string): Promise<void> {
+    await prisma.chatMessage.delete({
+      where: { id: messageId },
+    });
+  }
+
+  private async getRoom(roomId: string): Promise<Room | null> {
+    const room = await prisma.chatRoom.findUnique({
+      where: { id: roomId },
+      include: {
+        ChatParticipant: {
+          where: { isActive: true },
+        },
+        ChatModerator: true,
+      },
+    });
+    
+    if (!room) return null;
+    
+    return {
+      id: room.id,
+      name: room.name,
+      topic: room.topic,
+      description: room.description,
+      type: RoomType.GROUP,
+      maxParticipants: room.maxParticipants,
+      currentParticipants: room.ChatParticipant.length,
+      isActive: room.isActive,
+      isPrivate: false,
+      isAnonymous: false,
+      createdBy: "",
+      createdAt: room.createdAt,
+      moderators: room.ChatModerator.map(m => m.userId),
+      bannedUsers: [],
+      settings: room.settings as any,
+    };
+  }
+
+  private async createRoom(data: Partial<Room>): Promise<Room> {
+    const roomId = `room_${Date.now()}_${crypto.randomBytes(8).toString("hex")}`;
+    
+    const room = await prisma.chatRoom.create({
+      data: {
+        id: roomId,
+        name: data.name || "New Room",
+        topic: data.topic || "",
+        description: data.description || "",
+        maxParticipants: data.maxParticipants || 20,
+        isActive: true,
+        settings: data.settings || {},
+        rules: [],
+      },
+    });
+    
+    // Add creator as participant
+    await prisma.chatParticipant.create({
+      data: {
+        id: crypto.randomBytes(16).toString("hex"),
+        roomId: room.id,
+        userId: data.createdBy!,
+        isActive: true,
+      },
+    });
+    
+    return {
+      id: room.id,
+      name: room.name,
+      topic: room.topic,
+      description: room.description,
+      type: data.type || RoomType.GROUP,
+      maxParticipants: room.maxParticipants,
+      currentParticipants: 1,
+      isActive: room.isActive,
+      isPrivate: data.isPrivate || false,
+      isAnonymous: data.isAnonymous || false,
+      createdBy: data.createdBy!,
+      createdAt: room.createdAt,
+      moderators: [],
+      bannedUsers: [],
+      settings: room.settings as any,
+    };
+  }
+
+  private async addRoomParticipant(roomId: string, userId: string): Promise<void> {
+    await prisma.chatParticipant.upsert({
+      where: {
+        roomId_userId: { roomId, userId },
+      },
+      update: {
+        isActive: true,
+        leftAt: null,
+      },
+      create: {
+        id: crypto.randomBytes(16).toString("hex"),
+        roomId,
+        userId,
+        isActive: true,
+      },
+    });
+  }
+
+  private async removeRoomParticipant(roomId: string, userId: string): Promise<void> {
+    await prisma.chatParticipant.update({
+      where: {
+        roomId_userId: { roomId, userId },
+      },
+      data: {
+        isActive: false,
+        leftAt: new Date(),
+      },
+    });
+  }
+
+  private async getRoomParticipants(roomId: string): Promise<any[]> {
+    const participants = await prisma.chatParticipant.findMany({
+      where: {
+        roomId,
+        isActive: true,
+      },
+    });
+    
+    return participants.map(p => ({
+      userId: p.userId,
+      joinedAt: p.joinedAt,
+    }));
+  }
+
+  private async banUserFromRoom(roomId: string, userId: string): Promise<void> {
+    // This would need to be implemented with a proper ban list in the database
+    // For now, we'll just mark them as inactive
+    await this.removeRoomParticipant(roomId, userId);
+  }
+
+  private updateMessageDeliveryStatus(
+    messageId: string,
+    roomId: string | null,
+    delivered: boolean = false
+  ): void {
+    // Update delivery status in database
+    // This would be implemented with proper tracking
+  }
+
+  private updateMessageReadStatus(messageId: string, userId: string): void {
+    // Update read status in database
+    // This would be implemented with proper tracking
+  }
+
+  // Public Methods
+  public sendNotification(userId: string, notification: Notification): void {
+    const userSockets = this.connectedUsers.get(userId);
+    if (userSockets) {
+      userSockets.forEach(socketId => {
+        this.io.to(socketId).emit(NotificationEvent.PUSH, notification);
+      });
+    } else {
+      // Queue notification for offline user
+      this.notificationManager.queueNotification(userId, notification);
+    }
+  }
+
+  public broadcastCrisisAlert(alert: CrisisAlert): void {
+    // Broadcast to crisis counselors
+    this.io.to("crisis_counselors").emit(CrisisEvent.ALERT, alert);
+    
+    // Also send to admins
+    this.io.to("admins").emit(CrisisEvent.ALERT, alert);
+  }
+
+  public getIO(): SocketIOServer {
+    return this.io;
+  }
+
+  public isUserOnline(userId: string): boolean {
+    return this.connectedUsers.has(userId);
+  }
+
+  public getUserSockets(userId: string): Set<string> | undefined {
+    return this.connectedUsers.get(userId);
+  }
+}
+
+// Singleton instance
+let socketServer: WebSocketServer | null = null;
+
+export function initializeSocketServer(httpServer: HTTPServer): WebSocketServer {
+  if (!socketServer) {
+    socketServer = new WebSocketServer(httpServer);
+  }
+  return socketServer;
+}
+
+export function getSocketServer(): WebSocketServer | null {
+  return socketServer;
+}

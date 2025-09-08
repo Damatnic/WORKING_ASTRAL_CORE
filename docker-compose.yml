@@ -1,0 +1,339 @@
+version: '3.8'
+
+# AstralCore Mental Health Platform - Docker Compose Configuration
+# HIPAA-compliant development and production environment setup
+
+services:
+  # Main Application Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_DATE: $BUILD_DATE
+        VCS_REF: $VCS_REF
+        VERSION: $VERSION
+    container_name: astralcore-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - AUDIT_LOG_KEY=${AUDIT_LOG_KEY}
+      - FIELD_ENCRYPTION_KEY=${FIELD_ENCRYPTION_KEY}
+      - FIELD_ENCRYPTION_PEPPER=${FIELD_ENCRYPTION_PEPPER}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - SOCKET_SECRET=${SOCKET_SECRET}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - astralcore-network
+    volumes:
+      - app-logs:/app/logs
+      - app-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    tmpfs:
+      - /tmp:size=100M,mode=1777
+    labels:
+      - "com.astralcore.service=app"
+      - "com.astralcore.environment=${NODE_ENV:-production}"
+      - "traefik.enable=true"
+      - "traefik.http.routers.astralcore.rule=Host(`${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.astralcore.tls=true"
+      - "traefik.http.services.astralcore.loadbalancer.server.port=3000"
+
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:15-alpine
+    container_name: astralcore-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-astralcore}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - postgres-backups:/backups
+      - ./scripts/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - astralcore-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-astralcore}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+      -c log_statement=all
+      -c log_min_duration_statement=0
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_checkpoints=on
+      -c log_lock_waits=on
+      -c log_temp_files=0
+      -c log_autovacuum_min_duration=0
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+    labels:
+      - "com.astralcore.service=database"
+      - "com.astralcore.environment=${NODE_ENV:-production}"
+
+  # Redis Cache Service
+  redis:
+    image: redis:7-alpine
+    container_name: astralcore-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - astralcore-network
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    sysctls:
+      net.core.somaxconn: 65535
+    labels:
+      - "com.astralcore.service=cache"
+      - "com.astralcore.environment=${NODE_ENV:-production}"
+
+  # Nginx Reverse Proxy (Optional - for production)
+  nginx:
+    image: nginx:alpine
+    container_name: astralcore-nginx
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/ssl:/etc/ssl/certs:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - astralcore-network
+    profiles:
+      - production
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - "com.astralcore.service=proxy"
+      - "com.astralcore.environment=${NODE_ENV:-production}"
+
+  # Monitoring and Logging Services
+  
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: astralcore-prometheus
+    restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - astralcore-network
+    profiles:
+      - monitoring
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    labels:
+      - "com.astralcore.service=monitoring"
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: astralcore-grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=${GRAFANA_DOMAIN:-localhost}
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
+    networks:
+      - astralcore-network
+    profiles:
+      - monitoring
+    labels:
+      - "com.astralcore.service=visualization"
+
+  # Log aggregation service
+  loki:
+    image: grafana/loki:latest
+    container_name: astralcore-loki
+    restart: unless-stopped
+    ports:
+      - "${LOKI_PORT:-3100}:3100"
+    volumes:
+      - ./config/loki.yml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+    networks:
+      - astralcore-network
+    profiles:
+      - monitoring
+    command: -config.file=/etc/loki/local-config.yaml
+    labels:
+      - "com.astralcore.service=logging"
+
+  # Security and Backup Services
+  
+  # Database backup service
+  postgres-backup:
+    image: postgres:15-alpine
+    container_name: astralcore-backup
+    restart: "no"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-astralcore}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-backups:/backups
+      - ./scripts/backup.sh:/backup.sh:ro
+    networks:
+      - astralcore-network
+    depends_on:
+      - postgres
+    profiles:
+      - backup
+    command: /bin/sh -c "chmod +x /backup.sh && /backup.sh"
+    labels:
+      - "com.astralcore.service=backup"
+
+  # Security scanner (for development)
+  security-scanner:
+    image: aquasec/trivy:latest
+    container_name: astralcore-scanner
+    restart: "no"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - trivy-cache:/root/.cache/trivy
+    networks:
+      - astralcore-network
+    profiles:
+      - security
+    command: image --security-checks vuln astralcore-app:latest
+    labels:
+      - "com.astralcore.service=security"
+
+# Network Configuration
+networks:
+  astralcore-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+    driver_opts:
+      com.docker.network.bridge.name: astralcore-bridge
+    labels:
+      - "com.astralcore.network=main"
+
+# Volume Configuration
+volumes:
+  # Application volumes
+  app-logs:
+    driver: local
+    labels:
+      - "com.astralcore.volume=logs"
+  
+  app-uploads:
+    driver: local
+    labels:
+      - "com.astralcore.volume=uploads"
+
+  # Database volumes
+  postgres-data:
+    driver: local
+    labels:
+      - "com.astralcore.volume=database"
+  
+  postgres-backups:
+    driver: local
+    labels:
+      - "com.astralcore.volume=backups"
+
+  # Cache volumes
+  redis-data:
+    driver: local
+    labels:
+      - "com.astralcore.volume=cache"
+
+  # Monitoring volumes
+  prometheus-data:
+    driver: local
+    labels:
+      - "com.astralcore.volume=metrics"
+  
+  grafana-data:
+    driver: local
+    labels:
+      - "com.astralcore.volume=visualization"
+  
+  loki-data:
+    driver: local
+    labels:
+      - "com.astralcore.volume=logs-aggregation"
+
+  # Proxy volumes
+  nginx-logs:
+    driver: local
+    labels:
+      - "com.astralcore.volume=proxy-logs"
+
+  # Security volumes
+  trivy-cache:
+    driver: local
+    labels:
+      - "com.astralcore.volume=security-cache"

@@ -1,0 +1,38 @@
+src/app/dashboard/page.tsx(72,19): error TS2339: Property 'user' does not exist on type '{ update: UpdateSession; data: Session; status: "authenticated"; } | { update: UpdateSession; data: null; status: "loading"; } | { update: UpdateSession; data: Session; status: "authenticated"; } | { ...; }'.
+src/app/dashboard/page.tsx(119,16): error TS2339: Property 'user' does not exist on type '{ update: UpdateSession; data: Session; status: "authenticated"; } | { update: UpdateSession; data: null; status: "loading"; } | { update: UpdateSession; data: Session; status: "authenticated"; } | { ...; }'.
+src/contexts/AuthContext.tsx(92,25): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(97,27): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(101,25): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(124,26): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(125,37): error TS2339: Property 'isEmailVerified' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/contexts/AuthContext.tsx(126,41): error TS2339: Property 'onboardingCompleted' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+src/lib/api-middleware.ts(27,17): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/api-middleware.ts(156,31): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/lib/database/optimization.ts(28,10): error TS2339: Property '$use' does not exist on type 'OptimizedPrismaClient'.
+src/lib/database/optimization.ts(29,10): error TS2339: Property '$use' does not exist on type 'OptimizedPrismaClient'.
+src/lib/database/query-optimizer.ts(126,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimizer.ts(127,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/database/query-optimizer.ts(128,17): error TS2339: Property '$use' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+src/lib/monitoring/health-check.ts(348,15): error TS2339: Property 'neonDb' does not exist on type 'typeof import("H:/Astral Core/NEW CORE/AstralCoreV5/src/lib/neon-database")'.
+src/lib/notification-utils.ts(455,56): error TS2339: Property 'metadata' does not exist on type '{ id: string; userId: string; timezone: string; createdAt: Date; updatedAt: Date; frequency: string; categories: JsonValue; language: string; emailEnabled: boolean; smsEnabled: boolean; pushEnabled: boolean; inAppEnabled: boolean; quietHoursStart: string | null; quietHoursEnd: string | null; }'.
+src/lib/notifications/notification-service.ts(367,22): error TS2339: Property 'template' does not exist on type '{ name: string; id: string; createdAt: Date; updatedAt: Date; isActive: boolean; priority: string; category: string; subject: string | null; contentTemplate: string; channels: string[]; variables: JsonValue; }'.
+src/lib/session/session-manager.ts(143,41): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(144,43): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(145,48): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(146,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(147,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(148,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(599,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(600,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(601,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(602,48): error TS2339: Property 'encryptedData' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(603,50): error TS2339: Property 'iv' does not exist on type 'EncryptedField'.
+src/lib/session/session-manager.ts(604,55): error TS2339: Property 'authTag' does not exist on type 'EncryptedField'.
+src/lib/websocket.ts(62,19): error TS2339: Property 'user' does not exist on type '{}'.
+src/lib/websocket.ts(110,6): error TS2339: Property 'use' does not exist on type 'Server'.
+src/lib/websocket.ts(113,6): error TS2339: Property 'on' does not exist on type 'Server'.
+src/lib/websocket.ts(297,28): error TS2339: Property 'in' does not exist on type 'Server'.
+src/lib/websocket.ts(309,28): error TS2339: Property 'in' does not exist on type 'Server'.
+src/lib/websocket/crisis-manager.ts(376,15): error TS2339: Property 'UserProfile' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; anonymousId: string; email: string | null; hashedPassword: string | null; role: UserRole; permissions: string[]; isActive: boolean; ... 17 more ...; lockedUntil: Date | null; }'.
+src/lib/websocket/crisis-manager.ts(421,11): error TS2339: Property 'notesEncrypted' does not exist on type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(635,26): error TS2339: Property 'notesEncrypted' does not exist on type 'CrisisAlert'.

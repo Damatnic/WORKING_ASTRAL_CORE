@@ -1,0 +1,247 @@
+src/app/api/audit/events/route.ts(133,19): error TS2554: Expected 2-3 arguments, but got 1.
+src/app/api/community/groups/route.ts(54,9): error TS2353: Object literal may only specify known properties, and 'sessions' does not exist in type 'SupportGroupInclude<DefaultArgs>'.
+src/app/api/helper/clients/route.ts(238,9): error TS2322: Type '{ notes: string; } | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/app/api/helper/sessions/route.ts(73,17): error TS2353: Object literal may only specify known properties, and 'preferredTopics' does not exist in type 'UserProfileSelect<DefaultArgs>'.
+src/app/api/helper/sessions/route.ts(168,9): error TS2322: Type '{ notes: string; } | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/app/api/helper/stats/route.ts(29,9): error TS2353: Object literal may only specify known properties, and 'completedSessions' does not exist in type 'HelperProfileSelect<DefaultArgs>'.
+src/app/api/messaging/notifications/route.ts(14,15): error TS2554: Expected 2-3 arguments, but got 1.
+src/app/api/messaging/notifications/route.ts(191,7): error TS2322: Type '{ userId: string; type: string; title: string; message: string; isPriority: boolean; metadata: Record<any, unknown>; }[]' is not assignable to type 'NotificationCreateManyInput | NotificationCreateManyInput[]'.
+src/app/api/messaging/notifications/route.ts(203,7): error TS2322: Type '{ userId: string; action: string; resource: string; details: { type: string; targetCount: number; broadcast: boolean; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/app/api/platform/files/route.ts(329,7): error TS2322: Type 'Buffer<ArrayBufferLike>' is not assignable to type 'Buffer<ArrayBuffer>'.
+src/app/api/platform/files/route.ts(339,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type '(Without<FileCreateInput, FileUncheckedCreateInput> & FileUncheckedCreateInput) | (Without<...> & FileCreateInput)'.
+src/app/api/platform/files/route.ts(365,9): error TS2353: Object literal may only specify known properties, and 'storagePath' does not exist in type 'Without<FileVersionCreateInput, FileVersionUncheckedCreateInput> & FileVersionUncheckedCreateInput'.
+src/app/api/platform/files/route.ts(419,9): error TS2353: Object literal may only specify known properties, and 'ownerId' does not exist in type 'FileWhereInput'.
+src/app/api/platform/files/route.ts(431,9): error TS2353: Object literal may only specify known properties, and 'deletedAt' does not exist in type '(Without<FileUpdateInput, FileUncheckedUpdateInput> & FileUncheckedUpdateInput) | (Without<...> & FileUpdateInput)'.
+src/app/api/platform/notifications/preferences/route.ts(35,11): error TS2353: Object literal may only specify known properties, and 'channels' does not exist in type 'Without<NotificationPreferenceCreateInput, NotificationPreferenceUncheckedCreateInput> & NotificationPreferenceUncheckedCreateInput'.
+src/app/api/platform/notifications/preferences/route.ts(174,21): error TS2554: Expected 2-3 arguments, but got 1.
+src/app/api/platform/notifications/preferences/route.ts(194,9): error TS2353: Object literal may only specify known properties, and 'channels' does not exist in type '(Without<NotificationPreferenceUpdateInput, NotificationPreferenceUncheckedUpdateInput> & NotificationPreferenceUncheckedUpdateInput) | (Without<...> & NotificationPreferenceUpdateInput)'.
+src/app/api/platform/notifications/preferences/route.ts(207,9): error TS2353: Object literal may only specify known properties, and 'channels' does not exist in type 'Without<NotificationPreferenceCreateInput, NotificationPreferenceUncheckedCreateInput> & NotificationPreferenceUncheckedCreateInput'.
+src/app/api/platform/notifications/route.ts(169,19): error TS2554: Expected 2-3 arguments, but got 1.
+src/app/api/platform/notifications/route.ts(176,7): error TS2322: Type '{ userId: string; type: "error" | "message" | "info" | "success" | "system" | "crisis" | "appointment" | "warning"; title: string; message: string; isPriority: boolean; metadata: { priority: "low" | ... 2 more ... | "urgent"; category: "community" | ... 5 more ... | "therapy"; channels: ("push" | ... 3 more ... | "p...' is not assignable to type '(Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput) | (Without<...> & NotificationCreateInput)'.
+src/app/api/platform/notifications/templates/route.ts(112,23): error TS2554: Expected 2-3 arguments, but got 1.
+src/app/api/platform/notifications/templates/route.ts(127,9): error TS2353: Object literal may only specify known properties, and 'title' does not exist in type '(Without<NotificationTemplateCreateInput, NotificationTemplateUncheckedCreateInput> & NotificationTemplateUncheckedCreateInput) | (Without<...> & NotificationTemplateCreateInput)'.
+src/app/api/platform/notifications/templates/route.ts(189,9): error TS2353: Object literal may only specify known properties, and 'title' does not exist in type '(Without<NotificationTemplateUpdateInput, NotificationTemplateUncheckedUpdateInput> & NotificationTemplateUncheckedUpdateInput) | (Without<...> & NotificationTemplateUpdateInput)'.
+src/app/api/therapy/appointments/route.ts(167,28): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(298,32): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(342,30): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(529,13): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(539,37): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(563,11): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(570,35): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(649,21): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(663,30): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(669,35): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(688,11): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/appointments/route.ts(695,27): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(197,28): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(346,33): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(367,24): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(446,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(464,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(465,9): error TS2353: Object literal may only specify known properties, and 'updatedAt' does not exist in type '(Without<MoodEntryUpdateInput, MoodEntryUncheckedUpdateInput> & MoodEntryUncheckedUpdateInput) | (Without<...> & MoodEntryUpdateInput)'.
+src/app/api/therapy/assessments/route.ts(527,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(538,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/assessments/route.ts(539,9): error TS2353: Object literal may only specify known properties, and 'updatedAt' does not exist in type '(Without<MoodEntryUpdateInput, MoodEntryUncheckedUpdateInput> & MoodEntryUncheckedUpdateInput) | (Without<...> & MoodEntryUpdateInput)'.
+src/app/api/therapy/billing/route.ts(157,33): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/billing/route.ts(181,31): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/billing/route.ts(306,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/billing/route.ts(316,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/billing/route.ts(411,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/billing/route.ts(499,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/clients/route.ts(179,28): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/clients/route.ts(265,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/clients/route.ts(383,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/clients/route.ts(397,28): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/dashboard/route.ts(168,24): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/dashboard/route.ts(240,23): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/dashboard/route.ts(391,25): error TS2322: Type 'null' is not assignable to type 'InputJsonValue | FieldRef<"Appointment", "Json"> | JsonNullValueFilter | undefined'.
+src/app/api/therapy/dashboard/route.ts(404,22): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(195,30): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(198,22): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(312,33): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(326,30): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(327,31): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(342,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(414,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(438,26): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(468,29): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(496,27): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(497,24): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(560,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/notes/route.ts(573,24): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(157,28): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(251,13): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(292,11): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(456,11): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(467,35): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(551,25): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/sessions/route.ts(552,45): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(152,68): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(153,67): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(154,65): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(155,65): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(156,61): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(263,32): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(264,36): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(265,35): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(269,35): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(270,33): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(374,9): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/therapy/treatment-plans/route.ts(397,32): error TS2554: Expected 2 arguments, but got 1.
+src/app/api/user/profile/route.ts(51,9): error TS2353: Object literal may only specify known properties, and 'profile' does not exist in type 'UserInclude<DefaultArgs>'.
+src/app/api/user/profile/route.ts(151,9): error TS2353: Object literal may only specify known properties, and 'profile' does not exist in type '(Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)'.
+src/app/api/user/profile/route.ts(169,9): error TS2353: Object literal may only specify known properties, and 'profile' does not exist in type 'UserInclude<DefaultArgs>'.
+src/app/api/user/profile/route.ts(238,9): error TS2353: Object literal may only specify known properties, and 'fullName' does not exist in type '(Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)'.
+src/app/api/user/wellness-goals/route.ts(300,11): error TS2322: Type '{ title: any; description: any; category: any; targetDate: any; milestones: any; progress: any; status: any; updatedAt: string; id?: string | undefined; createdAt?: string | undefined; }' is not assignable to type 'WellnessGoal'.
+src/app/api/websocket/route.ts(9,11): error TS2554: Expected 1-2 arguments, but got 0.
+src/app/crisis/page.tsx(28,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+src/app/dashboard/page.tsx(186,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+src/app/dashboard/page.tsx(256,15): error TS2322: Type '"large"' is not assignable to type '"sm" | "md" | "lg" | undefined'.
+src/app/dashboard/page.tsx(266,15): error TS2322: Type '{ type: "error"; title: string; message: string; actions: { label: string; onClick: () => Promise<void>; variant: string; }[]; className: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleAlertProps'.
+src/app/page.tsx(8,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+src/app/wellness/mood-tracker/page.tsx(49,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+src/components/community/CommunityFeed.tsx(56,9): error TS2322: Type '{ id: string; title: string | undefined; content: string; author: { id: string; name: string; avatar: string; verified: false; role: "user"; }; timestamp: Date; type: "text" | "milestone" | "question"; ... 5 more ...; supportLevel: "celebrating" | ... 1 more ... | "offering"; }[]' is not assignable to type 'Post[]'.
+src/components/community/CommunityFeed.tsx(140,5): error TS2322: Type '{ id: string; title: string; content: string; type: "story" | "milestone" | "question" | "encouragement"; category: string | undefined; author: { id: string; displayName: string; avatar: undefined; }; ... 6 more ...; userInteraction: { ...; }; }[]' is not assignable to type 'CommunityPost[]'.
+src/components/crisis/CrisisAlertSystem.tsx(121,3): error TS2322: Type '"notification"' is not assignable to type '"security_breach" | "client_emergency" | "system_critical" | "staffing_urgent" | "protocol_violation" | "technical_failure"'.
+src/components/helper/ScheduleManager.tsx(759,13): error TS2322: Type 'TimeSlot | null' is not assignable to type 'TimeSlot | undefined'.
+src/components/helper/SessionTools.tsx(245,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/shared/ActionButton.tsx(120,8): error TS2322: Type '{ children: (Element | ReactNode)[]; form?: string | undefined; formAction?: string | ((formData: FormData) => void) | undefined; formEncType?: string | undefined; ... 284 more ...; onClick: MouseEventHandler<...> | undefined; }' is not assignable to type 'Omit<HTMLMotionProps<"button">, "ref">'.
+src/components/shared/DataTable.tsx(187,21): error TS2322: Type '{ type: "checkbox"; checked: boolean; indeterminate: boolean; onChange: () => void; className: string; "aria-label": string; }' is not assignable to type 'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>'.
+src/components/therapist/BillingInsuranceManagement.tsx(211,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+src/components/therapist/BillingInsuranceManagement.tsx(237,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+src/components/therapist/BillingInsuranceManagement.tsx(257,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+src/components/virtual/VirtualAuditLog.tsx(464,65): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+src/components/virtual/VirtualAuditLog.tsx(487,69): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+src/components/virtual/VirtualAuditLog.tsx(490,69): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+src/components/virtual/VirtualMoodHistory.tsx(218,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/virtual/VirtualMoodHistory.tsx(223,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/virtual/VirtualMoodHistory.tsx(232,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/lib/api-middleware.ts(54,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { requiredRoles: $Enums.UserRole[]; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/api-middleware.ts(88,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { requiredPermission: string; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/api-middleware.ts(129,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/lib/api-utils.ts(93,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/lib/api-utils.ts(405,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/lib/audit-logger.ts(35,9): error TS2353: Object literal may only specify known properties, and 'createdAt' does not exist in type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(110,15): error TS2322: Type '{ userId: string | null; action: string; resource: string; details: { email: string; reason: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(128,15): error TS2322: Type '{ userId: string; action: string; resource: string; details: { reason: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(142,15): error TS2322: Type '{ userId: string; action: string; resource: string; details: { reason: string; lockedUntil: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(169,13): error TS2322: Type '{ userId: string; action: string; resource: string; details: { email: string | null; role: $Enums.UserRole; method: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(204,13): error TS2322: Type '{ userId: string | null; action: string; resource: string; details: { email: string; errorType: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(279,15): error TS2322: Type '{ email: any; firstName: any; lastName: any; displayName: any; avatarUrl: any; isEmailVerified: any; role: "USER"; privacySettings: string; }' is not assignable to type '(Without<UserCreateInput, UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+src/lib/auth.ts(297,15): error TS2322: Type '{ userId: string; mentalHealthGoals: never[]; interestedTopics: never[]; preferredCommunication: string[]; crisisContacts: string; notificationSettings: string; }' is not assignable to type '(Without<UserProfileCreateInput, UserProfileUncheckedCreateInput> & UserProfileUncheckedCreateInput) | (Without<...> & UserProfileCreateInput)'.
+src/lib/auth.ts(325,9): error TS2322: Type '{ userId: any; action: string; resource: string; details: { provider: any; isNewUser: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth.ts(342,11): error TS2322: Type '{ userId: any; action: string; resource: string; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/auth/mfa-service.ts(110,20): error TS2353: Object literal may only specify known properties, and 'mfaSettings' does not exist in type 'UserInclude<DefaultArgs>'.
+src/lib/cache/cache-utils.ts(95,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/lib/cache/cache-utils.ts(145,31): error TS2322: Type 'string | undefined' is not assignable to type 'string | null'.
+src/lib/cache/cache-utils.ts(161,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/lib/cache/cache-utils.ts(162,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/lib/community/moderation.ts(265,7): error TS2322: Type '{ userId: string; score: number; factors: {}; history: { action: "positive" | "negative"; adjustment: number; timestamp: Date; }[]; }' is not assignable to type '(Without<TrustMetricCreateInput, TrustMetricUncheckedCreateInput> & TrustMetricUncheckedCreateInput) | (Without<...> & TrustMetricCreateInput)'.
+src/lib/community/moderation.ts(290,7): error TS2322: Type '{ type: string; severity: "low" | "medium" | "high" | "none"; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+src/lib/community/moderation.ts(309,11): error TS2322: Type '{ detection: CrisisDetectionResult; timestamp: Date; }' is not assignable to type 'JsonNull | InputJsonValue'.
+src/lib/community/moderation.ts(331,11): error TS2322: Type '{ userId: string; type: string; title: string; message: string; isPriority: true; metadata: { userId: string; level: "low" | "medium" | "high" | "none"; }; }' is not assignable to type '(Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput) | (Without<...> & NotificationCreateInput)'.
+src/lib/crisis-alert-system.ts(108,11): error TS2353: Object literal may only specify known properties, and 'assignedCrisisReports' does not exist in type 'UserInclude<DefaultArgs>'.
+src/lib/crisis-alert-system.ts(174,11): error TS2353: Object literal may only specify known properties, and 'type' does not exist in type '(Without<CrisisReportCreateInput, CrisisReportUncheckedCreateInput> & CrisisReportUncheckedCreateInput) | (Without<...> & CrisisReportCreateInput)'.
+src/lib/crisis-alert-system.ts(254,33): error TS2322: Type '"SUPERVISOR"' is not assignable to type 'UserRole'.
+src/lib/crisis-alert-system.ts(379,13): error TS2353: Object literal may only specify known properties, and 'status' does not exist in type '(Without<CrisisReportUpdateInput, CrisisReportUncheckedUpdateInput> & CrisisReportUncheckedUpdateInput) | (Without<...> & CrisisReportUpdateInput)'.
+src/lib/crisis-alert-system.ts(446,13): error TS2353: Object literal may only specify known properties, and 'autoDetected' does not exist in type '{ keywordTriggers?: string[] | undefined; confidenceScore?: number | undefined; sources?: string[] | undefined; relatedReports?: string[] | undefined; }'.
+src/lib/database/query-optimization.ts(195,11): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/database/query-optimization.ts(251,19): error TS2353: Object literal may only specify known properties, and 'deletedAt' does not exist in type 'CommunityPostWhereInput'.
+src/lib/database/query-optimization.ts(377,15): error TS2353: Object literal may only specify known properties, and 'tags' does not exist in type 'CommunityPostSelect<DefaultArgs>'.
+src/lib/database/query-optimization.ts(418,17): error TS2353: Object literal may only specify known properties, and 'isFeatured' does not exist in type 'CommunityPostOrderByWithRelationInput'.
+src/lib/database/query-optimizer.ts(579,9): error TS2322: Type '{ action: string; resource: any; resourceId: any; details: any; outcome: string; userId: any; timestamp: any; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/error-handling/error-handler.ts(334,9): error TS2353: Object literal may only specify known properties, and 'errorId' does not exist in type '{ errorCode: string; errorMessage: string; stackTrace?: string | undefined; }'.
+src/lib/monitoring/audit-trail.ts(774,11): error TS2322: Type 'AuditEvent | undefined' is not assignable to type 'AuditEvent'.
+src/lib/monitoring/monitoring-integration.ts(63,11): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+src/lib/monitoring/monitoring-integration.ts(77,13): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+src/lib/monitoring/monitoring-integration.ts(93,9): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+src/lib/monitoring/monitoring-integration.ts(105,9): error TS2353: Object literal may only specify known properties, and 'requestId' does not exist in type 'Omit<ResponseTimeEntry, "timestamp">'.
+src/lib/monitoring/monitoring-integration.ts(426,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+src/lib/monitoring/monitoring-integration.ts(435,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+src/lib/monitoring/monitoring-integration.ts(447,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+src/lib/monitoring/performance-monitor.ts(288,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+src/lib/monitoring/performance-monitor.ts(289,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+src/lib/monitoring/performance-monitor.ts(290,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+src/lib/notification-utils.ts(187,5): error TS2322: Type '{ userId: string; type: string; title: string; message: string; metadata: any; isPriority: boolean; }' is not assignable to type '(Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput) | (Without<...> & NotificationCreateInput)'.
+src/lib/notification-utils.ts(327,13): error TS2322: Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/lib/notification-utils.ts(355,13): error TS2322: Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/lib/notifications/notification-service.ts(267,32): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/notifications/notification-service.ts(308,11): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '(Without<NotificationDeliveryCreateInput, NotificationDeliveryUncheckedCreateInput> & NotificationDeliveryUncheckedCreateInput) | (Without<...> & NotificationDeliveryCreateInput)'.
+src/lib/notifications/notification-service.ts(364,16): error TS2353: Object literal may only specify known properties, and 'type' does not exist in type 'NotificationTemplateWhereInput'.
+src/lib/notifications/notification-service.ts(423,13): error TS2353: Object literal may only specify known properties, and 'expiresAt' does not exist in type 'NotificationWhereInput'.
+src/lib/notifications/notification-service.ts(424,13): error TS2353: Object literal may only specify known properties, and 'expiresAt' does not exist in type 'NotificationWhereInput'.
+src/lib/performance/dynamic-imports.tsx(204,10): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & (T extends MemoExoticComponent<infer U extends ComponentType<any>> | LazyExoticComponent<infer U extends ComponentType<...>> ? ReactManagedAttributes<...> : ReactManagedAttributes<...>)'.
+src/lib/performance/dynamic-imports.tsx(210,10): error TS2322: Type '{ children: Element; error: Error; retry: () => void; }' is not assignable to type 'IntrinsicAttributes & { error: Error; retry: () => void; }'.
+src/lib/performance/dynamic-imports.tsx(262,15): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & LibraryManagedAttributes<T, any>'.
+src/lib/performance/dynamic-imports.tsx(266,13): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & LibraryManagedAttributes<T, any>'.
+src/lib/performance/dynamic-imports.tsx(605,15): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & ComponentProps<T>'.
+src/lib/rbac/rbac-middleware.ts(104,15): error TS2353: Object literal may only specify known properties, and 'required' does not exist in type 'ValidationError[]'.
+src/lib/rbac/rbac-middleware.ts(132,11): error TS2353: Object literal may only specify known properties, and 'resource' does not exist in type '{ errorCode: string; errorMessage: string; stackTrace?: string | undefined; }'.
+src/lib/rbac/rbac-service.ts(444,11): error TS2322: Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+src/lib/search/search-service.ts(81,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/search/search-service.ts(134,9): error TS2353: Object literal may only specify known properties, and 'isPublic' does not exist in type 'JournalEntryWhereInput'.
+src/lib/search/search-service.ts(138,9): error TS2353: Object literal may only specify known properties, and 'title' does not exist in type 'JournalEntrySelect<DefaultArgs>'.
+src/lib/search/search-service.ts(339,33): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/search/search-service.ts(348,13): error TS2322: Type '{ id: string; createdAt: Date; updatedAt: Date; anonymousId: string; email: string | null; hashedPassword: string | null; role: UserRole; permissions: string[]; isActive: boolean; ... 17 more ...; lockedUntil: Date | null; } | undefined' is not assignable to type '{ id: string; name: string; avatar?: string | undefined; } | undefined'.
+src/lib/security/audit.ts(382,9): error TS2322: Type '{ details: string | undefined; beforeState: string | undefined; afterState: string | undefined; metadata: string | undefined; id?: string | undefined; timestamp: Date; eventType: AuditEventType; ... 13 more ...; errorMessage?: string | undefined; }[]' is not assignable to type 'AuditLogCreateManyInput | AuditLogCreateManyInput[]'.
+src/lib/security/audit.ts(414,9): error TS2353: Object literal may only specify known properties, and 'metadata' does not exist in type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/security/encryption.ts(248,9): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/security/mfa.ts(96,29): error TS2353: Object literal may only specify known properties, and 'mfaRequired' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/security/mfa.ts(114,30): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'UserSelect<DefaultArgs>'.
+src/lib/security/mfa.ts(215,15): error TS2353: Object literal may only specify known properties, and 'mfaEnabled' does not exist in type '(Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)'.
+src/lib/security/mfa.ts(514,15): error TS2353: Object literal may only specify known properties, and 'mfaEnabled' does not exist in type '(Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)'.
+src/lib/security/pentest-simulator.ts(328,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+src/lib/security/pentest-simulator.ts(422,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+src/lib/security/pentest-simulator.ts(517,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+src/lib/security/pentest-simulator.ts(715,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+src/lib/security/rbac.ts(566,15): error TS2322: Type 'SystemRole' is not assignable to type 'UserRole | EnumUserRoleFieldUpdateOperationsInput | undefined'.
+src/lib/session/session-manager.ts(59,15): error TS2554: Expected 2-3 arguments, but got 1.
+src/lib/session/session-manager.ts(71,15): error TS2554: Expected 2-3 arguments, but got 1.
+src/lib/session/session-manager.ts(241,15): error TS2353: Object literal may only specify known properties, and 'encryptedData' does not exist in type 'EncryptedField'.
+src/lib/session/session-manager.ts(570,17): error TS2353: Object literal may only specify known properties, and 'encryptedData' does not exist in type 'EncryptedField'.
+src/lib/session/session-middleware.ts(79,7): error TS2322: Type '{}' is not assignable to type 'string'.
+src/lib/session/session-middleware.ts(82,7): error TS2322: Type '{}' is not assignable to type 'boolean'.
+src/lib/socket-server.ts(105,9): error TS2322: Type '{ userId: string; displayName: string; avatar: string; colorTheme: string; languages: string[]; badges: never[]; }' is not assignable to type '(Without<AnonymousIdentityCreateInput, AnonymousIdentityUncheckedCreateInput> & AnonymousIdentityUncheckedCreateInput) | (Without<...> & AnonymousIdentityCreateInput)'.
+src/lib/socket-server.ts(166,7): error TS2322: Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+src/lib/socket-server.ts(254,13): error TS2353: Object literal may only specify known properties, and 'participants' does not exist in type 'ChatRoomInclude<DefaultArgs>'.
+src/lib/socket-server.ts(278,13): error TS2322: Type '{ roomId: string; userId: any; }' is not assignable to type '(Without<ChatParticipantCreateInput, ChatParticipantUncheckedCreateInput> & ChatParticipantUncheckedCreateInput) | (Without<...> & ChatParticipantCreateInput)'.
+src/lib/socket-server.ts(294,13): error TS2353: Object literal may only specify known properties, and 'author' does not exist in type 'ChatMessageInclude<DefaultArgs>'.
+src/lib/socket-server.ts(369,11): error TS2322: Type '{ roomId: string; authorId: any; content: string; type: string; metadata: { moderated: boolean; violations: string[]; crisis: boolean; }; reactions: never[]; flags: never[]; }' is not assignable to type '(Without<ChatMessageCreateInput, ChatMessageUncheckedCreateInput> & ChatMessageUncheckedCreateInput) | (Without<...> & ChatMessageCreateInput)'.
+src/lib/socket-server.ts(383,13): error TS2353: Object literal may only specify known properties, and 'author' does not exist in type 'ChatMessageInclude<DefaultArgs>'.
+src/lib/socket-server.ts(518,11): error TS2322: Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+src/lib/socket-server.ts(565,9): error TS2322: Type '{ userId: string; score: number; level: string; factors: { participation: number; }; history: { type: string; description: string; impact: number; timestamp: Date; }[]; restrictions: never[]; }' is not assignable to type '(Without<TrustMetricCreateInput, TrustMetricUncheckedCreateInput> & TrustMetricUncheckedCreateInput) | (Without<...> & TrustMetricCreateInput)'.
+src/lib/test-utils/factories.ts(36,51): error TS2554: Expected 0-1 arguments, but got 2.
+src/lib/test-utils/factories.ts(100,40): error TS2353: Object literal may only specify known properties, and 'days' does not exist in type '{ years?: number | undefined; refDate?: string | number | Date | undefined; }'.
+src/lib/test-utils/factories.ts(115,36): error TS2353: Object literal may only specify known properties, and 'days' does not exist in type '{ years?: number | undefined; refDate?: string | number | Date | undefined; }'.
+src/lib/test-utils/factories.ts(125,34): error TS2353: Object literal may only specify known properties, and 'days' does not exist in type '{ years?: number | undefined; refDate?: string | number | Date | undefined; }'.
+src/lib/validation/validation-middleware.ts(297,5): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+src/lib/validation/validation-middleware.ts(304,7): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+src/lib/websocket.ts(137,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { socketId: any; userRole: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/websocket.ts(191,11): error TS2322: Type '{ userId: any; action: string; resource: string; resourceId: any; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/websocket.ts(211,9): error TS2322: Type '{ userId: any; action: string; resource: string; details: { socketId: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/websocket.ts(224,3): error TS2322: Type 'Server | null' is not assignable to type 'Server'.
+src/lib/websocket/crisis-manager.ts(108,7): error TS2353: Object literal may only specify known properties, and 'contactMethod' does not exist in type 'CrisisAlert'.
+src/lib/websocket/crisis-manager.ts(165,7): error TS2353: Object literal may only specify known properties, and 'contactMethod' does not exist in type 'CrisisAlertPayload'.
+src/lib/websocket/crisis-manager.ts(171,7): error TS2322: Type '"crisis_support"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(174,7): error TS2322: Type '"high"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(203,7): error TS2353: Object literal may only specify known properties, and 'contactMethod' does not exist in type 'CrisisAlertPayload'.
+src/lib/websocket/crisis-manager.ts(257,7): error TS2322: Type '"crisis_assignment"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(260,7): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(270,7): error TS2322: Type '"counselor_assigned"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(273,7): error TS2322: Type '"high"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(335,9): error TS2322: Type '"crisis_escalation"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(338,9): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(370,13): error TS2353: Object literal may only specify known properties, and 'EmergencyContacts' does not exist in type 'UserProfileInclude<DefaultArgs>'.
+src/lib/websocket/crisis-manager.ts(398,9): error TS2322: Type '"safety_plan_activated"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(401,9): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(442,7): error TS2322: Type '"crisis_resolved"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(445,7): error TS2322: Type '"normal"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(528,7): error TS2322: Type '"crisis_response"' is not assignable to type 'NotificationType'.
+src/lib/websocket/crisis-manager.ts(531,7): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+src/lib/websocket/crisis-manager.ts(605,11): error TS2353: Object literal may only specify known properties, and 'message' does not exist in type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+src/lib/websocket/crisis-manager.ts(626,11): error TS2353: Object literal may only specify known properties, and 'message' does not exist in type '(Without<SafetyAlertUpdateInput, SafetyAlertUncheckedUpdateInput> & SafetyAlertUncheckedUpdateInput) | (Without<...> & SafetyAlertUpdateInput)'.
+src/lib/websocket/crisis-manager.ts(652,9): error TS2322: Type '{ userId: string; action: string; resource: string; resourceId: string; details: { severity: CrisisSeverity; status: CrisisStatus; assignedCounselor: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+src/lib/websocket/server.ts(1132,9): error TS2322: Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[] | ChatMessageCreatereactionsInput | undefined'.
+src/lib/websocket/server.ts(1167,9): error TS2322: Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[] | ChatMessageUpdatereactionsInput | undefined'.
+src/lib/websocket/server.ts(1221,9): error TS2322: Type 'RoomSettings | {}' is not assignable to type 'JsonNull | InputJsonValue'.
+src/services/crisis-intervention.ts(444,7): error TS2322: Type '{ type: string; severity: "critical" | "low" | "medium" | "high"; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.

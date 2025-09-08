@@ -1,0 +1,22 @@
+{
+  "moderate": true,
+  "high": true,
+  "critical": true,
+  "allowlist": [
+    "https://github.com/advisories/GHSA-example-allow"
+  ],
+  "package-manager": "npm",
+  "path": "./",
+  "report-type": "full",
+  "retry": {
+    "count": 3,
+    "delay": 1000
+  },
+  "output-format": "json",
+  "summary-format": "text",
+  "show-not-found": false,
+  "report": {
+    "full": true,
+    "summary": true
+  }
+}

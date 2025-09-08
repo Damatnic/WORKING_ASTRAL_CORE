@@ -1,0 +1,1189 @@
+[17:49:35.852] Running build in Washington, D.C., USA (East) – iad1
+[17:49:35.852] Build machine configuration: 4 cores, 8 GB
+[17:49:35.869] Cloning github.com/Damatnic/CoreV6 (Branch: master, Commit: 286c9e6)
+[17:49:35.972] Previous build caches not available
+[17:49:36.406] Cloning completed: 537.000ms
+[17:49:36.498] Found .vercelignore
+[17:49:36.516] Removed 74 ignored files defined in .vercelignore
+[17:49:36.516]   /__tests__/security/api-security.security.test.ts
+[17:49:36.516]   /__tests__/security/authentication.security.test.ts
+[17:49:36.516]   /__tests__/security/authorization.security.test.ts
+[17:49:36.516]   /__tests__/security/data-protection.security.test.ts
+[17:49:36.516]   /__tests__/security/hipaa-compliance.security.test.ts
+[17:49:36.516]   /__tests__/security/input-validation.security.test.ts
+[17:49:36.516]   /.git/config
+[17:49:36.516]   /.git/description
+[17:49:36.516]   /.git/FETCH_HEAD
+[17:49:36.517]   /.git/HEAD
+[17:49:37.366] Running "vercel build"
+[17:49:38.555] Vercel CLI 47.0.5
+[17:49:38.966] Running "install" command: `npm ci`...
+[17:49:42.678] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[17:49:44.183] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[17:49:46.881] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[17:49:46.945] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[17:49:47.703] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[17:49:47.827] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[17:49:51.878] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[17:50:07.518] 
+[17:50:07.518] added 1187 packages, and audited 1188 packages in 28s
+[17:50:07.519] 
+[17:50:07.519] 299 packages are looking for funding
+[17:50:07.519]   run `npm fund` for details
+[17:50:07.530] 
+[17:50:07.530] 3 low severity vulnerabilities
+[17:50:07.531] 
+[17:50:07.531] To address all issues (including breaking changes), run:
+[17:50:07.531]   npm audit fix --force
+[17:50:07.531] 
+[17:50:07.531] Run `npm audit` for details.
+[17:50:07.585] Detected Next.js version: 14.2.32
+[17:50:07.586] Running "npm run vercel:build"
+[17:50:07.707] 
+[17:50:07.707] > astral-core-v5@0.1.0 vercel:build
+[17:50:07.707] > npx prisma generate && npm run typecheck && npm run lint && npm run build
+[17:50:07.707] 
+[17:50:09.603] Environment variables loaded from .env
+[17:50:09.604] Prisma schema loaded from prisma/schema.prisma
+[17:50:10.604] 
+[17:50:10.604] ✔ Generated Prisma Client (v6.15.0) to ./node_modules/@prisma/client in 449ms
+[17:50:10.605] 
+[17:50:10.605] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[17:50:10.605] 
+[17:50:10.605] Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate
+[17:50:10.605] 
+[17:50:10.743] 
+[17:50:10.743] > astral-core-v5@0.1.0 typecheck
+[17:50:10.743] > tsc --noEmit
+[17:50:10.744] 
+[17:50:53.529] src/app/api/auth/[...nextauth]/route.ts(2,15): error TS2305: Module '"next-auth"' has no exported member 'AuthOptions'.
+[17:50:53.530] src/app/api/auth/[...nextauth]/route.ts(5,17): error TS2349: This expression is not callable.
+[17:50:53.530]   Type 'typeof import("next-auth")' has no call signatures.
+[17:50:53.530] src/app/api/community/chat-rooms/route.ts(5,42): error TS2305: Module '"@/lib/auth-middleware"' has no exported member 'withRoles'.
+[17:50:53.530] src/app/api/community/moderation/route.ts(5,42): error TS2305: Module '"@/lib/auth-middleware"' has no exported member 'withRoles'.
+[17:50:53.530] src/app/api/community/moderation/route.ts(339,25): error TS18047: 'targetAnonymousId' is possibly 'null'.
+[17:50:53.530] src/app/api/community/moderation/route.ts(340,24): error TS18047: 'moderatorAnonymousId' is possibly 'null'.
+[17:50:53.530] src/app/api/community/reports/route.ts(5,42): error TS2305: Module '"@/lib/auth-middleware"' has no exported member 'withRoles'.
+[17:50:53.530] src/app/api/crisis/counselor-dashboard/route.ts(122,20): error TS2304: Cannot find name 'CounselorStats'.
+[17:50:53.531] src/app/api/crisis/counselor-dashboard/route.ts(134,29): error TS2552: Cannot find name 'AlertResponse'. Did you mean 'NextResponse'?
+[17:50:53.531] src/app/api/crisis/counselor-dashboard/route.ts(150,31): error TS2552: Cannot find name 'AlertResponse'. Did you mean 'NextResponse'?
+[17:50:53.531] src/app/api/crisis/counselor-dashboard/route.ts(166,36): error TS2304: Cannot find name 'InterventionResponse'.
+[17:50:53.531] src/app/api/crisis/counselor-dashboard/route.ts(181,34): error TS2304: Cannot find name 'EscalationResponse'.
+[17:50:53.531] src/app/api/crisis/counselor-dashboard/route.ts(212,23): error TS2304: Cannot find name 'CounselorDashboardResponse'.
+[17:50:53.531] src/app/api/crisis/escalations/route.ts(5,68): error TS2305: Module '"@/lib/auth-middleware"' has no exported member 'withHelper'.
+[17:50:53.531] src/app/api/crisis/escalations/route.ts(6,42): error TS2305: Module '"@/lib/websocket"' has no exported member 'emitEmergencyBroadcast'.
+[17:50:53.531] src/app/api/crisis/reports/route.ts(72,18): error TS2345: Argument of type 'string' is not assignable to parameter of type '"CRISIS_COUNSELOR" | "ADMIN" | "SUPER_ADMIN"'.
+[17:50:53.531] src/app/api/crisis/reports/route.ts(77,18): error TS2345: Argument of type 'string' is not assignable to parameter of type '"HELPER" | "THERAPIST"'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(89,22): error TS2304: Cannot find name 'ReportFilters'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(90,85): error TS2304: Cannot find name 'CrisisSeverity'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(91,69): error TS2304: Cannot find name 'TriggerType'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(92,59): error TS2304: Cannot find name 'ReportStatus'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(153,30): error TS2304: Cannot find name 'ReportResponse'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(155,27): error TS2304: Cannot find name 'ReportResponse'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(212,23): error TS2304: Cannot find name 'PaginatedResponse'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(212,41): error TS2304: Cannot find name 'ReportResponse'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(256,23): error TS2304: Cannot find name 'ValidationError'.
+[17:50:53.532] src/app/api/crisis/reports/route.ts(267,19): error TS2304: Cannot find name 'CreateReportRequest'.
+[17:50:53.533] src/app/api/crisis/reports/route.ts(342,23): error TS2304: Cannot find name 'CrisisResponse'.
+[17:50:53.533] src/app/api/crisis/reports/route.ts(342,38): error TS2304: Cannot find name 'ReportResponse'.
+[17:50:53.533] src/app/api/crisis/reports/route.ts(401,23): error TS2304: Cannot find name 'ValidationError'.
+[17:50:53.533] src/app/api/crisis/reports/route.ts(412,19): error TS2304: Cannot find name 'UpdateReportRequest'.
+[17:50:53.533] src/app/api/crisis/reports/route.ts(464,37): error TS2551: Property 'REPORT_UPDATED' does not exist on type '{ ALERT_UPDATED: string; INTERVENTION_STARTED: string; INTERVENTION_COMPLETED: string; }'. Did you mean 'ALERT_UPDATED'?
+[17:50:53.534] src/app/api/crisis/reports/route.ts(499,23): error TS2304: Cannot find name 'CrisisResponse'.
+[17:50:53.534] src/app/api/crisis/reports/route.ts(499,38): error TS2304: Cannot find name 'ReportResponse'.
+[17:50:53.534] src/app/api/dashboard/stats/route.ts(74,18): error TS2561: Object literal may only specify known properties, but 'userId' does not exist in type 'CommunityPostWhereInput'. Did you mean to write 'User'?
+[17:50:53.534] src/app/api/helper/clients/route.ts(234,48): error TS1117: An object literal cannot have multiple properties with the same name.
+[17:50:53.534] src/app/api/helper/sessions/route.ts(164,48): error TS1117: An object literal cannot have multiple properties with the same name.
+[17:50:53.535] src/app/api/messaging/notifications/route.ts(15,15): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.535] src/app/api/messaging/notifications/route.ts(184,7): error TS2322: Type '{ userId: string; type: string; title: string; message: string; isPriority: boolean; metadata: Record<any, unknown>; }[]' is not assignable to type 'NotificationCreateManyInput | NotificationCreateManyInput[]'.
+[17:50:53.535]   Type '{ userId: string; type: string; title: string; message: string; isPriority: boolean; metadata: Record<any, unknown>; }[]' is not assignable to type 'NotificationCreateManyInput[]'.
+[17:50:53.535]     Property 'id' is missing in type '{ userId: string; type: string; title: string; message: string; isPriority: boolean; metadata: Record<any, unknown>; }' but required in type 'NotificationCreateManyInput'.
+[17:50:53.535] src/app/api/platform/files/route.ts(220,35): error TS7006: Parameter 'v' implicitly has an 'any' type.
+[17:50:53.535] src/app/api/platform/files/route.ts(330,7): error TS2322: Type 'Buffer<ArrayBufferLike>' is not assignable to type 'Buffer<ArrayBuffer>'.
+[17:50:53.536]   Type 'ArrayBufferLike' is not assignable to type 'ArrayBuffer'.
+[17:50:53.536]     Type 'SharedArrayBuffer' is missing the following properties from type 'ArrayBuffer': resizable, resize, detached, transfer, transferToFixedLength
+[17:50:53.536] src/app/api/platform/files/route.ts(339,48): error TS1117: An object literal cannot have multiple properties with the same name.
+[17:50:53.536] src/app/api/platform/files/route.ts(344,9): error TS2353: Object literal may only specify known properties, and 'storagePath' does not exist in type '(Without<FileCreateInput, FileUncheckedCreateInput> & FileUncheckedCreateInput) | (Without<...> & FileCreateInput)'.
+[17:50:53.536] src/app/api/platform/files/route.ts(366,9): error TS2353: Object literal may only specify known properties, and 'userId' does not exist in type 'Without<FileVersionCreateInput, FileVersionUncheckedCreateInput> & FileVersionUncheckedCreateInput'.
+[17:50:53.536] src/app/api/platform/notifications/preferences/route.ts(89,11): error TS2353: Object literal may only specify known properties, and 'digestFrequency' does not exist in type 'Without<NotificationPreferenceCreateInput, NotificationPreferenceUncheckedCreateInput> & NotificationPreferenceUncheckedCreateInput'.
+[17:50:53.536] src/app/api/platform/notifications/preferences/route.ts(173,21): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.536] src/app/api/platform/notifications/preferences/route.ts(198,9): error TS2353: Object literal may only specify known properties, and 'crisisOverride' does not exist in type '(Without<NotificationPreferenceUpdateInput, NotificationPreferenceUncheckedUpdateInput> & NotificationPreferenceUncheckedUpdateInput) | (Without<...> & NotificationPreferenceUpdateInput)'.
+[17:50:53.536] src/app/api/platform/notifications/preferences/route.ts(211,9): error TS2353: Object literal may only specify known properties, and 'crisisOverride' does not exist in type 'Without<NotificationPreferenceCreateInput, NotificationPreferenceUncheckedCreateInput> & NotificationPreferenceUncheckedCreateInput'.
+[17:50:53.536] src/app/api/platform/notifications/route.ts(85,7): error TS2532: Object is possibly 'undefined'.
+[17:50:53.536] src/app/api/platform/notifications/route.ts(168,19): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.536] src/app/api/platform/notifications/templates/route.ts(111,23): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.537] src/app/api/platform/notifications/templates/route.ts(128,9): error TS2353: Object literal may only specify known properties, and 'emailTemplate' does not exist in type '(Without<NotificationTemplateCreateInput, NotificationTemplateUncheckedCreateInput> & NotificationTemplateUncheckedCreateInput) | (Without<...> & NotificationTemplateCreateInput)'.
+[17:50:53.537] src/app/api/platform/notifications/templates/route.ts(187,9): error TS2353: Object literal may only specify known properties, and 'message' does not exist in type '(Without<NotificationTemplateUpdateInput, NotificationTemplateUncheckedUpdateInput> & NotificationTemplateUncheckedUpdateInput) | (Without<...> & NotificationTemplateUpdateInput)'.
+[17:50:53.537] src/app/api/platform/search/route.ts(171,54): error TS2551: Property 'scheduledAt' does not exist on type '{ therapistUser: { id: string; role: UserRole; displayName: string | null; }; } & { status: TherapySessionStatus; type: SessionType; clientId: string; ... 11 more ...; notesEncrypted: JsonValue; }'. Did you mean 'scheduledTime'?
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(107,44): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(116,53): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(125,51): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(133,48): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(141,50): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(152,44): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(166,48): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(173,57): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(271,37): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(274,46): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(277,44): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(280,41): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/[clientId]/route.ts(283,43): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.537] src/app/api/therapist/clients/route.ts(127,40): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(136,49): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(145,47): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(153,44): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(161,46): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(230,25): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(231,34): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(232,32): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(233,29): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/clients/route.ts(235,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(164,36): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(167,37): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(170,37): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(173,38): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(176,32): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.538] src/app/api/therapist/session-notes/route.ts(179,39): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(182,44): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(185,35): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(250,30): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(251,31): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(252,31): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(253,32): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(255,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(257,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(259,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/session-notes/route.ts(261,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/sessions/route.ts(136,38): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapist/sessions/route.ts(143,14): error TS2790: The operand of a 'delete' operator must be optional.
+[17:50:53.539] src/app/api/therapist/sessions/route.ts(260,7): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(158,33): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(182,95): error TS2345: Argument of type '{}' is not assignable to parameter of type 'string'.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(307,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(317,25): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(412,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.539] src/app/api/therapy/billing/route.ts(500,25): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/clients/route.ts(180,28): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/clients/route.ts(266,9): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/clients/route.ts(384,25): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/clients/route.ts(398,28): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(168,24): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(240,23): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(404,22): error TS2554: Expected 2 arguments, but got 1.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(492,53): error TS7006: Parameter 'a' implicitly has an 'any' type.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(492,56): error TS7006: Parameter 'b' implicitly has an 'any' type.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(493,51): error TS7006: Parameter 'a' implicitly has an 'any' type.
+[17:50:53.540] src/app/api/therapy/dashboard/route.ts(493,54): error TS7006: Parameter 'b' implicitly has an 'any' type.
+[17:50:53.540] src/app/api/user/dashboard/route.ts(7,3): error TS2724: '"@/lib/api-utils"' has no exported member named 'decryptField'. Did you mean 'decryptApiField'?
+[17:50:53.540] src/app/api/user/dashboard/route.ts(147,13): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.540] src/app/api/user/dashboard/route.ts(147,42): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.540] src/app/api/user/dashboard/route.ts(148,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.540]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.540] src/app/api/user/journal-entries/route.ts(52,16): error TS18048: 'page' is possibly 'undefined'.
+[17:50:53.540] src/app/api/user/journal-entries/route.ts(52,28): error TS18048: 'limit' is possibly 'undefined'.
+[17:50:53.540] src/app/api/user/journal-entries/route.ts(54,20): error TS2464: A computed property name must be of type 'string', 'number', 'symbol', or 'any'.
+[17:50:53.541] src/app/api/user/journal-entries/route.ts(138,32): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+[17:50:53.541]   Type 'undefined' is not assignable to type 'number'.
+[17:50:53.541] src/app/api/user/journal-entries/route.ts(182,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541] src/app/api/user/journal-entries/route.ts(327,9): error TS2322: Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(66,16): error TS18048: 'page' is possibly 'undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(66,28): error TS18048: 'limit' is possibly 'undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(68,20): error TS2464: A computed property name must be of type 'string', 'number', 'symbol', or 'any'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(153,32): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+[17:50:53.541]   Type 'undefined' is not assignable to type 'number'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(196,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(197,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(327,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541] src/app/api/user/mood-entries/route.ts(328,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.541]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.542] src/app/api/user/preferences/route.ts(28,9): error TS2561: Object literal may only specify known properties, but 'userProfile' does not exist in type 'UserSelect<DefaultArgs>'. Did you mean to write 'UserProfile'?
+[17:50:53.542] src/app/api/user/profile/route.ts(33,18): error TS2304: Cannot find name 'req'.
+[17:50:53.542] src/app/api/user/profile/route.ts(77,36): error TS2551: Property 'emailVerified' does not exist on type '{ UserProfile: { id: string; onboardingCompleted: boolean; userId: string; mentalHealthGoals: string[]; interestedTopics: string[]; preferredCommunication: string[]; crisisContacts: JsonValue; ... 8 more ...; lastAssessmentAt: Date | null; } | null; } & { ...; }'. Did you mean 'isEmailVerified'?
+[17:50:53.542] src/app/api/user/profile/route.ts(109,18): error TS2304: Cannot find name 'req'.
+[17:50:53.542] src/app/api/user/profile/route.ts(129,73): error TS2345: Argument of type '$ZodIssue[]' is not assignable to parameter of type 'ValidationError[]'.
+[17:50:53.542]   Type '$ZodIssue' is not assignable to type 'ValidationError'.
+[17:50:53.542]     Property 'field' is missing in type '$ZodIssueInvalidType<unknown>' but required in type 'ValidationError'.
+[17:50:53.542] src/app/api/user/profile/route.ts(153,15): error TS2353: Object literal may only specify known properties, and 'medicalHistory' does not exist in type '(Without<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput> & UserProfileUncheckedCreateWithoutUserInput) | (Without<...> & UserProfileCreateWithoutUserInput)'.
+[17:50:53.542] src/app/api/user/profile/route.ts(219,18): error TS2304: Cannot find name 'req'.
+[17:50:53.542] src/app/api/user/profile/route.ts(240,9): error TS2353: Object literal may only specify known properties, and 'address' does not exist in type '(Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(62,13): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(62,42): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(63,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.542]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(167,13): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(167,42): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.542] src/app/api/user/wellness-goals/route.ts(168,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.543]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(282,13): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(282,42): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(283,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.543]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(301,11): error TS2322: Type '{ title: any; description: any; category: any; targetDate: any; milestones: any; progress: any; status: any; updatedAt: string; id?: string | undefined; createdAt?: string | undefined; }' is not assignable to type 'WellnessGoal'.
+[17:50:53.543]   Types of property 'id' are incompatible.
+[17:50:53.543]     Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.543]       Type 'undefined' is not assignable to type 'string'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(303,28): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(304,72): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(305,34): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(306,69): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(307,69): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(308,63): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(309,30): error TS18048: 'existingGoal' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(395,13): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(395,42): error TS18048: 'goalsData' is possibly 'undefined'.
+[17:50:53.543] src/app/api/user/wellness-goals/route.ts(396,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.543]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.544] src/app/api/user/wellness-goals/route.ts(432,16): error TS18048: 'deletedGoal' is possibly 'undefined'.
+[17:50:53.544] src/app/api/user/wellness-goals/route.ts(433,19): error TS18048: 'deletedGoal' is possibly 'undefined'.
+[17:50:53.544] src/app/api/user/wellness-goals/route.ts(434,23): error TS18048: 'deletedGoal' is possibly 'undefined'.
+[17:50:53.544] src/app/api/websocket/route.ts(9,11): error TS2554: Expected 1-2 arguments, but got 0.
+[17:50:53.544] src/app/api/wellness/overview/route.ts(126,15): error TS18048: 'lastEntry' is possibly 'undefined'.
+[17:50:53.544] src/app/api/wellness/overview/route.ts(127,15): error TS18048: 'lastEntry' is possibly 'undefined'.
+[17:50:53.544] src/app/api/wellness/overview/route.ts(128,17): error TS18048: 'lastEntry' is possibly 'undefined'.
+[17:50:53.544] src/app/api/wellness/overview/route.ts(129,18): error TS18048: 'lastEntry' is possibly 'undefined'.
+[17:50:53.544] src/app/auth/signin/page.tsx(151,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'Message'.
+[17:50:53.545]   Type 'undefined' is not assignable to type 'Message'.
+[17:50:53.545] src/app/crisis/page.tsx(28,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.545]   Property 'targetId' does not exist on type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.545] src/app/dashboard/page.tsx(186,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.545]   Property 'targetId' does not exist on type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.545] src/app/dashboard/page.tsx(256,15): error TS2322: Type '"large"' is not assignable to type '"sm" | "md" | "lg" | undefined'.
+[17:50:53.546] src/app/dashboard/page.tsx(266,15): error TS2322: Type '{ type: "error"; title: string; message: string; actions: { label: string; onClick: () => Promise<void>; variant: string; }[]; className: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleAlertProps'.
+[17:50:53.546]   Property 'message' does not exist on type 'IntrinsicAttributes & AccessibleAlertProps'.
+[17:50:53.546] src/app/page.tsx(8,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.546]   Property 'targetId' does not exist on type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.546] src/app/wellness/mood-tracker/page.tsx(49,27): error TS2322: Type '{ targetId: string; }' is not assignable to type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.546]   Property 'targetId' does not exist on type 'IntrinsicAttributes & AccessibleSkipLinkProps'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(31,3): error TS2305: Module '"@/types/admin"' has no exported member 'SystemMetrics'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(32,3): error TS2305: Module '"@/types/admin"' has no exported member 'UserAnalytics'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(552,76): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(556,30): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(578,77): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(581,32): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(581,40): error TS2571: Object is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(581,97): error TS18046: 'a' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(581,101): error TS18046: 'b' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(607,49): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(607,66): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'number'.
+[17:50:53.546] src/components/admin/AdminDashboard.tsx(611,28): error TS18046: 'count' is of type 'unknown'.
+[17:50:53.546] src/components/admin/PlatformAnalytics.tsx(443,51): error TS2532: Object is possibly 'undefined'.
+[17:50:53.546] src/components/admin/SystemHealthMonitoring.tsx(911,81): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/admin/SystemHealthMonitoring.tsx(917,85): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/admin/UserManagement.tsx(35,3): error TS2305: Module '"@/types/admin"' has no exported member 'User'.
+[17:50:53.547] src/components/admin/UserManagement.tsx(1191,65): error TS7006: Parameter 'device' implicitly has an 'any' type.
+[17:50:53.547] src/components/admin/UserManagement.tsx(1191,73): error TS7006: Parameter 'index' implicitly has an 'any' type.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(207,90): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(512,32): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(513,32): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(517,42): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(588,32): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(589,32): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(593,42): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(608,25): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(609,25): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/communication/MessageCenter.tsx(610,55): error TS2532: Object is possibly 'undefined'.
+[17:50:53.547] src/components/community/CommunityFeed.tsx(56,9): error TS2322: Type '{ id: string; title: string | undefined; content: string; author: { id: string; name: string; avatar: string; verified: false; role: "user"; }; timestamp: Date; type: "text" | "milestone" | "question"; ... 5 more ...; supportLevel: "celebrating" | ... 1 more ... | "offering"; }[]' is not assignable to type 'Post[]'.
+[17:50:53.547]   Type '{ id: string; title: string | undefined; content: string; author: { id: string; name: string; avatar: string; verified: false; role: "user"; }; timestamp: Date; type: "text" | "milestone" | "question"; ... 5 more ...; supportLevel: "celebrating" | ... 1 more ... | "offering"; }' is not assignable to type 'Post'.
+[17:50:53.547]     The types of 'engagement.likes' are incompatible between these types.
+[17:50:53.547]       Type 'number | undefined' is not assignable to type 'number'.
+[17:50:53.547]         Type 'undefined' is not assignable to type 'number'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(62,13): error TS18048: 'post.author' is possibly 'undefined'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(63,15): error TS18048: 'post.author' is possibly 'undefined'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(64,17): error TS18048: 'post.author' is possibly 'undefined'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(122,52): error TS18048: 'post.likes' is possibly 'undefined'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(122,69): error TS18048: 'post.likes' is possibly 'undefined'.
+[17:50:53.548] src/components/community/CommunityFeed.tsx(140,5): error TS2322: Type '{ id: string; title: string; content: string; type: "story" | "milestone" | "question" | "encouragement"; category: string | undefined; author: { id: string; displayName: string; avatar: undefined; }; ... 6 more ...; userInteraction: { ...; }; }[]' is not assignable to type 'CommunityPost[]'.
+[17:50:53.548]   Type '{ id: string; title: string; content: string; type: "story" | "milestone" | "question" | "encouragement"; category: string | undefined; author: { id: string; displayName: string; avatar: undefined; }; ... 6 more ...; userInteraction: { ...; }; }' is missing the following properties from type 'CommunityPost': authorSessionId, authorNickname, reactions, replies, and 4 more.
+[17:50:53.548] src/components/community/SupportGroups.tsx(125,69): error TS2304: Cannot find name 'privacyFilter'.
+[17:50:53.548] src/components/community/SupportGroups.tsx(125,92): error TS2304: Cannot find name 'topicFilter'.
+[17:50:53.548] src/components/crisis/CrisisAlertSystem.tsx(231,13): error TS7030: Not all code paths return a value.
+[17:50:53.548] src/components/crisis/CrisisAlertSystem.tsx(583,23): error TS7022: 'severityConfig' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+[17:50:53.548] src/components/crisis/CrisisAlertSystem.tsx(583,40): error TS2448: Block-scoped variable 'severityConfig' used before its declaration.
+[17:50:53.548] src/components/crisis/CrisisCounselorDashboard.tsx(455,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.548] src/components/crisis/CrisisReporting.tsx(356,9): error TS2532: Object is possibly 'undefined'.
+[17:50:53.548] src/components/crisis/CrisisReporting.tsx(358,11): error TS2532: Object is possibly 'undefined'.
+[17:50:53.548] src/components/helper/HelperDashboard.tsx(147,72): error TS7053: Element implicitly has an 'any' type because expression of type 'ClientStatus' can't be used to index type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.548]   Property 'assessment' does not exist on type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.548] src/components/helper/HelperDashboard.tsx(147,103): error TS7053: Element implicitly has an 'any' type because expression of type 'ClientStatus' can't be used to index type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.548]   Property 'assessment' does not exist on type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.549] src/components/helper/HelperDashboard.tsx(389,95): error TS7053: Element implicitly has an 'any' type because expression of type 'ClientStatus' can't be used to index type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.549]   Property 'assessment' does not exist on type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.549] src/components/helper/HelperDashboard.tsx(389,137): error TS7053: Element implicitly has an 'any' type because expression of type 'ClientStatus' can't be used to index type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.549]   Property 'assessment' does not exist on type '{ active: { text: string; bg: string; border: string; }; inactive: { text: string; bg: string; border: string; }; pending: { text: string; bg: string; border: string; }; completed: { text: string; bg: string; border: string; }; cancelled: { ...; }; }'.
+[17:50:53.549] src/components/helper/PerformanceMetrics.tsx(181,67): error TS2367: This comparison appears to be unintentional because the types '"availability" | "client_satisfaction" | "session_quality"' and '"no_show_rate"' have no overlap.
+[17:50:53.549] src/components/helper/ScheduleManager.tsx(759,13): error TS2322: Type 'TimeSlot | null' is not assignable to type 'TimeSlot | undefined'.
+[17:50:53.549]   Type 'null' is not assignable to type 'TimeSlot | undefined'.
+[17:50:53.549] src/components/helper/SessionTools.tsx(245,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.549]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.549] src/components/journal/PersonalJournal.tsx(161,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
+[17:50:53.549]   Type 'undefined' is not assignable to type 'SetStateAction<string>'.
+[17:50:53.549] src/components/journal/ReflectionPrompts.tsx(152,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
+[17:50:53.549]   Type 'undefined' is not assignable to type 'SetStateAction<string>'.
+[17:50:53.549] src/components/journal/ReflectionPrompts.tsx(158,20): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.549]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.549] src/components/loading/LoadingSpinner.tsx(94,19): error TS7030: Not all code paths return a value.
+[17:50:53.549] src/components/loading/LoadingSpinner.tsx(102,19): error TS7030: Not all code paths return a value.
+[17:50:53.549] src/components/loading/PerformanceLoader.tsx(7,39): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+[17:50:53.549] src/components/loading/PerformanceLoader.tsx(47,28): error TS2532: Object is possibly 'undefined'.
+[17:50:53.549] src/components/loading/PerformanceLoader.tsx(49,27): error TS2532: Object is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(9,42): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(85,24): error TS18048: 'stages' is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(86,45): error TS18048: 'stages' is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(98,27): error TS2345: Argument of type 'LoadingStage | undefined' is not assignable to parameter of type 'LoadingStage'.
+[17:50:53.550]   Type 'undefined' is not assignable to type 'LoadingStage'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(190,48): error TS18048: 'stages' is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(211,12): error TS18048: 'stages' is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(224,24): error TS18048: 'stages' is possibly 'undefined'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(340,23): error TS2345: Argument of type '(prev: Set<string>) => Set<string | undefined>' is not assignable to parameter of type 'SetStateAction<Set<string>>'.
+[17:50:53.550]   Type '(prev: Set<string>) => Set<string | undefined>' is not assignable to type '(prevState: Set<string>) => Set<string>'.
+[17:50:53.550]     Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+[17:50:53.550]       Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.550]         Type 'undefined' is not assignable to type 'string'.
+[17:50:53.550] src/components/loading/ProgressiveLoader.tsx(341,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.550]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.550] src/components/loading/exports.ts(59,8): error TS2459: Module '"./SuspenseBoundary"' declares 'ErrorFallbackProps' locally, but it is not exported.
+[17:50:53.550] src/components/loading/exports.ts(77,3): error TS2305: Module '"./LazyComponentBoundary"' has no exported member 'withLazyBoundary'.
+[17:50:53.550] src/components/loading/exports.ts(78,8): error TS2305: Module '"./LazyComponentBoundary"' has no exported member 'LazyBoundaryProps'.
+[17:50:53.551] src/components/loading/exports.ts(83,15): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+[17:50:53.551] src/components/loading/exports.ts(116,16): error TS2304: Cannot find name 'CrisisLoader'.
+[17:50:53.551] src/components/loading/exports.ts(118,16): error TS2304: Cannot find name 'WellnessLoader'.
+[17:50:53.551] src/components/loading/exports.ts(120,16): error TS2304: Cannot find name 'LoadingPresets'.
+[17:50:53.551] src/components/loading/exports.ts(122,16): error TS2304: Cannot find name 'LoadingSpinner'.
+[17:50:53.551] src/components/loading/exports.ts(131,18): error TS2304: Cannot find name 'DashboardSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(132,15): error TS2304: Cannot find name 'CrisisSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(133,13): error TS2304: Cannot find name 'MoodTrackerSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(134,16): error TS2304: Cannot find name 'ProfileSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(135,17): error TS2304: Cannot find name 'SettingsSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(136,13): error TS2304: Cannot find name 'ChatSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(137,14): error TS2304: Cannot find name 'TableSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(138,14): error TS2304: Cannot find name 'CardGridSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(139,13): error TS2304: Cannot find name 'ListSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(142,37): error TS2304: Cannot find name 'ContentSkeleton'.
+[17:50:53.551] src/components/loading/exports.ts(160,3): error TS18004: No value exists in scope for the shorthand property 'LoadingSpinner'. Either declare one or provide an initializer.
+[17:50:53.551] src/components/loading/exports.ts(161,3): error TS18004: No value exists in scope for the shorthand property 'ProgressiveLoader'. Either declare one or provide an initializer.
+[17:50:53.551] src/components/loading/exports.ts(162,3): error TS18004: No value exists in scope for the shorthand property 'PerformanceLoader'. Either declare one or provide an initializer.
+[17:50:53.551] src/components/loading/exports.ts(163,3): error TS18004: No value exists in scope for the shorthand property 'ErrorBoundary'. Either declare one or provide an initializer.
+[17:50:53.551] src/components/loading/exports.ts(164,3): error TS18004: No value exists in scope for the shorthand property 'SuspenseBoundary'. Either declare one or provide an initializer.
+[17:50:53.552] src/components/loading/exports.ts(165,3): error TS18004: No value exists in scope for the shorthand property 'LoadingPresets'. Either declare one or provide an initializer.
+[17:50:53.552] src/components/loading/exports.ts(166,3): error TS18004: No value exists in scope for the shorthand property 'DEFAULT_STAGES'. Either declare one or provide an initializer.
+[17:50:53.552] src/components/platform/AccessibilityCenter.tsx(335,15): error TS2367: This comparison appears to be unintentional because the types '"warning" | "pass" | "fail" | "not-tested"' and '"running"' have no overlap.
+[17:50:53.552] src/components/platform/FileManager.tsx(139,7): error TS2448: Block-scoped variable 'loadFiles' used before its declaration.
+[17:50:53.552] src/components/platform/FileManager.tsx(139,7): error TS2454: Variable 'loadFiles' is used before being assigned.
+[17:50:53.552] src/components/platform/LanguageManager.tsx(9,3): error TS2305: Module '"@heroicons/react/24/outline"' has no exported member 'TranslateIcon'.
+[17:50:53.552] src/components/platform/MobileOptimization.tsx(13,3): error TS2305: Module '"@heroicons/react/24/outline"' has no exported member 'TouchIcon'.
+[17:50:53.552] src/components/platform/MobileOptimization.tsx(15,3): error TS2724: '"@heroicons/react/24/outline"' has no exported member named 'BatteryIcon'. Did you mean 'Battery0Icon'?
+[17:50:53.552] src/components/platform/OfflineManager.tsx(7,3): error TS2724: '"@heroicons/react/24/outline"' has no exported member named 'WifiSlashIcon'. Did you mean 'SlashIcon'?
+[17:50:53.552] src/components/platform/OfflineManager.tsx(16,3): error TS2305: Module '"@heroicons/react/24/outline"' has no exported member 'DatabaseIcon'.
+[17:50:53.552] src/components/platform/SearchCenter.tsx(27,3): error TS2305: Module '"@heroicons/react/24/outline"' has no exported member 'TrendingUpIcon'.
+[17:50:53.552] src/components/shared/ActionButton.tsx(120,8): error TS2322: Type '{ children: (Element | ReactNode)[]; form?: string | undefined; formAction?: string | ((formData: FormData) => void) | undefined; formEncType?: string | undefined; ... 284 more ...; onClick: MouseEventHandler<...> | undefined; }' is not assignable to type 'Omit<HTMLMotionProps<"button">, "ref">'.
+[17:50:53.552]   Types of property 'onDrag' are incompatible.
+[17:50:53.552]     Type 'DragEventHandler<HTMLButtonElement> | undefined' is not assignable to type '((event: MouseEvent | PointerEvent | TouchEvent, info: PanInfo) => void) | undefined'.
+[17:50:53.552]       Type 'DragEventHandler<HTMLButtonElement>' is not assignable to type '(event: MouseEvent | PointerEvent | TouchEvent, info: PanInfo) => void'.
+[17:50:53.552]         Types of parameters 'event' and 'event' are incompatible.
+[17:50:53.552]           Type 'MouseEvent | PointerEvent | TouchEvent' is not assignable to type 'DragEvent<HTMLButtonElement>'.
+[17:50:53.552]             Type 'MouseEvent' is missing the following properties from type 'DragEvent<HTMLButtonElement>': dataTransfer, nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+[17:50:53.552] src/components/shared/DataTable.tsx(187,21): error TS2322: Type '{ type: "checkbox"; checked: boolean; indeterminate: boolean; onChange: () => void; className: string; "aria-label": string; }' is not assignable to type 'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>'.
+[17:50:53.552]   Property 'indeterminate' does not exist on type 'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>'.
+[17:50:53.555] src/components/shared/Modal.tsx(117,13): error TS7030: Not all code paths return a value.
+[17:50:53.555] src/components/testing/TestingSuite.tsx(527,26): error TS18048: 'test' is possibly 'undefined'.
+[17:50:53.555] src/components/testing/TestingSuite.tsx(546,26): error TS18048: 'test' is possibly 'undefined'.
+[17:50:53.556] src/components/therapist/AssessmentTools.tsx(407,20): error TS18048: 'min' is possibly 'undefined'.
+[17:50:53.556] src/components/therapist/BillingInsuranceManagement.tsx(211,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.556]   Type 'undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.556] src/components/therapist/BillingInsuranceManagement.tsx(237,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.556]   Type 'undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.556] src/components/therapist/BillingInsuranceManagement.tsx(257,5): error TS2322: Type 'InsuranceProvider | undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.557]   Type 'undefined' is not assignable to type 'InsuranceProvider'.
+[17:50:53.557] src/components/therapist/ClinicalClientManagement.tsx(938,95): error TS2345: Argument of type '"low" | "high" | "moderate" | "imminent"' is not assignable to parameter of type '"crisis" | "low" | "high" | "moderate"'.
+[17:50:53.557]   Type '"imminent"' is not assignable to type '"crisis" | "low" | "high" | "moderate"'.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(579,27): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"video"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(580,27): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"in_person"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(583,28): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"in_person"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(587,28): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"video"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(588,28): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"in_person"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(606,43): error TS2367: This comparison appears to be unintentional because the types '"LOW" | "HIGH" | "MODERATE" | "CRISIS"' and '"high"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(606,74): error TS2367: This comparison appears to be unintentional because the types '"LOW" | "HIGH" | "MODERATE" | "CRISIS"' and '"crisis"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(637,38): error TS2367: This comparison appears to be unintentional because the types '"ACTIVE" | "TERMINATED" | "COMPLETED" | "NO_SHOW" | "INTAKE" | "ON_HOLD"' and '"active"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(711,30): error TS2367: This comparison appears to be unintentional because the types '"ACTIVE" | "TERMINATED" | "COMPLETED" | "NO_SHOW" | "INTAKE" | "ON_HOLD"' and '"on_hold"' have no overlap.
+[17:50:53.557] src/components/therapist/TherapistDashboard.tsx(793,23): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"video"' have no overlap.
+[17:50:53.558] src/components/therapist/TherapistDashboard.tsx(794,23): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"in_person"' have no overlap.
+[17:50:53.558] src/components/therapist/TherapistDashboard.tsx(797,24): error TS2367: This comparison appears to be unintentional because the types '"VIDEO" | "IN_PERSON" | "PHONE"' and '"in_person"' have no overlap.
+[17:50:53.558] src/components/therapist/VideoTherapyPlatform.tsx(374,25): error TS2345: Argument of type '"good" | "fair" | "poor" | undefined' is not assignable to parameter of type 'SetStateAction<"good" | "fair" | "poor">'.
+[17:50:53.558]   Type 'undefined' is not assignable to type 'SetStateAction<"good" | "fair" | "poor">'.
+[17:50:53.558] src/components/therapy/AITherapyChat.tsx(181,108): error TS2532: Object is possibly 'undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(10,10): error TS2305: Module '"react-window"' has no exported member 'VariableSizeList'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(10,36): error TS2724: '"react-window"' has no exported member named 'ListChildComponentProps'. Did you mean 'CellComponentProps'?
+[17:50:53.558] src/components/ui/VirtualList.tsx(279,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(285,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(338,28): error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+[17:50:53.558]   'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(359,23): error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+[17:50:53.558]   'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(644,29): error TS18048: 'message' is possibly 'undefined'.
+[17:50:53.558] src/components/ui/VirtualList.tsx(709,13): error TS7031: Binding element 'index' implicitly has an 'any' type.
+[17:50:53.558] src/components/ui/VirtualList.tsx(709,20): error TS7031: Binding element 'style' implicitly has an 'any' type.
+[17:50:53.558] src/components/ui/VirtualList.tsx(709,46): error TS2345: Argument of type 'Message | undefined' is not assignable to parameter of type 'Message'.
+[17:50:53.559]   Type 'undefined' is not assignable to type 'Message'.
+[17:50:53.559] src/components/virtual/VirtualAuditLog.tsx(169,18): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+[17:50:53.559] src/components/virtual/VirtualAuditLog.tsx(464,65): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559]   Property 'title' does not exist on type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559] src/components/virtual/VirtualAuditLog.tsx(487,69): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559]   Property 'title' does not exist on type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559] src/components/virtual/VirtualAuditLog.tsx(490,69): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559]   Property 'title' does not exist on type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
+[17:50:53.559] src/components/virtual/VirtualJournalList.tsx(10,20): error TS2305: Module '"lucide-react"' has no exported member 'Mood'.
+[17:50:53.559] src/components/virtual/VirtualJournalList.tsx(142,18): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+[17:50:53.559] src/components/virtual/VirtualJournalList.tsx(268,14): error TS2604: JSX element type 'EnergyIcon' does not have any construct or call signatures.
+[17:50:53.559] src/components/virtual/VirtualJournalList.tsx(268,14): error TS2786: 'EnergyIcon' cannot be used as a JSX component.
+[17:50:53.559]   Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>> | undefined' is not a valid JSX element type.
+[17:50:53.559]     Type 'undefined' is not assignable to type 'ElementType'.
+[17:50:53.559] src/components/virtual/VirtualMessageList.tsx(10,10): error TS2305: Module '"react-window"' has no exported member 'FixedSizeList'.
+[17:50:53.559] src/components/virtual/VirtualMessageList.tsx(97,18): error TS7006: Parameter 'message' implicitly has an 'any' type.
+[17:50:53.559] src/components/virtual/VirtualMoodHistory.tsx(198,57): error TS2532: Object is possibly 'undefined'.
+[17:50:53.559] src/components/virtual/VirtualMoodHistory.tsx(218,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.559]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.560] src/components/virtual/VirtualMoodHistory.tsx(223,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.560]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.560] src/components/virtual/VirtualMoodHistory.tsx(232,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.560]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.560] src/components/virtual/VirtualMoodHistory.tsx(301,34): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.560]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.560] src/components/virtual/VirtualMoodHistory.tsx(301,50): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.560]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.560] src/components/virtual/VirtualPostFeed.tsx(133,18): error TS7006: Parameter 'post' implicitly has an 'any' type.
+[17:50:53.560] src/components/virtual/VirtualPostFeed.tsx(133,24): error TS7006: Parameter 'index' implicitly has an 'any' type.
+[17:50:53.560] src/components/wellness/ProfessionalConnectionHub.tsx(32,15): error TS2305: Module '"../../contexts/AuthContext"' has no exported member 'AuthContextType'.
+[17:50:53.560] src/components/wellness/TherapeuticTools/TherapeuticToolsHub.tsx(29,24): error TS2305: Module '"../../../contexts/AuthContext"' has no exported member 'AuthContextType'.
+[17:50:53.560] src/components/wellness/WellnessDashboard.tsx(34,24): error TS2305: Module '"../../contexts/AuthContext"' has no exported member 'AuthContextType'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(115,27): error TS2304: Cannot find name 'startMeasurement'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(145,5): error TS2304: Cannot find name 'endMeasurement'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(154,72): error TS2304: Cannot find name 'startMeasurement'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(154,90): error TS2304: Cannot find name 'endMeasurement'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(269,13): error TS18048: 'entry' is possibly 'undefined'.
+[17:50:53.560] src/hooks/useVirtualScroll.ts(548,22): error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+[17:50:53.560]   'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(132,11): error TS18048: 'lastElement' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(137,11): error TS18048: 'firstElement' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(152,5): error TS18048: 'firstElement' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(255,7): error TS2532: Object is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(382,21): error TS18048: 'rs' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(382,35): error TS18048: 'gs' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(382,49): error TS18048: 'bs' is possibly 'undefined'.
+[17:50:53.561] src/lib/accessibility/index.ts(388,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.561]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.561] src/lib/accessibility/index.ts(389,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.561]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.561] src/lib/accessibility/index.ts(390,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.561]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.561] src/lib/api-middleware.ts(51,16): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.561] src/lib/api-middleware.ts(54,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { requiredRoles: $Enums.UserRole[]; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.561]   Type '{ userId: any; action: string; resource: string; details: { requiredRoles: $Enums.UserRole[]; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.561]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; details: { requiredRoles: $Enums.UserRole[]; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.561] src/lib/api-middleware.ts(55,17): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.561] src/lib/api-middleware.ts(60,21): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.562] src/lib/api-middleware.ts(86,22): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.562] src/lib/api-middleware.ts(88,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { requiredPermission: string; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.562]   Type '{ userId: any; action: string; resource: string; details: { requiredPermission: string; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.562]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; details: { requiredPermission: string; userRole: any; method: string; }; outcome: string; ipAddress: string; userAgent: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.562] src/lib/api-middleware.ts(89,17): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.562] src/lib/api-middleware.ts(94,21): error TS2304: Cannot find name 'sessionUser'.
+[17:50:53.562] src/lib/api-middleware.ts(124,7): error TS2322: Type '{ userId: string | null; action: string; resource: string; resourceId: string | undefined; details: any; outcome: "failure" | "success"; ipAddress: string | null; userAgent: string | null; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.562]   Type '{ userId: string | null; action: string; resource: string; resourceId: string | undefined; details: any; outcome: "failure" | "success"; ipAddress: string | null; userAgent: string | null; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.562]     Property 'id' is missing in type '{ userId: string | null; action: string; resource: string; resourceId: string | undefined; details: any; outcome: "failure" | "success"; ipAddress: string | null; userAgent: string | null; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.562] src/lib/api-middleware.ts(175,18): error TS2352: Conversion of type 'ValidationError' to type 'ZodError<unknown>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+[17:50:53.562]   Type 'ValidationError' is missing the following properties from type 'ZodError<unknown>': format, flatten, addIssue, addIssues, and 4 more.
+[17:50:53.562] src/lib/api-performance.ts(333,51): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+[17:50:53.562]   Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
+[17:50:53.562] src/lib/api-utils.ts(405,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.562]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.562] src/lib/api-utils.ts(423,46): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'BinaryLike'.
+[17:50:53.562]   Type 'undefined' is not assignable to type 'BinaryLike'.
+[17:50:53.562] src/lib/audit/audit-service.ts(375,42): error TS7006: Parameter 'event' implicitly has an 'any' type.
+[17:50:53.562] src/lib/audit/audit-service.ts(405,49): error TS2345: Argument of type '{ startDate: string; endDate: string; limit: number; }' is not assignable to parameter of type '{ page: number; limit: number; sortBy: string; sortOrder: "asc" | "desc"; startDate?: string | undefined; endDate?: string | undefined; categories?: AuditEventCategory[] | undefined; ... 10 more ...; searchQuery?: string | undefined; }'.
+[17:50:53.562]   Type '{ startDate: string; endDate: string; limit: number; }' is missing the following properties from type '{ page: number; limit: number; sortBy: string; sortOrder: "asc" | "desc"; startDate?: string | undefined; endDate?: string | undefined; categories?: AuditEventCategory[] | undefined; ... 10 more ...; searchQuery?: string | undefined; }': page, sortBy, sortOrder
+[17:50:53.562] src/lib/audit/audit-service.ts(528,12): error TS2790: The operand of a 'delete' operator must be optional.
+[17:50:53.562] src/lib/audit/audit-service.ts(529,12): error TS2790: The operand of a 'delete' operator must be optional.
+[17:50:53.563] src/lib/audit/middleware.ts(4,10): error TS2305: Module '"@/lib/auth-middleware"' has no exported member 'getUserFromRequest'.
+[17:50:53.563] src/lib/audit/middleware.ts(398,12): error TS2532: Object is possibly 'undefined'.
+[17:50:53.563] src/lib/auth-simple.ts(1,10): error TS2305: Module '"next-auth"' has no exported member 'NextAuthOptions'.
+[17:50:53.563] src/lib/auth-simple.ts(1,33): error TS2305: Module '"next-auth"' has no exported member 'DefaultSession'.
+[17:50:53.563] src/lib/auth-simple.ts(18,5): error TS2717: Subsequent property declarations must have the same type.  Property 'role' must be of type 'string', but here has type 'UserRole'.
+[17:50:53.563] src/lib/auth-simple.ts(26,5): error TS2717: Subsequent property declarations must have the same type.  Property 'role' must be of type 'string', but here has type 'UserRole'.
+[17:50:53.563] src/lib/auth-simple.ts(87,17): error TS7031: Binding element 'token' implicitly has an 'any' type.
+[17:50:53.563] src/lib/auth-simple.ts(87,24): error TS7031: Binding element 'user' implicitly has an 'any' type.
+[17:50:53.563] src/lib/auth-simple.ts(97,21): error TS7031: Binding element 'session' implicitly has an 'any' type.
+[17:50:53.563] src/lib/auth-simple.ts(97,30): error TS7031: Binding element 'token' implicitly has an 'any' type.
+[17:50:53.563] src/lib/auth.ts(1,10): error TS2305: Module '"next-auth"' has no exported member 'NextAuthOptions'.
+[17:50:53.563] src/lib/auth.ts(1,33): error TS2305: Module '"next-auth"' has no exported member 'DefaultSession'.
+[17:50:53.563] src/lib/auth.ts(22,5): error TS2717: Subsequent property declarations must have the same type.  Property 'role' must be of type 'string', but here has type 'UserRole'.
+[17:50:53.563] src/lib/auth.ts(30,5): error TS2717: Subsequent property declarations must have the same type.  Property 'role' must be of type 'string', but here has type 'UserRole'.
+[17:50:53.563] src/lib/auth.ts(79,15): error TS2561: Object literal may only specify known properties, but 'userProfile' does not exist in type 'UserInclude<DefaultArgs>'. Did you mean to write 'UserProfile'?
+[17:50:53.563] src/lib/auth.ts(110,15): error TS2322: Type '{ userId: string | null; action: string; resource: string; details: { email: string; reason: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.563]   Type '{ userId: string | null; action: string; resource: string; details: { email: string; reason: string; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.563]     Property 'id' is missing in type '{ userId: string | null; action: string; resource: string; details: { email: string; reason: string; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.563] src/lib/auth.ts(128,15): error TS2322: Type '{ userId: string; action: string; resource: string; details: { reason: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.563]   Type '{ userId: string; action: string; resource: string; details: { reason: string; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.563]     Property 'id' is missing in type '{ userId: string; action: string; resource: string; details: { reason: string; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.563] src/lib/auth.ts(142,15): error TS2322: Type '{ userId: string; action: string; resource: string; details: { reason: string; lockedUntil: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.563]   Type '{ userId: string; action: string; resource: string; details: { reason: string; lockedUntil: string; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.564]     Property 'id' is missing in type '{ userId: string; action: string; resource: string; details: { reason: string; lockedUntil: string; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.564] src/lib/auth.ts(169,13): error TS2322: Type '{ userId: string; action: string; resource: string; details: { email: string | null; role: $Enums.UserRole; method: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.564]   Type '{ userId: string; action: string; resource: string; details: { email: string | null; role: $Enums.UserRole; method: string; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.564]     Property 'id' is missing in type '{ userId: string; action: string; resource: string; details: { email: string | null; role: $Enums.UserRole; method: string; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.564] src/lib/auth.ts(204,13): error TS2322: Type '{ userId: string | null; action: string; resource: string; details: { email: string; errorType: string; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.564]   Type '{ userId: string | null; action: string; resource: string; details: { email: string; errorType: string; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.564]     Property 'id' is missing in type '{ userId: string | null; action: string; resource: string; details: { email: string; errorType: string; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.564] src/lib/auth.ts(245,17): error TS7031: Binding element 'token' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(245,24): error TS7031: Binding element 'user' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(245,30): error TS7031: Binding element 'account' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(256,21): error TS7031: Binding element 'session' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(256,30): error TS7031: Binding element 'token' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(265,20): error TS7031: Binding element 'user' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(265,26): error TS7031: Binding element 'account' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(265,35): error TS7031: Binding element 'profile' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(279,15): error TS2322: Type '{ email: any; firstName: any; lastName: any; displayName: any; avatarUrl: any; isEmailVerified: any; role: "USER"; privacySettings: string; }' is not assignable to type '(Without<UserCreateInput, UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+[17:50:53.564]   Type '{ email: any; firstName: any; lastName: any; displayName: any; avatarUrl: any; isEmailVerified: any; role: "USER"; privacySettings: string; }' is not assignable to type 'Without<UserUncheckedCreateInput, UserCreateInput> & UserCreateInput'.
+[17:50:53.564]     Type '{ email: any; firstName: any; lastName: any; displayName: any; avatarUrl: any; isEmailVerified: any; role: "USER"; privacySettings: string; }' is missing the following properties from type 'UserCreateInput': id, anonymousId, updatedAt
+[17:50:53.564] src/lib/auth.ts(297,15): error TS2322: Type '{ userId: string; mentalHealthGoals: never[]; interestedTopics: never[]; preferredCommunication: string[]; crisisContacts: string; notificationSettings: string; }' is not assignable to type '(Without<UserProfileCreateInput, UserProfileUncheckedCreateInput> & UserProfileUncheckedCreateInput) | (Without<...> & UserProfileCreateInput)'.
+[17:50:53.564]   Type '{ userId: string; mentalHealthGoals: never[]; interestedTopics: never[]; preferredCommunication: string[]; crisisContacts: string; notificationSettings: string; }' is not assignable to type 'Without<UserProfileCreateInput, UserProfileUncheckedCreateInput> & UserProfileUncheckedCreateInput'.
+[17:50:53.564]     Type '{ userId: string; mentalHealthGoals: never[]; interestedTopics: never[]; preferredCommunication: string[]; crisisContacts: string; notificationSettings: string; }' is missing the following properties from type 'UserProfileUncheckedCreateInput': id, updatedAt
+[17:50:53.564] src/lib/auth.ts(322,20): error TS7031: Binding element 'user' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(322,26): error TS7031: Binding element 'account' implicitly has an 'any' type.
+[17:50:53.564] src/lib/auth.ts(322,35): error TS7031: Binding element 'profile' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth.ts(322,44): error TS7031: Binding element 'isNewUser' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth.ts(325,9): error TS2322: Type '{ userId: any; action: string; resource: string; details: { provider: any; isNewUser: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.565]   Type '{ userId: any; action: string; resource: string; details: { provider: any; isNewUser: any; }; outcome: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.565]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; details: { provider: any; isNewUser: any; }; outcome: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.565] src/lib/auth.ts(337,21): error TS7031: Binding element 'session' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth.ts(337,30): error TS7031: Binding element 'token' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth.ts(342,11): error TS2322: Type '{ userId: any; action: string; resource: string; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.565]   Type '{ userId: any; action: string; resource: string; outcome: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.565]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; outcome: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(120,17): error TS7006: Parameter 'setting' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth/mfa-service.ts(121,14): error TS7006: Parameter 'setting' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth/mfa-service.ts(399,60): error TS7006: Parameter 'code' implicitly has an 'any' type.
+[17:50:53.565] src/lib/auth/mfa-service.ts(731,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(732,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(733,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(734,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(735,19): error TS2532: Object is possibly 'undefined'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(773,58): error TS2769: No overload matches this call.
+[17:50:53.565]   The last overload gave the following error.
+[17:50:53.565]     Object literal may only specify known properties, and 'iv' does not exist in type 'TransformOptions<Transform>'.
+[17:50:53.565] src/lib/auth/mfa-service.ts(787,28): error TS2769: No overload matches this call.
+[17:50:53.565]   Overload 1 of 4, '(arrayBuffer: WithImplicitCoercion<ArrayBufferLike>, byteOffset?: number | undefined, length?: number | undefined): Buffer<ArrayBufferLike>', gave the following error.
+[17:50:53.565]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.565]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.565]   Overload 2 of 4, '(string: WithImplicitCoercion<string>, encoding?: BufferEncoding | undefined): Buffer<ArrayBuffer>', gave the following error.
+[17:50:53.565]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<string>'.
+[17:50:53.566]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<string>'.
+[17:50:53.566] src/lib/auth/mfa-service.ts(788,29): error TS2769: No overload matches this call.
+[17:50:53.566]   Overload 1 of 4, '(arrayBuffer: WithImplicitCoercion<ArrayBufferLike>, byteOffset?: number | undefined, length?: number | undefined): Buffer<ArrayBufferLike>', gave the following error.
+[17:50:53.566]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.566]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.567]   Overload 2 of 4, '(string: WithImplicitCoercion<string>, encoding?: BufferEncoding | undefined): Buffer<ArrayBuffer>', gave the following error.
+[17:50:53.567]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<string>'.
+[17:50:53.567]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<string>'.
+[17:50:53.567] src/lib/auth/mfa-service.ts(790,62): error TS2769: No overload matches this call.
+[17:50:53.567]   The last overload gave the following error.
+[17:50:53.567]     Object literal may only specify known properties, and 'iv' does not exist in type 'TransformOptions<Transform>'.
+[17:50:53.567] src/lib/auth/mfa-service.ts(806,9): error TS18048: 'username' is possibly 'undefined'.
+[17:50:53.567] src/lib/auth/mfa-service.ts(807,15): error TS18048: 'username' is possibly 'undefined'.
+[17:50:53.567] src/lib/auth/mfa.ts(7,31): error TS2307: Cannot find module 'otplib' or its corresponding type declarations.
+[17:50:53.567] src/lib/auth/mfa.ts(469,7): error TS2561: Object literal may only specify known properties, but 'priority' does not exist in type 'Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput'. Did you mean to write 'isPriority'?
+[17:50:53.567] src/lib/auth/mfa.ts(627,40): error TS7006: Parameter 'd' implicitly has an 'any' type.
+[17:50:53.567] src/lib/auth/rbac.ts(611,32): error TS2345: Argument of type 'UserRole' is not assignable to parameter of type '"THERAPIST" | "CRISIS_COUNSELOR" | "ADMIN" | "SUPER_ADMIN"'.
+[17:50:53.567]   Type '"USER"' is not assignable to type '"THERAPIST" | "CRISIS_COUNSELOR" | "ADMIN" | "SUPER_ADMIN"'.
+[17:50:53.567] src/lib/cache/cache-manager.ts(15,8): error TS1192: Module '"/vercel/path0/node_modules/lru-cache/dist/esm/index"' has no default export.
+[17:50:53.567] src/lib/cache/cache-manager.ts(153,11): error TS2564: Property 'stats' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.567] src/lib/cache/cache-manager.ts(166,17): error TS7006: Parameter 'key' implicitly has an 'any' type.
+[17:50:53.567] src/lib/cache/cache-manager.ts(166,22): error TS7006: Parameter 'value' implicitly has an 'any' type.
+[17:50:53.567] src/lib/cache/cache-manager.ts(731,10): error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+[17:50:53.567] src/lib/cache/cache-manager.ts(731,22): error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+[17:50:53.567] src/lib/cache/cache-manager.ts(731,44): error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+[17:50:53.567] src/lib/cache/cache-middleware.ts(219,44): error TS2345: Argument of type 'Response' is not assignable to parameter of type 'NextResponse<unknown>'.
+[17:50:53.567]   Type 'Response' is missing the following properties from type 'NextResponse<unknown>': cookies, [INTERNALS]
+[17:50:53.567] src/lib/cache/cache-utils.ts(28,14): error TS2323: Cannot redeclare exported variable 'CacheKeyUtils'.
+[17:50:53.567] src/lib/cache/cache-utils.ts(95,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.568]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(145,31): error TS2322: Type 'string | undefined' is not assignable to type 'string | null'.
+[17:50:53.568]   Type 'undefined' is not assignable to type 'string | null'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(161,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.568]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(162,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.568]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(189,14): error TS2323: Cannot redeclare exported variable 'SerializationUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(278,14): error TS2323: Cannot redeclare exported variable 'CompressionUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(440,14): error TS2323: Cannot redeclare exported variable 'CacheTagging'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(533,14): error TS2323: Cannot redeclare exported variable 'CacheWarmingUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(618,14): error TS2323: Cannot redeclare exported variable 'CachePerformanceUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(718,14): error TS2323: Cannot redeclare exported variable 'HIPAACacheUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(868,3): error TS2323: Cannot redeclare exported variable 'CacheKeyUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(868,3): error TS2484: Export declaration conflicts with exported declaration of 'CacheKeyUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(869,3): error TS2323: Cannot redeclare exported variable 'SerializationUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(869,3): error TS2484: Export declaration conflicts with exported declaration of 'SerializationUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(870,3): error TS2323: Cannot redeclare exported variable 'CompressionUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(870,3): error TS2484: Export declaration conflicts with exported declaration of 'CompressionUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(871,3): error TS2323: Cannot redeclare exported variable 'CacheTagging'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(871,3): error TS2484: Export declaration conflicts with exported declaration of 'CacheTagging'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(872,3): error TS2323: Cannot redeclare exported variable 'CacheWarmingUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(872,3): error TS2484: Export declaration conflicts with exported declaration of 'CacheWarmingUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(873,3): error TS2323: Cannot redeclare exported variable 'CachePerformanceUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(873,3): error TS2484: Export declaration conflicts with exported declaration of 'CachePerformanceUtils'.
+[17:50:53.568] src/lib/cache/cache-utils.ts(874,3): error TS2323: Cannot redeclare exported variable 'HIPAACacheUtils'.
+[17:50:53.569] src/lib/cache/cache-utils.ts(874,3): error TS2484: Export declaration conflicts with exported declaration of 'HIPAACacheUtils'.
+[17:50:53.569] src/lib/cache/redis-cache.ts(112,44): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.569]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.569] src/lib/cache/redis-cache.ts(116,46): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | CipherParams'.
+[17:50:53.569]   Type 'undefined' is not assignable to type 'string | CipherParams'.
+[17:50:53.569] src/lib/cache/redis.ts(295,15): error TS2488: Type '[error: Error | null, result: unknown] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+[17:50:53.569] src/lib/cache/redis.ts(517,27): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.569]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.569] src/lib/community/moderation.ts(265,7): error TS2322: Type '{ userId: string; score: number; factors: {}; history: { action: "positive" | "negative"; adjustment: number; timestamp: Date; }[]; }' is not assignable to type '(Without<TrustMetricCreateInput, TrustMetricUncheckedCreateInput> & TrustMetricUncheckedCreateInput) | (Without<...> & TrustMetricCreateInput)'.
+[17:50:53.569]   Type '{ userId: string; score: number; factors: {}; history: { action: "positive" | "negative"; adjustment: number; timestamp: Date; }[]; }' is not assignable to type 'Without<TrustMetricUncheckedCreateInput, TrustMetricCreateInput> & TrustMetricCreateInput'.
+[17:50:53.569]     Property 'id' is missing in type '{ userId: string; score: number; factors: {}; history: { action: "positive" | "negative"; adjustment: number; timestamp: Date; }[]; }' but required in type 'TrustMetricCreateInput'.
+[17:50:53.569] src/lib/community/moderation.ts(290,7): error TS2322: Type '{ type: string; severity: "low" | "medium" | "high" | "none"; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+[17:50:53.569]   Type '{ type: string; severity: "low" | "medium" | "high" | "none"; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type 'Without<SafetyAlertUncheckedCreateInput, SafetyAlertCreateInput> & SafetyAlertCreateInput'.
+[17:50:53.569]     Property 'id' is missing in type '{ type: string; severity: "low" | "medium" | "high" | "none"; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' but required in type 'SafetyAlertCreateInput'.
+[17:50:53.569] src/lib/community/moderation.ts(309,11): error TS2322: Type '{ detection: CrisisDetectionResult; timestamp: Date; }' is not assignable to type 'JsonNull | InputJsonValue'.
+[17:50:53.569]   Types of property 'detection' are incompatible.
+[17:50:53.569]     Type 'CrisisDetectionResult' is not assignable to type 'InputJsonValue | null | undefined'.
+[17:50:53.569]       Type 'CrisisDetectionResult' is not assignable to type 'InputJsonObject'.
+[17:50:53.569]         Index signature for type 'string' is missing in type 'CrisisDetectionResult'.
+[17:50:53.569] src/lib/community/moderation.ts(331,11): error TS2322: Type '{ userId: string; type: string; title: string; message: string; isPriority: true; metadata: { userId: string; level: "low" | "medium" | "high" | "none"; }; }' is not assignable to type '(Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput) | (Without<...> & NotificationCreateInput)'.
+[17:50:53.569]   Type '{ userId: string; type: string; title: string; message: string; isPriority: true; metadata: { userId: string; level: "low" | "medium" | "high" | "none"; }; }' is not assignable to type 'Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput'.
+[17:50:53.569]     Property 'id' is missing in type '{ userId: string; type: string; title: string; message: string; isPriority: true; metadata: { userId: string; level: "low" | "medium" | "high" | "none"; }; }' but required in type 'NotificationUncheckedCreateInput'.
+[17:50:53.569] src/lib/crisis-alert-system.ts(108,11): error TS2353: Object literal may only specify known properties, and 'assignedCrisisReports' does not exist in type 'UserInclude<DefaultArgs>'.
+[17:50:53.569] src/lib/crisis-alert-system.ts(169,17): error TS7030: Not all code paths return a value.
+[17:50:53.570] src/lib/crisis-alert-system.ts(175,11): error TS2353: Object literal may only specify known properties, and 'description' does not exist in type '(Without<CrisisReportCreateInput, CrisisReportUncheckedCreateInput> & CrisisReportUncheckedCreateInput) | (Without<...> & CrisisReportCreateInput)'.
+[17:50:53.570] src/lib/crisis-alert-system.ts(254,33): error TS2322: Type '"SUPERVISOR"' is not assignable to type 'UserRole'.
+[17:50:53.570] src/lib/crisis-alert-system.ts(381,13): error TS2353: Object literal may only specify known properties, and 'resolution' does not exist in type '(Without<CrisisReportUpdateInput, CrisisReportUncheckedUpdateInput> & CrisisReportUncheckedUpdateInput) | (Without<...> & CrisisReportUpdateInput)'.
+[17:50:53.570] src/lib/database/db-maintenance.ts(79,11): error TS2564: Property 'pool' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.570] src/lib/database/db-maintenance.ts(80,11): error TS2564: Property 'prisma' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.570] src/lib/database/db-maintenance.ts(1193,35): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.570]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.570] src/lib/database/db-maintenance.ts(1194,33): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.570]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.570] src/lib/database/db-maintenance.ts(1195,39): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.570]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.570] src/lib/database/db-maintenance.ts(1196,34): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.570]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.570] src/lib/database/db-maintenance.ts(1197,38): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.570]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.570] src/lib/database/db-performance.ts(102,11): error TS2564: Property 'pool' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.570] src/lib/database/db-performance.ts(103,11): error TS2564: Property 'prisma' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.570] src/lib/database/optimization.ts(36,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.570] src/lib/database/optimization.ts(37,27): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.570] src/lib/database/optimization.ts(85,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.570] src/lib/database/optimization.ts(86,27): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.570] src/lib/database/optimization.ts(330,30): error TS7006: Parameter 'err' implicitly has an 'any' type.
+[17:50:53.570] src/lib/database/optimized-queries.ts(503,29): error TS2532: Object is possibly 'undefined'.
+[17:50:53.570] src/lib/database/query-optimization.ts(196,11): error TS2353: Object literal may only specify known properties, and 'avatar' does not exist in type 'UserSelect<DefaultArgs>'.
+[17:50:53.571] src/lib/database/query-optimization.ts(238,18): error TS2551: Property 'therapySession' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'therapistSession'?
+[17:50:53.571] src/lib/database/query-optimization.ts(378,15): error TS2561: Object literal may only specify known properties, but 'likesCount' does not exist in type 'CommunityPostSelect<DefaultArgs>'. Did you mean to write 'likeCount'?
+[17:50:53.571] src/lib/database/query-optimization.ts(453,20): error TS2551: Property 'therapySession' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'therapistSession'?
+[17:50:53.571] src/lib/database/query-optimizer.ts(93,11): error TS2564: Property 'prisma' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.571] src/lib/database/query-optimizer.ts(94,11): error TS2564: Property 'pool' has no initializer and is not definitely assigned in the constructor.
+[17:50:53.574] src/lib/database/query-optimizer.ts(131,21): error TS2345: Argument of type '"query"' is not assignable to parameter of type 'never'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(132,21): error TS2345: Argument of type '"error"' is not assignable to parameter of type 'never'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(209,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(210,27): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(259,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(260,27): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(298,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(299,27): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(335,49): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(359,49): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.574] src/lib/database/query-optimizer.ts(396,20): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.575] src/lib/database/query-optimizer.ts(528,44): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.575] src/lib/database/query-optimizer.ts(579,9): error TS2322: Type '{ action: string; resource: any; resourceId: any; details: any; outcome: string; userId: any; timestamp: any; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.575]   Type '{ action: string; resource: any; resourceId: any; details: any; outcome: string; userId: any; timestamp: any; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.575]     Property 'id' is missing in type '{ action: string; resource: any; resourceId: any; details: any; outcome: string; userId: any; timestamp: any; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.575] src/lib/database/query-optimizer.ts(594,51): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'MiddlewareParams'.
+[17:50:53.575] src/lib/encryption-exports.ts(37,8): error TS2459: Module '"./security/encryption"' declares 'EncryptedData' locally, but it is not exported.
+[17:50:53.575] src/lib/encryption-exports.ts(96,3): error TS2459: Module '"./security/encryption"' declares 'EncryptedData' locally, but it is not exported.
+[17:50:53.575] src/lib/encryption-exports.ts(97,3): error TS2305: Module '"./security/encryption"' has no exported member 'EncryptedField'.
+[17:50:53.575] src/lib/encryption/api-utils.ts(43,7): error TS2862: Type 'T' is generic and can only be indexed for reading.
+[17:50:53.575] src/lib/encryption/api-utils.ts(50,9): error TS2862: Type 'T' is generic and can only be indexed for reading.
+[17:50:53.575] src/lib/encryption/api-utils.ts(110,11): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<string, any> | Record<string, any>[]'.
+[17:50:53.575]   No index signature with a parameter of type 'string' was found on type 'Record<string, any> | Record<string, any>[]'.
+[17:50:53.575] src/lib/encryption/api-utils.ts(113,11): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<string, any> | Record<string, any>[]'.
+[17:50:53.575]   No index signature with a parameter of type 'string' was found on type 'Record<string, any> | Record<string, any>[]'.
+[17:50:53.575] src/lib/encryption/api-utils.ts(120,14): error TS7053: Element implicitly has an 'any' type because expression of type '`${string}_hash`' can't be used to index type 'Record<string, any> | Record<string, any>[]'.
+[17:50:53.575] src/lib/encryption/field-encryption.ts(40,3): error TS2740: Type 'ArrayBuffer' is missing the following properties from type 'Buffer<ArrayBufferLike>': subarray, write, toJSON, equals, and 99 more.
+[17:50:53.575] src/lib/encryption/field-encryption.ts(109,58): error TS2769: No overload matches this call.
+[17:50:53.575]   The last overload gave the following error.
+[17:50:53.575]     Object literal may only specify known properties, and 'iv' does not exist in type 'TransformOptions<Transform>'.
+[17:50:53.575] src/lib/encryption/field-encryption.ts(161,62): error TS2769: No overload matches this call.
+[17:50:53.575]   The last overload gave the following error.
+[17:50:53.575]     Object literal may only specify known properties, and 'iv' does not exist in type 'TransformOptions<Transform>'.
+[17:50:53.575] src/lib/encryption/prisma-middleware.ts(211,54): error TS2694: Namespace '"/vercel/path0/node_modules/.prisma/client/index".Prisma' has no exported member 'Middleware'.
+[17:50:53.575] src/lib/encryption/prisma-middleware.ts(212,17): error TS7006: Parameter 'params' implicitly has an 'any' type.
+[17:50:53.576] src/lib/encryption/prisma-middleware.ts(212,25): error TS7006: Parameter 'next' implicitly has an 'any' type.
+[17:50:53.576] src/lib/encryption/types.ts(28,15): error TS2304: Cannot find name 'PHIFieldType'.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(68,16): error TS2540: Cannot assign to 'requestId' because it is a read-only property.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(69,16): error TS2540: Cannot assign to 'userId' because it is a read-only property.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(70,16): error TS2540: Cannot assign to 'sessionId' because it is a read-only property.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(131,15): error TS2540: Cannot assign to 'context' because it is a read-only property.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(190,13): error TS2540: Cannot assign to 'severity' because it is a read-only property.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(337,9): error TS2353: Object literal may only specify known properties, and 'context' does not exist in type '{ errorCode: string; errorMessage: string; stackTrace?: string | undefined; }'.
+[17:50:53.576] src/lib/error-handling/error-handler.ts(454,13): error TS2561: Object literal may only specify known properties, but 'priority' does not exist in type 'Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput'. Did you mean to write 'isPriority'?
+[17:50:53.576] src/lib/error-handling/error-middleware.ts(166,9): error TS2345: Argument of type '"RATE_LIMIT"' is not assignable to parameter of type 'ErrorCategory | undefined'.
+[17:50:53.576] src/lib/error-handling/logger.ts(260,23): error TS2532: Object is possibly 'undefined'.
+[17:50:53.576] src/lib/export-utils.ts(2,24): error TS2307: Cannot find module 'json2csv' or its corresponding type declarations.
+[17:50:53.576] src/lib/export-utils.ts(3,25): error TS2307: Cannot find module 'pdfkit' or its corresponding type declarations.
+[17:50:53.577] src/lib/export-utils.ts(4,22): error TS2307: Cannot find module 'archiver' or its corresponding type declarations.
+[17:50:53.577] src/lib/file-utils.ts(6,19): error TS2307: Cannot find module 'sharp' or its corresponding type declarations.
+[17:50:53.577] src/lib/file-utils.ts(369,20): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ 'application/pdf': { ext: string; category: string; }; 'application/msword': { ext: string; category: string; }; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { ...; }; ... 13 more ...; 'video/ogg': { ...; }; }'.
+[17:50:53.577]   No index signature with a parameter of type 'string' was found on type '{ 'application/pdf': { ext: string; category: string; }; 'application/msword': { ext: string; category: string; }; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { ...; }; ... 13 more ...; 'video/ogg': { ...; }; }'.
+[17:50:53.577] src/lib/file-utils.ts(374,20): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ 'application/pdf': { ext: string; category: string; }; 'application/msword': { ext: string; category: string; }; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { ...; }; ... 13 more ...; 'video/ogg': { ...; }; }'.
+[17:50:53.577]   No index signature with a parameter of type 'string' was found on type '{ 'application/pdf': { ext: string; category: string; }; 'application/msword': { ext: string; category: string; }; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { ...; }; ... 13 more ...; 'video/ogg': { ...; }; }'.
+[17:50:53.577] src/lib/monitoring/alert-manager.ts(110,44): error TS2551: Property 'createTransporter' does not exist on type 'typeof import("/vercel/path0/node_modules/@types/nodemailer/index")'. Did you mean 'createTransport'?
+[17:50:53.577] src/lib/monitoring/alert-manager.ts(690,10): error TS18048: 'nextLevel' is possibly 'undefined'.
+[17:50:53.577] src/lib/monitoring/alert-manager.ts(702,20): error TS2769: No overload matches this call.
+[17:50:53.577]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.577]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.577]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.577]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.577]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.577] src/lib/monitoring/analytics.ts(214,7): error TS2739: Type '{ anonymizeUsers: boolean; hashUserIds: boolean; }' is missing the following properties from type '{ anonymizeUsers: boolean; hashUserIds: boolean; excludeFields: string[]; consentRequired: boolean; }': excludeFields, consentRequired
+[17:50:53.577] src/lib/monitoring/analytics.ts(484,24): error TS2532: Object is possibly 'undefined'.
+[17:50:53.577] src/lib/monitoring/analytics.ts(484,74): error TS2532: Object is possibly 'undefined'.
+[17:50:53.577] src/lib/monitoring/analytics.ts(825,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(826,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(827,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1103,21): error TS2769: No overload matches this call.
+[17:50:53.578]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.578]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.578]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.578]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.578]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1115,3): error TS2484: Export declaration conflicts with exported declaration of 'AnalyticsEvent'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1116,3): error TS2484: Export declaration conflicts with exported declaration of 'AnalyticsEventType'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1117,3): error TS2484: Export declaration conflicts with exported declaration of 'UserJourney'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1118,3): error TS2484: Export declaration conflicts with exported declaration of 'FeatureUsage'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1119,3): error TS2484: Export declaration conflicts with exported declaration of 'TreatmentOutcome'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1120,3): error TS2484: Export declaration conflicts with exported declaration of 'CrisisAnalytics'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1121,3): error TS2484: Export declaration conflicts with exported declaration of 'EngagementMetrics'.
+[17:50:53.578] src/lib/monitoring/analytics.ts(1122,3): error TS2484: Export declaration conflicts with exported declaration of 'AnalyticsConfig'.
+[17:50:53.578] src/lib/monitoring/audit-trail.ts(312,41): error TS2345: Argument of type '{ startTime: number; endTime: number; }' is not assignable to parameter of type '{ start: number; end: number; }'.
+[17:50:53.578]   Type '{ startTime: number; endTime: number; }' is missing the following properties from type '{ start: number; end: number; }': start, end
+[17:50:53.578] src/lib/monitoring/audit-trail.ts(634,47): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'string'.
+[17:50:53.578] src/lib/monitoring/audit-trail.ts(774,11): error TS2322: Type 'AuditEvent | undefined' is not assignable to type 'AuditEvent'.
+[17:50:53.578]   Type 'undefined' is not assignable to type 'AuditEvent'.
+[17:50:53.578] src/lib/monitoring/audit-trail.ts(827,26): error TS2769: No overload matches this call.
+[17:50:53.579]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.579]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.579]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.579]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.579]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.579] src/lib/monitoring/config.ts(316,10): error TS2678: Type '"staging"' is not comparable to type '"development" | "production" | "test"'.
+[17:50:53.579] src/lib/monitoring/config.ts(377,15): error TS2484: Export declaration conflicts with exported declaration of 'MonitoringConfig'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(598,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(599,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(600,5): error TS2532: Object is possibly 'undefined'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(798,21): error TS2769: No overload matches this call.
+[17:50:53.579]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.579]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.579]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.579]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.579]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(859,3): error TS2484: Export declaration conflicts with exported declaration of 'ErrorInfo'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(860,3): error TS2484: Export declaration conflicts with exported declaration of 'ErrorGroup'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(861,3): error TS2484: Export declaration conflicts with exported declaration of 'ErrorStats'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(862,3): error TS2484: Export declaration conflicts with exported declaration of 'Breadcrumb'.
+[17:50:53.579] src/lib/monitoring/error-tracker.ts(863,3): error TS2484: Export declaration conflicts with exported declaration of 'ErrorReportConfig'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(271,21): error TS2769: No overload matches this call.
+[17:50:53.580]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.580]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.580]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.580]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.580]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(296,11): error TS2783: 'responseTime' is specified more than once, so this usage will be overwritten.
+[17:50:53.580] src/lib/monitoring/health-check.ts(355,9): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { host: string; driver: string; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(364,9): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(370,7): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; error: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(397,9): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { host: string; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(405,9): error TS2741: Property 'responseTime' is missing in type '{ status: "degraded"; message: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(412,7): error TS2741: Property 'responseTime' is missing in type '{ status: "degraded"; message: string; error: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(430,9): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { enabled: boolean; port: string; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(439,9): error TS2741: Property 'responseTime' is missing in type '{ status: "degraded"; message: string; details: { enabled: boolean; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(448,7): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; error: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(473,7): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { configured_services: number; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(488,9): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { total: number; successful: number; failed: number; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(498,9): error TS2741: Property 'responseTime' is missing in type '{ status: "degraded"; message: string; details: { total: number; successful: number; failed: number; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(508,9): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; details: { total: number; successful: number; failed: number; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(519,7): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; error: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(572,9): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; details: { memory: { used: number; total: number; percentage: number; status: HealthStatus; }; cpu: { usage: number; loadAverage: number[]; status: HealthStatus; }; disk: { used: number; total: number; percentage: number; status: HealthStatus; }; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.580] src/lib/monitoring/health-check.ts(585,9): error TS2741: Property 'responseTime' is missing in type '{ status: "degraded"; message: string; details: { memory: { used: number; total: number; percentage: number; status: HealthStatus; }; cpu: { usage: number; loadAverage: number[]; status: HealthStatus; }; disk: { used: number; total: number; percentage: number; status: HealthStatus; }; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.581] src/lib/monitoring/health-check.ts(592,7): error TS2741: Property 'responseTime' is missing in type '{ status: "healthy"; message: string; details: { memory: { used: number; total: number; percentage: number; status: HealthStatus; }; cpu: { usage: number; loadAverage: number[]; status: HealthStatus; }; disk: { used: number; total: number; percentage: number; status: HealthStatus; }; }; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.581] src/lib/monitoring/health-check.ts(598,7): error TS2741: Property 'responseTime' is missing in type '{ status: "unhealthy"; message: string; error: string; }' but required in type 'Omit<HealthCheckResult, "name" | "timestamp">'.
+[17:50:53.581] src/lib/monitoring/index.ts(26,8): error TS2300: Duplicate identifier 'HealthStatus'.
+[17:50:53.581] src/lib/monitoring/index.ts(39,8): error TS2300: Duplicate identifier 'AlertSeverity'.
+[17:50:53.581] src/lib/monitoring/index.ts(49,8): error TS2300: Duplicate identifier 'AuditEventType'.
+[17:50:53.581] src/lib/monitoring/index.ts(73,8): error TS2300: Duplicate identifier 'AnalyticsEventType'.
+[17:50:53.581] src/lib/monitoring/index.ts(88,5): error TS2304: Cannot find name 'healthCheckService'.
+[17:50:53.581] src/lib/monitoring/index.ts(92,5): error TS2304: Cannot find name 'performanceMonitor'.
+[17:50:53.581] src/lib/monitoring/index.ts(96,5): error TS2304: Cannot find name 'errorTracker'.
+[17:50:53.581] src/lib/monitoring/index.ts(100,5): error TS2304: Cannot find name 'analyticsService'.
+[17:50:53.581] src/lib/monitoring/index.ts(106,15): error TS2304: Cannot find name 'healthCheckService'.
+[17:50:53.581] src/lib/monitoring/index.ts(107,20): error TS2304: Cannot find name 'performanceMonitor'.
+[17:50:53.581] src/lib/monitoring/index.ts(108,15): error TS2304: Cannot find name 'alertManager'.
+[17:50:53.581] src/lib/monitoring/index.ts(109,14): error TS2304: Cannot find name 'auditTrailService'.
+[17:50:53.581] src/lib/monitoring/index.ts(110,15): error TS2304: Cannot find name 'errorTracker'.
+[17:50:53.581] src/lib/monitoring/index.ts(111,18): error TS2304: Cannot find name 'analyticsService'.
+[17:50:53.581] src/lib/monitoring/index.ts(122,5): error TS2304: Cannot find name 'healthCheckService'.
+[17:50:53.581] src/lib/monitoring/index.ts(123,5): error TS2304: Cannot find name 'performanceMonitor'.
+[17:50:53.581] src/lib/monitoring/index.ts(124,5): error TS2304: Cannot find name 'alertManager'.
+[17:50:53.581] src/lib/monitoring/index.ts(125,5): error TS2304: Cannot find name 'auditTrailService'.
+[17:50:53.581] src/lib/monitoring/index.ts(136,49): error TS7006: Parameter 's' implicitly has an 'any' type.
+[17:50:53.581] src/lib/monitoring/index.ts(160,3): error TS2300: Duplicate identifier 'HealthStatus'.
+[17:50:53.581] src/lib/monitoring/index.ts(161,3): error TS2300: Duplicate identifier 'AlertSeverity'.
+[17:50:53.581] src/lib/monitoring/index.ts(162,3): error TS2300: Duplicate identifier 'AuditEventType'.
+[17:50:53.581] src/lib/monitoring/index.ts(163,3): error TS2300: Duplicate identifier 'AnalyticsEventType'.
+[17:50:53.581] src/lib/monitoring/monitoring-integration.ts(63,11): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+[17:50:53.581]   Type 'null' is not assignable to type 'string | undefined'.
+[17:50:53.581] src/lib/monitoring/monitoring-integration.ts(77,13): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+[17:50:53.582]   Type 'null' is not assignable to type 'string | undefined'.
+[17:50:53.582] src/lib/monitoring/monitoring-integration.ts(93,9): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+[17:50:53.582]   Type 'null' is not assignable to type 'string | undefined'.
+[17:50:53.582] src/lib/monitoring/monitoring-integration.ts(105,9): error TS2353: Object literal may only specify known properties, and 'requestId' does not exist in type 'Omit<ResponseTimeEntry, "timestamp">'.
+[17:50:53.582] src/lib/monitoring/monitoring-integration.ts(426,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+[17:50:53.582] src/lib/monitoring/monitoring-integration.ts(435,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+[17:50:53.582] src/lib/monitoring/monitoring-integration.ts(447,11): error TS2353: Object literal may only specify known properties, and 'category' does not exist in type '{ userId?: string | undefined; sessionId?: string | undefined; properties?: Record<string, any> | undefined; containsPHI?: boolean | undefined; }'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(179,21): error TS2769: No overload matches this call.
+[17:50:53.582]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.582]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.582]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.582]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.582]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(288,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+[17:50:53.582]   Type 'undefined' is not assignable to type 'number'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(289,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+[17:50:53.582]   Type 'undefined' is not assignable to type 'number'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(290,7): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+[17:50:53.582]   Type 'undefined' is not assignable to type 'number'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(550,3): error TS2484: Export declaration conflicts with exported declaration of 'PerformanceMetrics'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(551,3): error TS2484: Export declaration conflicts with exported declaration of 'ResponseTimeEntry'.
+[17:50:53.582] src/lib/monitoring/performance-monitor.ts(552,3): error TS2484: Export declaration conflicts with exported declaration of 'DatabaseQueryEntry'.
+[17:50:53.582] src/lib/notification-utils.ts(4,21): error TS2307: Cannot find module 'web-push' or its corresponding type declarations.
+[17:50:53.582] src/lib/notification-utils.ts(8,37): error TS2551: Property 'createTransporter' does not exist on type 'typeof import("/vercel/path0/node_modules/@types/nodemailer/index")'. Did you mean 'createTransport'?
+[17:50:53.583] src/lib/notification-utils.ts(84,24): error TS18048: 'startHour' is possibly 'undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(84,41): error TS18048: 'startMin' is possibly 'undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(85,22): error TS18048: 'endHour' is possibly 'undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(85,37): error TS18048: 'endMin' is possibly 'undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(187,5): error TS2322: Type '{ userId: string; type: string; title: string; message: string; metadata: any; isPriority: boolean; }' is not assignable to type '(Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput) | (Without<...> & NotificationCreateInput)'.
+[17:50:53.583]   Type '{ userId: string; type: string; title: string; message: string; metadata: any; isPriority: boolean; }' is not assignable to type 'Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput'.
+[17:50:53.583]     Property 'id' is missing in type '{ userId: string; type: string; title: string; message: string; metadata: any; isPriority: boolean; }' but required in type 'NotificationUncheckedCreateInput'.
+[17:50:53.583] src/lib/notification-utils.ts(327,13): error TS2322: Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.583]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(355,13): error TS2322: Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.583]   Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+[17:50:53.583] src/lib/notification-utils.ts(473,9): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | null'.
+[17:50:53.583]   Type 'undefined' is not assignable to type 'string | null'.
+[17:50:53.583] src/lib/notifications/notification-service.ts(5,21): error TS2307: Cannot find module 'web-push' or its corresponding type declarations.
+[17:50:53.583] src/lib/notifications/notification-service.ts(64,40): error TS7006: Parameter 'socket' implicitly has an 'any' type.
+[17:50:53.583] src/lib/notifications/notification-service.ts(126,11): error TS2561: Object literal may only specify known properties, but 'priority' does not exist in type 'Without<NotificationCreateInput, NotificationUncheckedCreateInput> & NotificationUncheckedCreateInput'. Did you mean to write 'isPriority'?
+[17:50:53.583] src/lib/notifications/notification-service.ts(309,11): error TS2353: Object literal may only specify known properties, and 'attemptedAt' does not exist in type '(Without<NotificationDeliveryCreateInput, NotificationDeliveryUncheckedCreateInput> & NotificationDeliveryUncheckedCreateInput) | (Without<...> & NotificationDeliveryCreateInput)'.
+[17:50:53.583] src/lib/notifications/notification-service.ts(343,15): error TS18046: 'error' is of type 'unknown'.
+[17:50:53.583] src/lib/notifications/notification-service.ts(364,16): error TS2353: Object literal may only specify known properties, and 'type' does not exist in type 'NotificationTemplateWhereInput'.
+[17:50:53.583] src/lib/notifications/notification-service.ts(423,13): error TS2353: Object literal may only specify known properties, and 'expiresAt' does not exist in type 'NotificationWhereInput'.
+[17:50:53.583] src/lib/notifications/notification-service.ts(424,13): error TS2353: Object literal may only specify known properties, and 'expiresAt' does not exist in type 'NotificationWhereInput'.
+[17:50:53.583] src/lib/performance/crisis-optimization.ts(232,23): error TS2307: Cannot find module '@/components/crisis/EmergencyContacts' or its corresponding type declarations.
+[17:50:53.583] src/lib/performance/crisis-optimization.ts(396,57): error TS2341: Property 'crisisComponents' is private and only accessible within class 'CrisisOptimizationManager'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(204,10): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & (T extends MemoExoticComponent<infer U extends ComponentType<any>> | LazyExoticComponent<infer U extends ComponentType<...>> ? ReactManagedAttributes<...> : ReactManagedAttributes<...>)'.
+[17:50:53.584]   Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'T extends MemoExoticComponent<infer U extends ComponentType<any>> | LazyExoticComponent<infer U extends ComponentType<any>> ? ReactManagedAttributes<...> : ReactManagedAttributes<...>'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(210,10): error TS2322: Type '{ children: Element; error: Error; retry: () => void; }' is not assignable to type 'IntrinsicAttributes & { error: Error; retry: () => void; }'.
+[17:50:53.584]   Property 'children' does not exist on type 'IntrinsicAttributes & { error: Error; retry: () => void; }'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(262,15): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & LibraryManagedAttributes<T, any>'.
+[17:50:53.584]   Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'LibraryManagedAttributes<T, any>'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(266,13): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & LibraryManagedAttributes<T, any>'.
+[17:50:53.584]   Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'LibraryManagedAttributes<T, any>'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(585,17): error TS18048: 'entry' is possibly 'undefined'.
+[17:50:53.584] src/lib/performance/dynamic-imports.tsx(605,15): error TS2322: Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'IntrinsicAttributes & ComponentProps<T>'.
+[17:50:53.585]   Type 'ComponentPropsWithRef<T> & { ref: ForwardedRef<any>; }' is not assignable to type 'ComponentProps<T>'.
+[17:50:53.585] src/lib/performance/monitoring.ts(7,24): error TS2305: Module '"web-vitals"' has no exported member 'onFID'.
+[17:50:53.585] src/lib/performance/monitoring.ts(139,12): error TS7006: Parameter 'metric' implicitly has an 'any' type.
+[17:50:53.585] src/lib/performance/monitoring.ts(492,20): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ crisis: number; dashboard: number; wellness: number; default: number; }'.
+[17:50:53.585]   No index signature with a parameter of type 'string' was found on type '{ crisis: number; dashboard: number; wellness: number; default: number; }'.
+[17:50:53.585] src/lib/performance/monitoring.ts(754,33): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+[17:50:53.585] src/lib/performance/monitoring.ts(756,3): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+[17:50:53.585] src/lib/performance/tree-shaking-optimization.ts(37,3): error TS2305: Module '"lucide-react"' has no exported member 'Sort'.
+[17:50:53.585] src/lib/performance/tree-shaking-optimization.ts(44,3): error TS2305: Module '"lucide-react"' has no exported member 'Cancel'.
+[17:50:53.585] src/lib/performance/tree-shaking-optimization.ts(54,3): error TS2305: Module '"lucide-react"' has no exported member 'Warning'.
+[17:50:53.585] src/lib/performance/tree-shaking-optimization.ts(55,3): error TS2305: Module '"lucide-react"' has no exported member 'Error'.
+[17:50:53.585] src/lib/performance/tree-shaking-optimization.ts(56,3): error TS2305: Module '"lucide-react"' has no exported member 'Success'.
+[17:50:53.585] src/lib/rate-limit.ts(22,20): error TS2532: Object is possibly 'undefined'.
+[17:50:53.585] src/lib/rate-limit.ts(23,34): error TS2532: Object is possibly 'undefined'.
+[17:50:53.585] src/lib/rbac/rbac-middleware.ts(105,15): error TS2353: Object literal may only specify known properties, and 'current' does not exist in type 'ValidationError[]'.
+[17:50:53.585] src/lib/rbac/rbac-middleware.ts(133,11): error TS2353: Object literal may only specify known properties, and 'action' does not exist in type '{ errorCode: string; errorMessage: string; stackTrace?: string | undefined; }'.
+[17:50:53.585] src/lib/rbac/rbac-service.ts(444,11): error TS2322: Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+[17:50:53.585]   Type 'null' is not assignable to type 'string | undefined'.
+[17:50:53.585] src/lib/search/search-service.ts(3,18): error TS2307: Cannot find module 'fuse.js' or its corresponding type declarations.
+[17:50:53.585] src/lib/search/search-service.ts(83,9): error TS2353: Object literal may only specify known properties, and 'bio' does not exist in type 'UserSelect<DefaultArgs>'.
+[17:50:53.585] src/lib/search/search-service.ts(139,9): error TS2353: Object literal may only specify known properties, and 'content' does not exist in type 'JournalEntrySelect<DefaultArgs>'.
+[17:50:53.585] src/lib/search/search-service.ts(201,48): error TS7006: Parameter 't' implicitly has an 'any' type.
+[17:50:53.586] src/lib/search/search-service.ts(237,44): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.586]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.586] src/lib/search/search-service.ts(248,11): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.586]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.586] src/lib/search/search-service.ts(288,19): error TS7006: Parameter 'r' implicitly has an 'any' type.
+[17:50:53.586] src/lib/search/search-service.ts(305,19): error TS7006: Parameter 'r' implicitly has an 'any' type.
+[17:50:53.586] src/lib/search/search-service.ts(339,34): error TS2353: Object literal may only specify known properties, and 'avatar' does not exist in type 'UserSelect<DefaultArgs>'.
+[17:50:53.586] src/lib/search/search-service.ts(348,13): error TS2322: Type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; } | undefined' is not assignable to type '{ id: string; name: string; avatar?: string | undefined; } | undefined'.
+[17:50:53.586]   Property 'name' is missing in type '{ id: string; email: string | null; role: UserRole; isEmailVerified: boolean; hashedPassword: string | null; firstName: string | null; lastName: string | null; displayName: string | null; ... 18 more ...; updatedAt: Date; }' but required in type '{ id: string; name: string; avatar?: string | undefined; }'.
+[17:50:53.586] src/lib/search/search-service.ts(557,31): error TS7006: Parameter 's' implicitly has an 'any' type.
+[17:50:53.586] src/lib/search/search-service.ts(558,32): error TS7006: Parameter 's' implicitly has an 'any' type.
+[17:50:53.586] src/lib/search/search-service.ts(571,21): error TS2769: No overload matches this call.
+[17:50:53.586]   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+[17:50:53.586]     Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+[17:50:53.586]       Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+[17:50:53.586]   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
+[17:50:53.586]     Argument of type 'Timer' is not assignable to parameter of type 'number'.
+[17:50:53.586] src/lib/security/audit.ts(382,9): error TS2322: Type '{ details: string | undefined; beforeState: string | undefined; afterState: string | undefined; metadata: string | undefined; id?: string | undefined; timestamp: Date; eventType: AuditEventType; ... 13 more ...; errorMessage?: string | undefined; }[]' is not assignable to type 'AuditLogCreateManyInput | AuditLogCreateManyInput[]'.
+[17:50:53.586]   Type '{ details: string | undefined; beforeState: string | undefined; afterState: string | undefined; metadata: string | undefined; id?: string | undefined; timestamp: Date; eventType: AuditEventType; ... 13 more ...; errorMessage?: string | undefined; }[]' is not assignable to type 'AuditLogCreateManyInput[]'.
+[17:50:53.586]     Property 'outcome' is missing in type '{ details: string | undefined; beforeState: string | undefined; afterState: string | undefined; metadata: string | undefined; id?: string; timestamp: Date; eventType: AuditEventType; ... 13 more ...; errorMessage?: string; }' but required in type 'AuditLogCreateManyInput'.
+[17:50:53.586] src/lib/security/audit.ts(411,7): error TS2322: Type '{ details: string | undefined; id?: string; timestamp: Date; eventType: AuditEventType; category: AuditCategory; userId?: string; userName?: string; userRole?: string; patientId?: string; ... 11 more ...; metadata?: Record<string, any>; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.586]   Type '{ details: string | undefined; id?: string; timestamp: Date; eventType: AuditEventType; category: AuditCategory; userId?: string; userName?: string; userRole?: string; patientId?: string; ... 11 more ...; metadata?: Record<string, any>; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.586]     Type '{ details: string | undefined; id?: string; timestamp: Date; eventType: AuditEventType; category: AuditCategory; userId?: string; userName?: string; userRole?: string; patientId?: string; ... 11 more ...; metadata?: Record<string, any>; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput>'.
+[17:50:53.586]       Types of property 'userId' are incompatible.
+[17:50:53.586]         Type 'string | undefined' is not assignable to type 'undefined'.
+[17:50:53.586]           Type 'string' is not assignable to type 'undefined'.
+[17:50:53.587] src/lib/security/audit.ts(474,14): error TS2532: Object is possibly 'undefined'.
+[17:50:53.587] src/lib/security/encryption.ts(103,22): error TS7006: Parameter 'key' implicitly has an 'any' type.
+[17:50:53.587] src/lib/security/encryption.ts(246,7): error TS2322: Type '{ action: string; details: { keyVersion: number; algorithm: string; timestamp: string; }; ipAddress: string; userAgent: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.587]   Type '{ action: string; details: { keyVersion: number; algorithm: string; timestamp: string; }; ipAddress: string; userAgent: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.587]     Type '{ action: string; details: { keyVersion: number; algorithm: string; timestamp: string; }; ipAddress: string; userAgent: string; }' is missing the following properties from type 'AuditLogCreateInput': id, outcome
+[17:50:53.587] src/lib/security/encryption.ts(329,9): error TS2862: Type 'T' is generic and can only be indexed for reading.
+[17:50:53.587] src/lib/security/encryption.ts(349,13): error TS2862: Type 'T' is generic and can only be indexed for reading.
+[17:50:53.587] src/lib/security/encryption.ts(351,13): error TS2862: Type 'T' is generic and can only be indexed for reading.
+[17:50:53.587] src/lib/security/file-security.ts(47,8): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ 'application/pdf': string[]; 'application/msword': string[]; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': string[]; 'text/plain': string[]; 'text/csv': string[]; 'image/jpeg': string[]; ... 7 more ...; 'video/webm': string[]; }'.
+[17:50:53.587]   No index signature with a parameter of type 'string' was found on type '{ 'application/pdf': string[]; 'application/msword': string[]; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': string[]; 'text/plain': string[]; 'text/csv': string[]; 'image/jpeg': string[]; ... 7 more ...; 'video/webm': string[]; }'.
+[17:50:53.587] src/lib/security/file-security.ts(53,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ 'application/pdf': string[]; 'application/msword': string[]; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': string[]; 'text/plain': string[]; 'text/csv': string[]; 'image/jpeg': string[]; ... 7 more ...; 'video/webm': string[]; }'.
+[17:50:53.587]   No index signature with a parameter of type 'string' was found on type '{ 'application/pdf': string[]; 'application/msword': string[]; 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': string[]; 'text/plain': string[]; 'text/csv': string[]; 'image/jpeg': string[]; ... 7 more ...; 'video/webm': string[]; }'.
+[17:50:53.587] src/lib/security/file-security.ts(194,50): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'string'.
+[17:50:53.587] src/lib/security/file-security.ts(226,52): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'string'.
+[17:50:53.587] src/lib/security/file-security.ts(294,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'BinaryLike'.
+[17:50:53.587]   Type 'undefined' is not assignable to type 'BinaryLike'.
+[17:50:53.587] src/lib/security/file-security.ts(302,43): error TS2769: No overload matches this call.
+[17:50:53.587]   Overload 1 of 4, '(arrayBuffer: WithImplicitCoercion<ArrayBufferLike>, byteOffset?: number | undefined, length?: number | undefined): Buffer<ArrayBufferLike>', gave the following error.
+[17:50:53.587]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.587]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<ArrayBufferLike>'.
+[17:50:53.587]   Overload 2 of 4, '(string: WithImplicitCoercion<string>, encoding?: BufferEncoding | undefined): Buffer<ArrayBuffer>', gave the following error.
+[17:50:53.587]     Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<string>'.
+[17:50:53.587]       Type 'undefined' is not assignable to type 'WithImplicitCoercion<string>'.
+[17:50:53.587] src/lib/security/mfa.ts(7,31): error TS2307: Cannot find module 'otplib' or its corresponding type declarations.
+[17:50:53.587] src/lib/security/mfa.ts(387,18): error TS2551: Property 'smsVerification' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'emailVerification'?
+[17:50:53.589] src/lib/security/mfa.ts(430,39): error TS2551: Property 'smsVerification' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'emailVerification'?
+[17:50:53.589] src/lib/security/mfa.ts(457,20): error TS2551: Property 'smsVerification' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'emailVerification'?
+[17:50:53.589] src/lib/security/mfa.ts(480,18): error TS2551: Property 'smsVerification' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'emailVerification'?
+[17:50:53.589] src/lib/security/pentest-simulator.ts(146,7): error TS2783: 'maxConcurrency' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(147,7): error TS2783: 'timeoutMs' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(148,7): error TS2783: 'skipDestructiveTests' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(149,7): error TS2783: 'onlyValidateControls' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(150,7): error TS2783: 'testEnvironment' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(151,7): error TS2783: 'phiProtectionLevel' is specified more than once, so this usage will be overwritten.
+[17:50:53.589] src/lib/security/pentest-simulator.ts(328,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.589]   Type 'undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.590] src/lib/security/pentest-simulator.ts(422,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.590]   Type 'undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.590] src/lib/security/pentest-simulator.ts(517,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.590]   Type 'undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.593] src/lib/security/pentest-simulator.ts(715,9): error TS2322: Type 'TestSeverity | undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.593]   Type 'undefined' is not assignable to type 'TestSeverity'.
+[17:50:53.593] src/lib/security/rate-limiter.ts(397,27): error TS7006: Parameter 'r' implicitly has an 'any' type.
+[17:50:53.593] src/lib/security/rbac.ts(470,55): error TS7006: Parameter 'up' implicitly has an 'any' type.
+[17:50:53.593] src/lib/security/rbac.ts(566,15): error TS2322: Type 'SystemRole' is not assignable to type 'UserRole | EnumUserRoleFieldUpdateOperationsInput | undefined'.
+[17:50:53.594] src/lib/security/rbac.ts(667,34): error TS2551: Property 'therapySession' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'. Did you mean 'therapistSession'?
+[17:50:53.594] src/lib/security/security-headers.ts(207,7): error TS7053: Element implicitly has an 'any' type because expression of type '"report-uri"' can't be used to index type '{ 'default-src': string[]; 'script-src': string[]; 'style-src': string[]; 'img-src': string[]; 'font-src': string[]; 'connect-src': string[]; 'media-src': string[]; 'object-src': string[]; 'child-src': string[]; 'frame-src': string[]; ... 6 more ...; 'block-all-mixed-content': never[]; }'.
+[17:50:53.594]   Property 'report-uri' does not exist on type '{ 'default-src': string[]; 'script-src': string[]; 'style-src': string[]; 'img-src': string[]; 'font-src': string[]; 'connect-src': string[]; 'media-src': string[]; 'object-src': string[]; 'child-src': string[]; 'frame-src': string[]; ... 6 more ...; 'block-all-mixed-content': never[]; }'.
+[17:50:53.594] src/lib/security/security-headers.ts(208,7): error TS7053: Element implicitly has an 'any' type because expression of type '"report-to"' can't be used to index type '{ 'default-src': string[]; 'script-src': string[]; 'style-src': string[]; 'img-src': string[]; 'font-src': string[]; 'connect-src': string[]; 'media-src': string[]; 'object-src': string[]; 'child-src': string[]; 'frame-src': string[]; ... 6 more ...; 'block-all-mixed-content': never[]; }'.
+[17:50:53.594]   Property 'report-to' does not exist on type '{ 'default-src': string[]; 'script-src': string[]; 'style-src': string[]; 'img-src': string[]; 'font-src': string[]; 'connect-src': string[]; 'media-src': string[]; 'object-src': string[]; 'child-src': string[]; 'frame-src': string[]; ... 6 more ...; 'block-all-mixed-content': never[]; }'.
+[17:50:53.594] src/lib/security/vulnerability-scanner.ts(898,37): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+[17:50:53.594] src/lib/session/session-manager.ts(59,15): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.594] src/lib/session/session-manager.ts(71,15): error TS2554: Expected 2-3 arguments, but got 1.
+[17:50:53.594] src/lib/session/session-manager.ts(119,22): error TS18048: 'oldestSession' is possibly 'undefined'.
+[17:50:53.594] src/lib/session/session-manager.ts(136,57): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-manager.ts(137,64): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-manager.ts(242,15): error TS2353: Object literal may only specify known properties, and 'iv' does not exist in type 'EncryptedField'.
+[17:50:53.594] src/lib/session/session-manager.ts(244,16): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-manager.ts(571,17): error TS2353: Object literal may only specify known properties, and 'iv' does not exist in type 'EncryptedField'.
+[17:50:53.594] src/lib/session/session-manager.ts(573,18): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-manager.ts(592,67): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-manager.ts(593,67): error TS2693: 'PHIFieldType' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/session/session-middleware.ts(79,7): error TS2322: Type '{}' is not assignable to type 'string'.
+[17:50:53.594] src/lib/session/session-middleware.ts(82,7): error TS2322: Type '{}' is not assignable to type 'boolean'.
+[17:50:53.594] src/lib/socket-server.ts(3,36): error TS2305: Module '"socket.io"' has no exported member 'Socket'.
+[17:50:53.594] src/lib/socket-server.ts(99,18): error TS2561: Object literal may only specify known properties, but 'user' does not exist in type 'AnonymousIdentityInclude<DefaultArgs>'. Did you mean to write 'User'?
+[17:50:53.594] src/lib/socket-server.ts(105,9): error TS2322: Type '{ userId: string; displayName: string; avatar: string; colorTheme: string; languages: string[]; badges: never[]; }' is not assignable to type '(Without<AnonymousIdentityCreateInput, AnonymousIdentityUncheckedCreateInput> & AnonymousIdentityUncheckedCreateInput) | (Without<...> & AnonymousIdentityCreateInput)'.
+[17:50:53.594]   Type '{ userId: string; displayName: string; avatar: string; colorTheme: string; languages: string[]; badges: never[]; }' is not assignable to type 'Without<AnonymousIdentityCreateInput, AnonymousIdentityUncheckedCreateInput> & AnonymousIdentityUncheckedCreateInput'.
+[17:50:53.594]     Type '{ userId: string; displayName: string; avatar: string; colorTheme: string; languages: string[]; badges: never[]; }' is missing the following properties from type 'AnonymousIdentityUncheckedCreateInput': id, updatedAt
+[17:50:53.594] src/lib/socket-server.ts(166,7): error TS2322: Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+[17:50:53.594]   Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type 'Without<SafetyAlertUncheckedCreateInput, SafetyAlertCreateInput> & SafetyAlertCreateInput'.
+[17:50:53.594]     Property 'id' is missing in type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' but required in type 'SafetyAlertCreateInput'.
+[17:50:53.594] src/lib/socket-server.ts(227,18): error TS2693: 'SocketIOServer' only refers to a type, but is being used as a value here.
+[17:50:53.594] src/lib/socket-server.ts(270,62): error TS2551: Property 'participants' does not exist on type '{ ChatParticipant: { id: string; userId: string; roomId: string; isActive: boolean; joinedAt: Date; leftAt: Date | null; }[]; } & { name: string; id: string; isActive: boolean; createdAt: Date; ... 7 more ...; settings: JsonValue; }'. Did you mean 'maxParticipants'?
+[17:50:53.594] src/lib/socket-server.ts(276,18): error TS2551: Property 'participants' does not exist on type '{ ChatParticipant: { id: string; userId: string; roomId: string; isActive: boolean; joinedAt: Date; leftAt: Date | null; }[]; } & { name: string; id: string; isActive: boolean; createdAt: Date; ... 7 more ...; settings: JsonValue; }'. Did you mean 'maxParticipants'?
+[17:50:53.595] src/lib/socket-server.ts(278,13): error TS2322: Type '{ roomId: string; userId: any; }' is not assignable to type '(Without<ChatParticipantCreateInput, ChatParticipantUncheckedCreateInput> & ChatParticipantUncheckedCreateInput) | (Without<...> & ChatParticipantCreateInput)'.
+[17:50:53.595]   Type '{ roomId: string; userId: any; }' is not assignable to type 'Without<ChatParticipantCreateInput, ChatParticipantUncheckedCreateInput> & ChatParticipantUncheckedCreateInput'.
+[17:50:53.595]     Property 'id' is missing in type '{ roomId: string; userId: any; }' but required in type 'ChatParticipantUncheckedCreateInput'.
+[17:50:53.595] src/lib/socket-server.ts(307,54): error TS2551: Property 'participants' does not exist on type '{ ChatParticipant: { id: string; userId: string; roomId: string; isActive: boolean; joinedAt: Date; leftAt: Date | null; }[]; } & { name: string; id: string; isActive: boolean; createdAt: Date; ... 7 more ...; settings: JsonValue; }'. Did you mean 'maxParticipants'?
+[17:50:53.595] src/lib/socket-server.ts(313,54): error TS2551: Property 'participants' does not exist on type '{ ChatParticipant: { id: string; userId: string; roomId: string; isActive: boolean; joinedAt: Date; leftAt: Date | null; }[]; } & { name: string; id: string; isActive: boolean; createdAt: Date; ... 7 more ...; settings: JsonValue; }'. Did you mean 'maxParticipants'?
+[17:50:53.595] src/lib/socket-server.ts(369,11): error TS2322: Type '{ roomId: string; authorId: any; content: string; type: string; metadata: { moderated: boolean; violations: string[]; crisis: boolean; }; reactions: never[]; flags: never[]; }' is not assignable to type '(Without<ChatMessageCreateInput, ChatMessageUncheckedCreateInput> & ChatMessageUncheckedCreateInput) | (Without<...> & ChatMessageCreateInput)'.
+[17:50:53.595]   Type '{ roomId: string; authorId: any; content: string; type: string; metadata: { moderated: boolean; violations: string[]; crisis: boolean; }; reactions: never[]; flags: never[]; }' is not assignable to type 'Without<ChatMessageCreateInput, ChatMessageUncheckedCreateInput> & ChatMessageUncheckedCreateInput'.
+[17:50:53.595]     Property 'id' is missing in type '{ roomId: string; authorId: any; content: string; type: string; metadata: { moderated: boolean; violations: string[]; crisis: boolean; }; reactions: never[]; flags: never[]; }' but required in type 'ChatMessageUncheckedCreateInput'.
+[17:50:53.595] src/lib/socket-server.ts(518,11): error TS2322: Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+[17:50:53.595]   Type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' is not assignable to type 'Without<SafetyAlertUncheckedCreateInput, SafetyAlertCreateInput> & SafetyAlertCreateInput'.
+[17:50:53.595]     Property 'id' is missing in type '{ type: string; severity: string; userId: string; context: string; indicators: string[]; handled: false; actions: string[]; }' but required in type 'SafetyAlertCreateInput'.
+[17:50:53.595] src/lib/socket-server.ts(565,9): error TS2322: Type '{ userId: string; score: number; level: string; factors: { participation: number; }; history: { type: string; description: string; impact: number; timestamp: Date; }[]; restrictions: never[]; }' is not assignable to type '(Without<TrustMetricCreateInput, TrustMetricUncheckedCreateInput> & TrustMetricUncheckedCreateInput) | (Without<...> & TrustMetricCreateInput)'.
+[17:50:53.595]   Type '{ userId: string; score: number; level: string; factors: { participation: number; }; history: { type: string; description: string; impact: number; timestamp: Date; }[]; restrictions: never[]; }' is not assignable to type 'Without<TrustMetricUncheckedCreateInput, TrustMetricCreateInput> & TrustMetricCreateInput'.
+[17:50:53.595]     Property 'id' is missing in type '{ userId: string; score: number; level: string; factors: { participation: number; }; history: { type: string; description: string; impact: number; timestamp: Date; }[]; restrictions: never[]; }' but required in type 'TrustMetricCreateInput'.
+[17:50:53.595] src/lib/test-utils/db-setup.ts(85,11): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+[17:50:53.595]   No index signature with a parameter of type 'string' was found on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+[17:50:53.595] src/lib/test-utils/db-setup.ts(86,15): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+[17:50:53.595]   No index signature with a parameter of type 'string' was found on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+[17:50:53.595] src/lib/test-utils/factories.ts(36,51): error TS2554: Expected 0-1 arguments, but got 2.
+[17:50:53.595] src/lib/test-utils/index.tsx(38,10): error TS2352: Conversion of type 'Mock<any, any[], T extends (this: infer C, ...args: any[]) => any ? C : never>' to type 'MockedFunction<T>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+[17:50:53.595]   Type 'Mock<any, any[], T extends (this: infer C, ...args: any[]) => any ? C : never>' is not comparable to type 'MockInstance<ReturnType<T>, ArgsType<T>, T extends (this: infer C, ...args: any[]) => any ? C : never>'.
+[17:50:53.595]     Types of property 'mock' are incompatible.
+[17:50:53.595]       Type 'MockContext<any, any[], T extends (this: infer C, ...args: any[]) => any ? C : never>' is not comparable to type 'MockContext<ReturnType<T>, ArgsType<T>, T extends (this: infer C, ...args: any[]) => any ? C : never>'.
+[17:50:53.595]         Type 'any[]' is not comparable to type 'ArgsType<T>'.
+[17:50:53.595] src/lib/utils.ts(196,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.595]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.595] src/lib/utils.ts(197,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.595]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.595] src/lib/utils.ts(198,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+[17:50:53.595]   Type 'undefined' is not assignable to type 'string'.
+[17:50:53.596] src/lib/validation/schemas.ts(20,37): error TS2576: Property 'getInstance' does not exist on type 'ValidationService'. Did you mean to access the static member 'ValidationService.getInstance' instead?
+[17:50:53.596] src/lib/validation/schemas.ts(39,5): error TS2740: Type 'ZodOptional<ZodString>' is missing the following properties from type 'ZodString': email, url, jwt, emoji, and 39 more.
+[17:50:53.596] src/lib/validation/schemas.ts(122,14): error TS2323: Cannot redeclare exported variable 'EnhancedUserSchemas'.
+[17:50:53.596] src/lib/validation/schemas.ts(206,14): error TS2323: Cannot redeclare exported variable 'EnhancedAuthSchemas'.
+[17:50:53.596] src/lib/validation/schemas.ts(253,14): error TS2323: Cannot redeclare exported variable 'EnhancedWellnessSchemas'.
+[17:50:53.596] src/lib/validation/schemas.ts(323,14): error TS2323: Cannot redeclare exported variable 'EnhancedCrisisSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(420,14): error TS2323: Cannot redeclare exported variable 'EnhancedCommunitySchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(477,14): error TS2323: Cannot redeclare exported variable 'EnhancedFileSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(509,14): error TS2323: Cannot redeclare exported variable 'EnhancedSearchSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(554,3): error TS2323: Cannot redeclare exported variable 'EnhancedUserSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(554,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedUserSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(555,3): error TS2323: Cannot redeclare exported variable 'EnhancedAuthSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(555,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedAuthSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(556,3): error TS2323: Cannot redeclare exported variable 'EnhancedWellnessSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(556,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedWellnessSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(557,3): error TS2323: Cannot redeclare exported variable 'EnhancedCrisisSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(557,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedCrisisSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(558,3): error TS2323: Cannot redeclare exported variable 'EnhancedCommunitySchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(558,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedCommunitySchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(559,3): error TS2323: Cannot redeclare exported variable 'EnhancedFileSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(559,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedFileSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(560,3): error TS2323: Cannot redeclare exported variable 'EnhancedSearchSchemas'.
+[17:50:53.597] src/lib/validation/schemas.ts(560,3): error TS2484: Export declaration conflicts with exported declaration of 'EnhancedSearchSchemas'.
+[17:50:53.597] src/lib/validation/validation-middleware.ts(83,22): error TS2749: 'ValidationService' refers to a value, but is being used as a type here. Did you mean 'typeof ValidationService'?
+[17:50:53.597] src/lib/validation/validation-middleware.ts(88,40): error TS2576: Property 'getInstance' does not exist on type 'ValidationService'. Did you mean to access the static member 'ValidationService.getInstance' instead?
+[17:50:53.597] src/lib/validation/validation-middleware.ts(108,33): error TS2352: Conversion of type '{ threatLevel: "suspicious"; threatCount: number; blocked: true; threats: string[]; requestId: string; userId?: string; sessionId?: string; ipAddress?: string; userAgent?: string; sanitizedBody?: any; originalBody?: any; securityThreats: string[]; isBlocked: boolean; }' to type 'SecurityAuditEvent' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+[17:50:53.597]   Type '{ threatLevel: "suspicious"; threatCount: number; blocked: true; threats: string[]; requestId: string; userId?: string | undefined; sessionId?: string | undefined; ipAddress?: string | undefined; ... 4 more ...; isBlocked: boolean; }' is missing the following properties from type 'SecurityAuditEvent': timestamp, endpoint, method
+[17:50:53.597] src/lib/validation/validation-middleware.ts(168,35): error TS2352: Conversion of type '{ threatLevel: ThreatLevel; threatCount: number; blocked: true; threats: string[]; requestId: string; userId?: string; sessionId?: string; ipAddress?: string; userAgent?: string; sanitizedBody?: any; originalBody?: any; securityThreats: string[]; isBlocked: boolean; }' to type 'SecurityAuditEvent' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+[17:50:53.598]   Type '{ threatLevel: ThreatLevel; threatCount: number; blocked: true; threats: string[]; requestId: string; userId?: string | undefined; sessionId?: string | undefined; ipAddress?: string | undefined; ... 4 more ...; isBlocked: boolean; }' is missing the following properties from type 'SecurityAuditEvent': timestamp, endpoint, method
+[17:50:53.598] src/lib/validation/validation-middleware.ts(191,35): error TS2352: Conversion of type '{ threatLevel: ThreatLevel; threatCount: number; blocked: false; threats: string[]; requestId: string; userId?: string; sessionId?: string; ipAddress?: string; userAgent?: string; sanitizedBody?: any; originalBody?: any; securityThreats: string[]; isBlocked: boolean; }' to type 'SecurityAuditEvent' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+[17:50:53.598]   Type '{ threatLevel: ThreatLevel; threatCount: number; blocked: false; threats: string[]; requestId: string; userId?: string | undefined; sessionId?: string | undefined; ipAddress?: string | undefined; ... 4 more ...; isBlocked: boolean; }' is missing the following properties from type 'SecurityAuditEvent': timestamp, endpoint, method
+[17:50:53.598] src/lib/validation/validation-middleware.ts(297,5): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+[17:50:53.598]   Type 'undefined' is not assignable to type 'boolean'.
+[17:50:53.598] src/lib/validation/validation-middleware.ts(304,7): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+[17:50:53.598]   Type 'undefined' is not assignable to type 'boolean'.
+[17:50:53.598] src/lib/validation/validation-middleware.ts(426,14): error TS2532: Object is possibly 'undefined'.
+[17:50:53.598] src/lib/validation/validation-service.ts(388,52): error TS2769: No overload matches this call.
+[17:50:53.598]   The last overload gave the following error.
+[17:50:53.598]     Type 'string | undefined' is not assignable to type 'string'.
+[17:50:53.598]       Type 'undefined' is not assignable to type 'string'.
+[17:50:53.598] src/lib/websocket.ts(2,36): error TS2305: Module '"socket.io"' has no exported member 'Socket'.
+[17:50:53.598] src/lib/websocket.ts(99,12): error TS2693: 'SocketIOServer' only refers to a type, but is being used as a value here.
+[17:50:53.598] src/lib/websocket.ts(137,7): error TS2322: Type '{ userId: any; action: string; resource: string; details: { socketId: any; userRole: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.598]   Type '{ userId: any; action: string; resource: string; details: { socketId: any; userRole: any; }; outcome: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.598]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; details: { socketId: any; userRole: any; }; outcome: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.598] src/lib/websocket.ts(150,42): error TS7006: Parameter 'data' implicitly has an 'any' type.
+[17:50:53.598] src/lib/websocket.ts(162,50): error TS7006: Parameter 'data' implicitly has an 'any' type.
+[17:50:53.598] src/lib/websocket.ts(191,11): error TS2322: Type '{ userId: any; action: string; resource: string; resourceId: any; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.598]   Type '{ userId: any; action: string; resource: string; resourceId: any; outcome: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.598]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; resourceId: any; outcome: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.598] src/lib/websocket.ts(211,9): error TS2322: Type '{ userId: any; action: string; resource: string; details: { socketId: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.598]   Type '{ userId: any; action: string; resource: string; details: { socketId: any; }; outcome: string; }' is not assignable to type 'Without<AuditLogUncheckedCreateInput, AuditLogCreateInput> & AuditLogCreateInput'.
+[17:50:53.598]     Property 'id' is missing in type '{ userId: any; action: string; resource: string; details: { socketId: any; }; outcome: string; }' but required in type 'AuditLogCreateInput'.
+[17:50:53.598] src/lib/websocket.ts(224,3): error TS2322: Type 'Server | null' is not assignable to type 'Server'.
+[17:50:53.598]   Type 'null' is not assignable to type 'Server'.
+[17:50:53.598] src/lib/websocket/client.ts(163,32): error TS2551: Property 'AUTH_FAILURE' does not exist on type 'typeof SystemEvent'. Did you mean 'AUTH_FAILED'?
+[17:50:53.598] src/lib/websocket/client.ts(176,32): error TS2551: Property 'ESCALATED' does not exist on type 'typeof CrisisEvent'. Did you mean 'ESCALATE'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(14,3): error TS2305: Module '"./events"' has no exported member 'CrisisTrigger'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(110,7): error TS2561: Object literal may only specify known properties, but 'assignedCounselor' does not exist in type 'CrisisAlert'. Did you mean to write 'assignedCounselors'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(161,50): error TS2345: Argument of type '{ severity: CrisisSeverity; message: string; triggers: any; }' is not assignable to parameter of type 'CrisisAlertPayload'.
+[17:50:53.599]   Property 'type' is missing in type '{ severity: CrisisSeverity; message: string; triggers: any; }' but required in type 'CrisisAlertPayload'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(174,7): error TS2322: Type '"high"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(200,50): error TS2345: Argument of type '{ severity: CrisisSeverity; message: string; }' is not assignable to parameter of type 'CrisisAlertPayload'.
+[17:50:53.599]   Property 'type' is missing in type '{ severity: CrisisSeverity; message: string; }' but required in type 'CrisisAlertPayload'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(242,11): error TS2551: Property 'assignedCounselor' does not exist on type 'CrisisAlert'. Did you mean 'assignedCounselors'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(260,7): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(273,7): error TS2322: Type '"high"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(338,9): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(347,42): error TS2551: Property 'ESCALATED' does not exist on type 'typeof CrisisEvent'. Did you mean 'ESCALATE'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(401,9): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(445,7): error TS2322: Type '"normal"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(477,28): error TS2488: Type 'string[] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(482,61): error TS2551: Property 'assignedCounselor' does not exist on type 'CrisisAlert'. Did you mean 'assignedCounselors'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(494,44): error TS7006: Parameter 'k' implicitly has an 'any' type.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(497,25): error TS7006: Parameter 'k' implicitly has an 'any' type.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(503,25): error TS7006: Parameter 'k' implicitly has an 'any' type.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(509,25): error TS7006: Parameter 'k' implicitly has an 'any' type.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(531,7): error TS2322: Type '"urgent"' is not assignable to type 'NotificationPriority'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(558,59): error TS2551: Property 'assignedCounselor' does not exist on type 'CrisisAlert'. Did you mean 'assignedCounselors'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(607,11): error TS2353: Object literal may only specify known properties, and 'metadata' does not exist in type '(Without<SafetyAlertCreateInput, SafetyAlertUncheckedCreateInput> & SafetyAlertUncheckedCreateInput) | (Without<...> & SafetyAlertCreateInput)'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(628,28): error TS2551: Property 'assignedCounselor' does not exist on type 'CrisisAlert'. Did you mean 'assignedCounselors'?
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(630,11): error TS2353: Object literal may only specify known properties, and 'metadata' does not exist in type '(Without<SafetyAlertUpdateInput, SafetyAlertUncheckedUpdateInput> & SafetyAlertUncheckedUpdateInput) | (Without<...> & SafetyAlertUpdateInput)'.
+[17:50:53.599] src/lib/websocket/crisis-manager.ts(652,9): error TS2322: Type '{ userId: string; action: string; resource: string; resourceId: string; details: { severity: CrisisSeverity; status: CrisisStatus; assignedCounselor: any; }; outcome: string; }' is not assignable to type '(Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput) | (Without<...> & AuditLogCreateInput)'.
+[17:50:53.599]   Type '{ userId: string; action: string; resource: string; resourceId: string; details: { severity: CrisisSeverity; status: CrisisStatus; assignedCounselor: any; }; outcome: string; }' is not assignable to type 'Without<AuditLogCreateInput, AuditLogUncheckedCreateInput> & AuditLogUncheckedCreateInput'.
+[17:50:53.599]     Property 'id' is missing in type '{ userId: string; action: string; resource: string; resourceId: string; details: { severity: CrisisSeverity; status: CrisisStatus; assignedCounselor: any; }; outcome: string; }' but required in type 'AuditLogUncheckedCreateInput'.
+[17:50:53.600] src/lib/websocket/crisis-manager.ts(660,38): error TS2551: Property 'assignedCounselor' does not exist on type 'CrisisAlert'. Did you mean 'assignedCounselors'?
+[17:50:53.600] src/lib/websocket/events.ts(431,8): error TS2448: Block-scoped variable 'PERMISSION_MATRIX' used before its declaration.
+[17:50:53.600] src/lib/websocket/events.ts(431,8): error TS2454: Variable 'PERMISSION_MATRIX' is used before being assigned.
+[17:50:53.600] src/lib/websocket/events.ts(436,8): error TS2448: Block-scoped variable 'PERMISSION_MATRIX' used before its declaration.
+[17:50:53.600] src/lib/websocket/events.ts(436,8): error TS2454: Variable 'PERMISSION_MATRIX' is used before being assigned.
+[17:50:53.600] src/lib/websocket/events.ts(441,8): error TS2448: Block-scoped variable 'PERMISSION_MATRIX' used before its declaration.
+[17:50:53.600] src/lib/websocket/events.ts(441,8): error TS2454: Variable 'PERMISSION_MATRIX' is used before being assigned.
+[17:50:53.600] src/lib/websocket/events.ts(448,8): error TS2448: Block-scoped variable 'PERMISSION_MATRIX' used before its declaration.
+[17:50:53.600] src/lib/websocket/events.ts(448,8): error TS2454: Variable 'PERMISSION_MATRIX' is used before being assigned.
+[17:50:53.600] src/lib/websocket/middleware.ts(6,8): error TS1192: Module '"/vercel/path0/node_modules/bad-words/dist/esm/index"' has no default export.
+[17:50:53.600] src/lib/websocket/server.ts(7,36): error TS2305: Module '"socket.io"' has no exported member 'Socket'.
+[17:50:53.600] src/lib/websocket/server.ts(7,44): error TS2305: Module '"socket.io"' has no exported member 'Namespace'.
+[17:50:53.600] src/lib/websocket/server.ts(48,37): error TS2307: Cannot find module './notification-manager' or its corresponding type declarations.
+[17:50:53.600] src/lib/websocket/server.ts(102,19): error TS2693: 'SocketIOServer' only refers to a type, but is being used as a value here.
+[17:50:53.600] src/lib/websocket/server.ts(229,72): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(232,61): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(235,63): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(238,62): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(249,76): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(252,68): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(263,70): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(266,59): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(269,60): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(272,66): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(295,78): error TS2345: Argument of type 'UserRole' is not assignable to parameter of type '"ADMIN" | "SUPER_ADMIN"'.
+[17:50:53.600]   Type '"USER"' is not assignable to type '"ADMIN" | "SUPER_ADMIN"'.
+[17:50:53.600] src/lib/websocket/server.ts(296,71): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(299,70): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+[17:50:53.600] src/lib/websocket/server.ts(1132,9): error TS2322: Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[] | ChatMessageCreatereactionsInput | undefined'.
+[17:50:53.601]   Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[]'.
+[17:50:53.601]     Type 'MessageReaction' is not assignable to type 'InputJsonValue'.
+[17:50:53.601]       Type 'MessageReaction' is not assignable to type 'InputJsonObject'.
+[17:50:53.601]         Index signature for type 'string' is missing in type 'MessageReaction'.
+[17:50:53.601] src/lib/websocket/server.ts(1167,9): error TS2322: Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[] | ChatMessageUpdatereactionsInput | undefined'.
+[17:50:53.601]   Type 'MessageReaction[]' is not assignable to type 'InputJsonValue[]'.
+[17:50:53.601]     Type 'MessageReaction' is not assignable to type 'InputJsonValue'.
+[17:50:53.601]       Type 'MessageReaction' is not assignable to type 'InputJsonObject'.
+[17:50:53.601]         Index signature for type 'string' is missing in type 'MessageReaction'.
+[17:50:53.601] src/lib/websocket/server.ts(1221,9): error TS2322: Type 'RoomSettings | {}' is not assignable to type 'JsonNull | InputJsonValue'.
+[17:50:53.601]   Type 'RoomSettings' is not assignable to type 'JsonNull | InputJsonValue'.
+[17:50:53.601]     Type 'RoomSettings' is not assignable to type 'InputJsonObject'.
+[17:50:53.601]       Index signature for type 'string' is missing in type 'RoomSettings'.
+[17:50:53.711] Error: Command "npm run vercel:build" exited with 2

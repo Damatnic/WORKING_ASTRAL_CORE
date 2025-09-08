@@ -1,0 +1,25 @@
+
+> astral-core-v5@0.1.0 build:windows
+> node scripts/windows-build.js
+
+🔧 Windows Build Script - Handling symlink issues...
+🧹 Cleaning build cache...
+🚀 Starting Next.js build...
+ ⚠ Invalid next.config.mjs options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+  ▲ Next.js 14.2.32
+  - Environments: .env.local, .env
+  - Experiments (use with caution):
+    · optimizeCss
+
+   Creating an optimized production build ...
+Failed to compile.
+
+Error: EISDIR: illegal operation on a directory, readlink 'H:\Astral Core\NEW CORE\AstralCoreV5-Clean\src\app\about\page.tsx'
+
+
+> Build failed because of webpack errors
+❌ Build failed with code: 1
+💡 For Vercel deployment, the build will work on Linux servers.
+💡 This is a Windows-specific development issue.

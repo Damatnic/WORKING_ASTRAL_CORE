@@ -1,0 +1,346 @@
+/* Accessibility Styles for Astral Core */
+
+/* Screen Reader Only Text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only.focus:focus,
+.sr-only.focus:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus Management */
+.focus-trap {
+  position: relative;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --tw-text-opacity: 1;
+  --tw-bg-opacity: 1;
+}
+
+.high-contrast * {
+  border-color: #000 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.high-contrast button,
+.high-contrast [role="button"] {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+.high-contrast button:hover,
+.high-contrast [role="button"]:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+}
+
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+}
+
+.high-contrast a {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast a:visited {
+  color: #800080 !important;
+}
+
+.high-contrast a:hover,
+.high-contrast a:focus {
+  background-color: #ffff00 !important;
+  color: #000 !important;
+}
+
+/* Font Size Scaling */
+html[data-font-size="small"] {
+  font-size: 14px;
+}
+
+html[data-font-size="medium"] {
+  font-size: 16px;
+}
+
+html[data-font-size="large"] {
+  font-size: 18px;
+}
+
+html[data-font-size="extra-large"] {
+  font-size: 22px;
+}
+
+/* Reduced Motion */
+.reduce-motion,
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Focus Indicators */
+.focus-visible:focus-visible,
+.focus:focus,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip Links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #2563eb;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 9999;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Loading States */
+@keyframes accessible-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.accessible-spinner {
+  animation: accessible-spin 1s linear infinite;
+}
+
+.reduce-motion .accessible-spinner {
+  animation: none;
+}
+
+/* Progress Indicators */
+.progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+  border-radius: 9999px;
+}
+
+.reduce-motion .progress-bar-fill {
+  transition: none;
+}
+
+/* Modal and Dialog */
+.modal-backdrop {
+  backdrop-filter: blur(2px);
+}
+
+.reduce-motion .modal-backdrop {
+  backdrop-filter: none;
+}
+
+/* Form Validation */
+.form-field-error {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 1px #dc2626;
+}
+
+.form-field-success {
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 1px #16a34a;
+}
+
+/* Interactive Elements */
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Color Contrast Helpers */
+.contrast-text {
+  color: #000;
+  background-color: #fff;
+}
+
+.high-contrast .contrast-text {
+  color: #000 !important;
+  background-color: #fff !important;
+  border: 1px solid #000 !important;
+}
+
+/* Keyboard Navigation */
+.keyboard-nav button:focus,
+.keyboard-nav input:focus,
+.keyboard-nav textarea:focus,
+.keyboard-nav select:focus,
+.keyboard-nav a:focus,
+.keyboard-nav [tabindex]:focus {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Alert and Status Messages */
+.alert {
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  border-left: 4px solid;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border-left-color: #dc2626;
+  color: #991b1b;
+}
+
+.alert-warning {
+  background-color: #fffbeb;
+  border-left-color: #f59e0b;
+  color: #92400e;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border-left-color: #16a34a;
+  color: #166534;
+}
+
+.alert-info {
+  background-color: #eff6ff;
+  border-left-color: #2563eb;
+  color: #1d4ed8;
+}
+
+/* High contrast adjustments for alerts */
+.high-contrast .alert {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Live Regions */
+[aria-live] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Tooltip Accessibility */
+.tooltip {
+  position: relative;
+}
+
+.tooltip[aria-describedby]::after {
+  content: attr(aria-describedby);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 1000;
+}
+
+.tooltip:hover::after,
+.tooltip:focus::after {
+  opacity: 1;
+}
+
+.reduce-motion .tooltip::after {
+  transition: none;
+}
+
+/* Print Styles for Accessibility */
+@media print {
+  .no-print,
+  .skip-link,
+  .modal-backdrop {
+    display: none !important;
+  }
+  
+  a::after {
+    content: " (" attr(href) ")";
+  }
+  
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+}
+
+/* Ensure sufficient color contrast */
+@media (prefers-contrast: high) {
+  :root {
+    --tw-text-opacity: 1;
+    --tw-bg-opacity: 1;
+  }
+  
+  button,
+  input,
+  textarea,
+  select {
+    border: 2px solid #000;
+  }
+  
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+}

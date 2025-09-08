@@ -1,0 +1,28 @@
+
+> astral-core-v5@0.1.0 build
+> npx prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+✔ Generated Prisma Client (v6.15.0) to .\node_modules\@prisma\client in 383ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate
+
+ ⚠ Invalid next.config.mjs options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+  ▲ Next.js 14.2.32
+  - Environments: .env.local, .env
+  - Experiments (use with caution):
+    · optimizeCss
+
+   Creating an optimized production build ...
+Failed to compile.
+
+Error: EISDIR: illegal operation on a directory, readlink 'H:\Astral Core\NEW CORE\AstralCoreV5-Clean\src\app\api\admin\audit-logs\route.ts'
+
+
+> Build failed because of webpack errors
