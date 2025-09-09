@@ -195,3 +195,82 @@ afterEach(() => {
   jest.clearAllMocks()
   jest.clearAllTimers()
 })
+
+// Mock @faker-js/faker to avoid ESM issues
+jest.mock('@faker-js/faker', () => ({
+  faker: {
+    person: {
+      firstName: () => 'John',
+      lastName: () => 'Doe',
+      fullName: () => 'John Doe',
+    },
+    internet: {
+      email: () => 'test@example.com',
+      password: () => 'password123',
+    },
+    phone: {
+      number: () => '555-123-4567',
+    },
+    datatype: {
+      uuid: () => 'test-uuid-123',
+      number: () => Math.floor(Math.random() * 100),
+      boolean: () => true,
+    },
+    date: {
+      recent: () => new Date(),
+      past: () => new Date(Date.now() - 86400000),
+    },
+    lorem: {
+      sentence: () => 'Test sentence',
+      paragraph: () => 'Test paragraph',
+      words: () => ['test', 'words'],
+    },
+    location: {
+      city: () => 'Test City',
+      state: () => 'Test State',
+    }
+  }
+}))
+
+// Mock DOM APIs that are missing in JSDOM
+Object.defineProperty(Element.prototype, 'scrollIntoView', {
+  value: jest.fn(),
+  writable: true,
+});
+
+Object.defineProperty(Element.prototype, 'scroll', {
+  value: jest.fn(),
+  writable: true,
+});
+
+Object.defineProperty(Element.prototype, 'scrollTo', {
+  value: jest.fn(),
+  writable: true,
+});
+
+// Mock ResizeObserver
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+// Mock IntersectionObserver
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+// Mock WebSocket for AI service tests
+global.WebSocket = jest.fn().mockImplementation(() => ({
+  close: jest.fn(),
+  send: jest.fn(),
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  readyState: 1,
+  CONNECTING: 0,
+  OPEN: 1,
+  CLOSING: 2,
+  CLOSED: 3,
+}));

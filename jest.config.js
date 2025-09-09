@@ -47,6 +47,8 @@ const customJestConfig = {
     '<rootDir>/playwright-tests/',
     '<rootDir>/build/',
     '<rootDir>/dist/',
+    '<rootDir>/tests/e2e/',
+    '<rootDir>/tests/accessibility/',
   ],
   
   // Coverage configuration
@@ -114,7 +116,7 @@ const customJestConfig = {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(.*\\.mjs$|@testing-library|@babel|babel-preset-react-app|uuid|nanoid|@radix-ui))',
+    'node_modules/(?!(.*\\.mjs$|@testing-library|@babel|babel-preset-react-app|uuid|nanoid|@radix-ui|@faker-js))',
   ],
   
   // Module file extensions
@@ -181,14 +183,14 @@ const customJestConfig = {
   // Cache directory (Windows-compatible)
   cacheDirectory: path.join(__dirname, 'node_modules', '.cache', 'jest'),
   
-  // Snapshot serializers
-  snapshotSerializers: ['@emotion/jest/serializer'],
+  // Snapshot serializers (commented out due to missing dependency)
+  // snapshotSerializers: ['@emotion/jest/serializer'],
   
-  // Watch plugins for better development experience
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
-  ],
+  // Watch plugins for better development experience (commented out due to missing dependencies)
+  // watchPlugins: [
+  //   'jest-watch-typeahead/filename',
+  //   'jest-watch-typeahead/testname',
+  // ],
   
   // Collect coverage only when requested
   collectCoverage: process.env.CI || process.argv.includes('--coverage'),

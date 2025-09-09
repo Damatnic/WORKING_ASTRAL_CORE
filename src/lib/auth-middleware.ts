@@ -3,10 +3,13 @@ import { getServerSession } from 'next-auth/next';
 import { Session } from 'next-auth';
 import { authOptions } from './auth';
 import { UserRole } from '@/types/prisma';
+import { logger } from '@/lib/error-handling/logger';
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 // Import our extended types
 import '@/types/next-auth';
 
-// Type for authenticated request
+// Type for authentica1ted request
 export interface AuthenticatedRequest extends NextRequest {
   user?: {
     id: string;
@@ -115,14 +118,66 @@ export async function withCrisisCounselor(
   ], handler);
 }
 
-// Rate limiting placeholder (to be implemented with proper rate limiting)
+// Rate limiting middleware using Upstash Redis
+// Initialize Redis client for rate limiting
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || "",
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
+});
+
 export function withRateLimit(
-  _maxRequests: number = 60,
-  _windowMs: number = 60000
+  maxRequests: number = 60,
+  windowMs: number = 60000
 ) {
+  const ratelimit = new Ratelimit({
+    redis: redis,
+    limiter: Ratelimit.slidingWindow(maxRequests, `${windowMs}ms`),
+    analytics: true,
+  });
+
   return function(
     handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
   ): (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse {
-    return handler; // TODO: Implement actual rate limiting
+    return async (req: AuthenticatedRequest) => {
+      // Get client IP for rate limiting
+      const ip = req.ip || req.headers.get("x-forwarded-for") || "127.0.0.1";
+      
+      try {
+        const { success, limit, remaining, reset } = await ratelimit.limit(
+          `auth_${ip}`
+        );
+
+        if (!success) {
+          return NextResponse.json(
+            {
+              error: "Too many requests",
+              message: `Rate limit exceeded. Try again in ${Math.round(
+                (reset - Date.now()) / 1000
+              )} seconds.`,
+            },
+            {
+              status: 429,
+              headers: {
+                "X-RateLimit-Limit": limit.toString(),
+                "X-RateLimit-Remaining": remaining.toString(),
+                "X-RateLimit-Reset": reset.toString(),
+              },
+            }
+          );
+        }
+
+        // Add rate limit headers to successful responses
+        const response = await handler(req);
+        response.headers.set("X-RateLimit-Limit", limit.toString());
+        response.headers.set("X-RateLimit-Remaining", remaining.toString());
+        response.headers.set("X-RateLimit-Reset", reset.toString());
+        
+        return response;
+      } catch (error) {
+        logger.error("Rate limiting error:", error);
+        // If rate limiting fails, allow the request but log the error
+        return handler(req);
+      }
+    };
   };
 }
