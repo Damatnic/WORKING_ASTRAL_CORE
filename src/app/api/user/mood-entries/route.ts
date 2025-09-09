@@ -17,7 +17,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/user/mood-entries - Get user's mood entries
-export const GET = withAuth(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
@@ -160,7 +161,8 @@ export const GET = withAuth(async (req) => {
 });
 
 // POST /api/user/mood-entries - Create a new mood entry
-export const POST = withAuth(async (req) => {
+export async function POST(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const body = await (req as any).json();
@@ -281,7 +283,8 @@ export const POST = withAuth(async (req) => {
 });
 
 // PUT /api/user/mood-entries - Update a mood entry
-export const PUT = withAuth(async (req) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
@@ -366,7 +369,8 @@ export const PUT = withAuth(async (req) => {
 });
 
 // DELETE /api/user/mood-entries - Delete a mood entry
-export const DELETE = withAuth(async (req) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();

@@ -10,7 +10,8 @@ import {
 import os from 'os';
 
 // GET /api/admin/system-health - Get comprehensive system health metrics
-export const GET = withAdmin(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);

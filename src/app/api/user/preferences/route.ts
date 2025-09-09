@@ -12,7 +12,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/user/preferences - Get user preferences
-export const GET = withAuth(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     
@@ -104,7 +105,8 @@ const preferencesUpdateSchema = z.object({
   }).optional(),
 });
 
-export const PUT = withAuth(async (req) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const body = await (req as any).json();

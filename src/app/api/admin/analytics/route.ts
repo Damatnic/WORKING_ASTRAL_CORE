@@ -9,7 +9,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/admin/analytics - Get comprehensive analytics data
-export const GET = withAdmin(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
@@ -409,4 +410,5 @@ export const GET = withAdmin(async (req) => {
     console.error('Admin analytics error:', error);
     return errorResponse('Failed to fetch analytics', 500);
   }
-});
+  });
+}

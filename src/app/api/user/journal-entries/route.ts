@@ -17,7 +17,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/user/journal-entries - Get user's journal entries
-export const GET = withAuth(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
@@ -145,7 +146,8 @@ export const GET = withAuth(async (req) => {
 });
 
 // POST /api/user/journal-entries - Create a new journal entry
-export const POST = withAuth(async (req) => {
+export async function POST(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const body = await (req as any).json();
@@ -273,7 +275,8 @@ export const POST = withAuth(async (req) => {
 });
 
 // PUT /api/user/journal-entries - Update a journal entry
-export const PUT = withAuth(async (req) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
@@ -362,7 +365,8 @@ export const PUT = withAuth(async (req) => {
 });
 
 // DELETE /api/user/journal-entries - Delete a journal entry
-export const DELETE = withAuth(async (req) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();

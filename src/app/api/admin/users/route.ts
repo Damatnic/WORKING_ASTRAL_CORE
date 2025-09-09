@@ -22,7 +22,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/admin/users - Get all users with pagination, search, and filters
-export const GET = withAdmin(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
@@ -106,7 +107,8 @@ const createUserSchema = z.object({
   permissions: z.record(z.string(), z.boolean()).optional(),
 });
 
-export const POST = withAdmin(async (req) => {
+export async function POST(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const body = await (req as any).json();
     const validation = validateRequest(body, createUserSchema);
@@ -235,7 +237,8 @@ const updateUserSchema = z.object({
   permissions: z.record(z.string(), z.boolean()).optional(),
 });
 
-export const PUT = withAdmin(async (req) => {
+export async function PUT(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const body = await (req as any).json();
     const validation = validateRequest(body, updateUserSchema);
@@ -360,7 +363,8 @@ export const PUT = withAdmin(async (req) => {
 });
 
 // DELETE /api/admin/users - Delete or anonymize a user
-export const DELETE = withAdmin(async (req) => {
+export async function DELETE(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);

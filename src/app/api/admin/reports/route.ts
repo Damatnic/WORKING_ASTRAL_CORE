@@ -15,7 +15,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/admin/reports - Get system reports and audit logs
-export const GET = withAdmin(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
@@ -410,7 +411,8 @@ const createReportSchema = z.object({
   query: z.string().optional(), // For custom SQL queries (super admin only)
 });
 
-export const POST = withAdmin(async (req) => {
+export async function POST(req: NextRequest) {
+  return withAdmin(req, async (req) => {
   try {
     const body = await (req as any).json();
     const validation = validateRequest(body, createReportSchema);

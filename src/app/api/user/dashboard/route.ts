@@ -8,7 +8,8 @@ import {
 } from '@/lib/api-utils';
 
 // GET /api/user/dashboard - Get comprehensive dashboard data for user
-export const GET = withAuth(async (req) => {
+export async function GET(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
