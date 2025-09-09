@@ -396,7 +396,8 @@ export async function GET(req: NextRequest) {
     console.error('Admin reports error:', error);
     return errorResponse('Failed to generate report', 500);
   }
-});
+  });
+}
 
 // POST /api/admin/reports - Create a custom report or schedule report generation
 const createReportSchema = z.object({

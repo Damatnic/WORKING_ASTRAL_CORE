@@ -105,7 +105,8 @@ const createUserSchema = z.object({
   adminLevel: z.nativeEnum(AdminLevel).optional(),
   departments: z.array(z.string()).optional(),
   permissions: z.record(z.string(), z.boolean()).optional(),
-});
+  });
+}
 
 export async function POST(req: NextRequest) {
   return withAdmin(req, async (req) => {
@@ -235,7 +236,8 @@ const updateUserSchema = z.object({
   newPassword: z.string().min(8).optional(),
   adminLevel: z.nativeEnum(AdminLevel).optional(),
   permissions: z.record(z.string(), z.boolean()).optional(),
-});
+  });
+}
 
 export async function PUT(req: NextRequest) {
   return withAdmin(req, async (req) => {
@@ -360,7 +362,8 @@ export async function PUT(req: NextRequest) {
     console.error('Admin user update error:', error);
     return errorResponse('Failed to update user', 500);
   }
-});
+  });
+}
 
 // DELETE /api/admin/users - Delete or anonymize a user
 export async function DELETE(req: NextRequest) {

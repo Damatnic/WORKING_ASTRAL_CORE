@@ -143,7 +143,8 @@ export async function GET(req: NextRequest) {
     console.error('Journal entries fetch error:', error);
     return errorResponse('Failed to fetch journal entries', 500);
   }
-});
+  });
+}
 
 // POST /api/user/journal-entries - Create a new journal entry
 export async function POST(req: NextRequest) {
@@ -272,7 +273,8 @@ export async function POST(req: NextRequest) {
     console.error('Journal entry creation error:', error);
     return errorResponse('Failed to create journal entry', 500);
   }
-});
+  });
+}
 
 // PUT /api/user/journal-entries - Update a journal entry
 export async function PUT(req: NextRequest) {
@@ -362,7 +364,8 @@ export async function PUT(req: NextRequest) {
     console.error('Journal entry update error:', error);
     return errorResponse('Failed to update journal entry', 500);
   }
-});
+  });
+}
 
 // DELETE /api/user/journal-entries - Delete a journal entry
 export async function DELETE(req: NextRequest) {

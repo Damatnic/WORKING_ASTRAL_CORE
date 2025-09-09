@@ -158,7 +158,8 @@ export async function GET(req: NextRequest) {
     console.error('Mood entries fetch error:', error);
     return errorResponse('Failed to fetch mood entries', 500);
   }
-});
+  });
+}
 
 // POST /api/user/mood-entries - Create a new mood entry
 export async function POST(req: NextRequest) {
@@ -280,7 +281,8 @@ export async function POST(req: NextRequest) {
     console.error('Mood entry creation error:', error);
     return errorResponse('Failed to create mood entry', 500);
   }
-});
+  });
+}
 
 // PUT /api/user/mood-entries - Update a mood entry
 export async function PUT(req: NextRequest) {
@@ -366,7 +368,8 @@ export async function PUT(req: NextRequest) {
     console.error('Mood entry update error:', error);
     return errorResponse('Failed to update mood entry', 500);
   }
-});
+  });
+}
 
 // DELETE /api/user/mood-entries - Delete a mood entry
 export async function DELETE(req: NextRequest) {

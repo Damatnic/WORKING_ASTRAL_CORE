@@ -73,7 +73,8 @@ export async function GET(req: NextRequest) {
     console.error('User preferences fetch error:', error);
     return errorResponse('Failed to fetch preferences', 500);
   }
-});
+  });
+}
 
 // PUT /api/user/preferences - Update user preferences
 const preferencesUpdateSchema = z.object({
