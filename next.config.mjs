@@ -31,7 +31,7 @@ const nextConfig = {
   },
 
   // Webpack configuration for Windows compatibility
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     // Disable symlinks completely (Windows compatibility)
     config.resolve.symlinks = false;
     
@@ -53,6 +53,24 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, 'src'),
     };
+    
+    // Windows-specific fixes for EISDIR errors
+    if (process.platform === 'win32') {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: ['**/node_modules', '**/.git', '**/.next'],
+        poll: true,
+      };
+      
+      // Override resolve.plugins to handle Windows path issues
+      const originalResolve = config.resolve;
+      config.resolve = {
+        ...originalResolve,
+        // Force case-sensitive paths on Windows
+        enforceExtension: false,
+        extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+      };
+    }
     
     return config;
   },

@@ -232,7 +232,7 @@ export const dbValidation = {
   ),
 };
 
-export default {
+const ValidationUtils = {
   schemas: {
     userRegistration: userRegistrationSchema,
     userUpdate: userUpdateSchema,
@@ -251,3 +251,5 @@ export default {
   common: commonValidation,
   db: dbValidation,
 };
+
+export default ValidationUtils;

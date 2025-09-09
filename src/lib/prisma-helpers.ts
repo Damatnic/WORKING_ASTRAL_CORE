@@ -316,8 +316,8 @@ export function createAuditLogData(data: {
   };
 }
 
-// Export default object with all helpers
-export default {
+// Named default export object
+const PrismaHelpers = {
   generatePrismaCreateFields,
   generatePrismaUpdateFields,
   getUserWithRoleValidation,
@@ -337,3 +337,5 @@ export default {
   convertZodIssuesToValidationErrors,
   createAuditLogData,
 };
+
+export default PrismaHelpers;

@@ -121,19 +121,44 @@ export async function withCrisisCounselor(
   ], handler);
 }
 
-// Rate limiting middleware using Upstash Redis
-// Initialize Redis client for rate limiting
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || "",
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
-});
+// Rate limiting middleware with graceful fallback
+// Initialize Redis client for rate limiting only if credentials are available
+let redis: Redis | null = null;
+let rateLimitingEnabled = false;
+
+// Check if Redis credentials are available
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  try {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+    rateLimitingEnabled = true;
+  } catch (error) {
+    console.warn('[Auth Middleware] Failed to initialize Redis for rate limiting:', error);
+    redis = null;
+    rateLimitingEnabled = false;
+  }
+} else {
+  console.warn('[Auth Middleware] Redis credentials not configured - rate limiting disabled');
+}
 
 export function withRateLimit(
   maxRequests: number = 60,
   windowMs: number = 60000
 ) {
+  // If rate limiting is not available, return a pass-through function
+  if (!rateLimitingEnabled || !redis) {
+    console.warn('[Auth Middleware] Rate limiting disabled - Redis not available');
+    return function(
+      handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
+    ): (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse {
+      return handler; // Pass through without rate limiting
+    };
+  }
+
   const ratelimit = new Ratelimit({
-    redis: redis,
+    redis: redis!,
     limiter: Ratelimit.slidingWindow(maxRequests, `${windowMs}ms`),
     analytics: true,
   });

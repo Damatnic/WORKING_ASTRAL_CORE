@@ -144,7 +144,7 @@ export async function createEncryptedSearch(
  * Middleware for automatic encryption/decryption in API routes
  */
 export function withEncryption<T extends ModelName>(modelName: T) {
-  return function (handler: Function) {
+  return function (handler: (req: NextRequest, context: any) => Promise<Response>) {
     return async function (request: NextRequest, context: any) {
       try {
         // Parse request body if present

@@ -4,10 +4,30 @@ import { Redis } from 'ioredis';
 import nodemailer from 'nodemailer';
 import webpush from 'web-push';
 
-// Initialize Redis for pub/sub
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
-const pubClient = redis.duplicate();
-const subClient = redis.duplicate();
+// Initialize Redis for pub/sub with graceful fallback
+let redis: Redis | null = null;
+let pubClient: Redis | null = null;
+let subClient: Redis | null = null;
+let redisAvailable = false;
+
+// Only initialize Redis if URL is provided
+if (process.env.REDIS_URL) {
+  try {
+    redis = new Redis(process.env.REDIS_URL);
+    pubClient = redis.duplicate();
+    subClient = redis.duplicate();
+    redisAvailable = true;
+    console.log('[Notification Service] Redis pub/sub initialized successfully');
+  } catch (error) {
+    console.warn('[Notification Service] Failed to initialize Redis pub/sub:', error);
+    redis = null;
+    pubClient = null;
+    subClient = null;
+    redisAvailable = false;
+  }
+} else {
+  console.warn('[Notification Service] Redis URL not configured - pub/sub disabled');
+}
 
 // Configure web push
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
@@ -18,16 +38,29 @@ if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   );
 }
 
-// Email transporter
-const emailTransporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// Email transporter with graceful fallback
+let emailTransporter: nodemailer.Transporter | null = null;
+
+// Initialize email transporter only if credentials are available
+if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+  try {
+    emailTransporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+    console.log('[Notification Service] Email transporter initialized successfully');
+  } catch (error) {
+    console.error('[Notification Service] Failed to initialize email transporter:', error);
+    emailTransporter = null;
+  }
+} else {
+  console.warn('[Notification Service] SMTP credentials not configured - email notifications disabled');
+}
 
 export interface NotificationPayload {
   userId: string;
@@ -95,14 +128,18 @@ export class NotificationService {
       });
     });
 
-    // Subscribe to Redis pub/sub for cross-server communication
-    subClient.subscribe('notifications');
-    subClient.on('message', (channel, message) => {
-      if (channel === 'notifications') {
-        const notification = JSON.parse(message);
-        this.emitToUser(notification.userId, 'new_notification', notification);
-      }
-    });
+    // Subscribe to Redis pub/sub for cross-server communication (if available)
+    if (redisAvailable && subClient) {
+      subClient.subscribe('notifications');
+      subClient.on('message', (channel, message) => {
+        if (channel === 'notifications') {
+          const notification = JSON.parse(message);
+          this.emitToUser(notification.userId, 'new_notification', notification);
+        }
+      });
+    } else {
+      console.warn('[Notification Service] Redis pub/sub not available - cross-server notifications disabled');
+    }
   }
 
   // Verify user token (implement with your auth system)
@@ -255,8 +292,14 @@ export class NotificationService {
       createdAt: notification.createdAt,
     });
 
-    // Publish to Redis for cross-server communication
-    await pubClient.publish('notifications', JSON.stringify(notification));
+    // Publish to Redis for cross-server communication (if available)
+    if (redisAvailable && pubClient) {
+      try {
+        await pubClient.publish('notifications', JSON.stringify(notification));
+      } catch (error) {
+        console.warn('[Notification Service] Failed to publish to Redis:', error);
+      }
+    }
   }
 
   // Send email notification
@@ -277,6 +320,11 @@ export class NotificationService {
         actionUrl: notification.actionUrl,
         actionText: notification.actionText,
       });
+
+      if (!emailTransporter) {
+        console.warn('[Notification Service] Email transporter not available - skipping email');
+        return;
+      }
 
       await emailTransporter.sendMail({
         from: process.env.SMTP_FROM,

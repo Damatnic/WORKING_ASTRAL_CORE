@@ -391,7 +391,7 @@ const CrisisAlertNotifications: React.FC<CrisisAlertNotificationsProps> = ({
                     <div className="flex items-center space-x-2 mb-2">
                       <img
                         src={alert.userAvatar || '/api/placeholder/32/32'}
-                        alt={alert.userName}
+                        alt={`Profile picture of ${alert.userName}`}
                         className="w-6 h-6 rounded-full"
                       />
                       <span className="text-sm text-gray-700">{alert.userName}</span>

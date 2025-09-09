@@ -265,8 +265,8 @@ export function validateRequiredConfig(requiredFeatures: string[]) {
   }
 }
 
-// Export all configurations as default
-export default {
+// Named default export object  
+const AppConfig = {
   app: appConstants,
   env: config,
   features: featureFlags,
@@ -286,3 +286,5 @@ export default {
   isTest,
   validateRequiredConfig,
 };
+
+export default AppConfig;

@@ -717,8 +717,8 @@ export const schemas = {
   resource: resourceSchema
 };
 
-// Default export for convenience
-export default {
+// Named default export object
+const ApiUtils = {
   // Encryption
   decryptField,
   encryptField,
@@ -768,3 +768,5 @@ export default {
   // Schemas
   schemas
 };
+
+export default ApiUtils;

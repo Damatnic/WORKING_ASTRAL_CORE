@@ -178,8 +178,8 @@ export interface AuditLog {
 // export * from './enums';
 // export * from './next-auth';
 
-// Default export
-export default {
+// Named default export object
+const TypeDefinitions = {
   // Export key interfaces as object properties for easier imports
   ApiResponse: {} as ApiResponse,
   PaginatedResponse: {} as PaginatedResponse,
@@ -197,3 +197,5 @@ export default {
   SystemConfig: {} as SystemConfig,
   AuditLog: {} as AuditLog,
 };
+
+export default TypeDefinitions;

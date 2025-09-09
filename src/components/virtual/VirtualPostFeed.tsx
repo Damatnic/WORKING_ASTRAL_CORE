@@ -265,7 +265,7 @@ export function VirtualPostFeed({
                 {media.type === 'image' ? (
                   <img 
                     src={media.url} 
-                    alt={media.alt || 'Post image'} 
+                    alt={media.alt || 'Image attached to post'} 
                     className="w-full h-auto max-h-96 object-cover"
                   />
                 ) : media.type === 'video' ? (
@@ -389,7 +389,7 @@ export function VirtualPostFeed({
                   ) : post.author.avatar ? (
                     <img 
                       src={post.author.avatar} 
-                      alt={post.author.name}
+                      alt={`Profile picture of ${post.author.name}`}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (

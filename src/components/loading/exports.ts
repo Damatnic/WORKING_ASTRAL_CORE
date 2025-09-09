@@ -35,8 +35,8 @@ export type PulseLoaderProps = any;
 export type SpinnerDotsProps = any;
 export type WaveLoaderProps = any;
 
-// Default export
-export default {
+// Named default export object
+const LoadingExports = {
   LoadingSpinner,
   ProgressBar,
   SkeletonLoader,
@@ -46,3 +46,5 @@ export default {
   SpinnerDots,
   WaveLoader,
 };
+
+export default LoadingExports;

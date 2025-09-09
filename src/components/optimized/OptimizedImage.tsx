@@ -187,6 +187,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
       >
         <Image
           {...imageProps}
+          alt={alt}
           fill
           className={`object-cover ${imageProps.className}`}
         />
@@ -203,7 +204,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
 
   return (
     <>
-      <Image {...imageProps} />
+      <Image {...imageProps} alt={alt} />
       
       {/* Loading overlay for non-fill images */}
       {isLoading && !fill && (

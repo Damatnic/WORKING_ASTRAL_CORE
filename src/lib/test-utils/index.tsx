@@ -44,7 +44,7 @@ import { render as rtlRender, RenderOptions } from '@testing-library/react'
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   // Add custom options here if needed
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  initialRoute?: string;
 }
 
 export function renderWithProviders(

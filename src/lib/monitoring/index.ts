@@ -79,8 +79,8 @@ export const logger = {
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 export type LogEntry = any;
 
-// Default export
-export default {
+// Named default export object
+const MonitoringServices = {
   performanceMonitor,
   healthCheckService,
   alertManager,
@@ -88,3 +88,5 @@ export default {
   analytics,
   logger,
 };
+
+export default MonitoringServices;

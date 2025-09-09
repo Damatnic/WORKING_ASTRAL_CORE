@@ -56,7 +56,7 @@ const DEFAULT_CONFIG: AuditMiddlewareConfig = {
 export function createAuditMiddleware(config: AuditMiddlewareConfig = {}) {
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
 
-  return function auditMiddleware(handler: Function) {
+  return function auditMiddleware(handler: (req: NextRequest, context?: any) => Promise<Response>) {
     return async function (request: NextRequest, context?: any) {
       const startTime = Date.now();
       const requestId = crypto.randomUUID();
@@ -506,7 +506,7 @@ function sanitizeResponseBody(body: any): any {
  * Convenience function to wrap an API route with audit middleware
  */
 export function withAudit(
-  handler: Function, 
+  handler: (req: NextRequest, context?: any) => Promise<Response>, 
   config?: AuditMiddlewareConfig
 ) {
   const auditMiddleware = createAuditMiddleware(config);

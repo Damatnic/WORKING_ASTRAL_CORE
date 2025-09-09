@@ -890,7 +890,7 @@ const SearchCenter: React.FC = () => {
                       {result.metadata?.thumbnailUrl ? (
                         <img
                           src={result.metadata.thumbnailUrl}
-                          alt={result.title}
+                          alt={`Thumbnail for search result: ${result.title}`}
                           className="w-12 h-12 object-cover rounded"
                         />
                       ) : (

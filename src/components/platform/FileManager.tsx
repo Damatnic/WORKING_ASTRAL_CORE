@@ -872,7 +872,7 @@ const FileManager: React.FC = () => {
                       {file.metadata?.thumbnailUrl && file.type === 'file' ? (
                         <img
                           src={file.metadata.thumbnailUrl}
-                          alt={file.name}
+                          alt={`Thumbnail preview of file: ${file.name}`}
                           className="w-16 h-16 object-cover rounded"
                         />
                       ) : (

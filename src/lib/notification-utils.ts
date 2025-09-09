@@ -9,15 +9,28 @@ let emailTransporter: nodemailer.Transporter | null = null;
 
 function getEmailTransporter() {
   if (!emailTransporter) {
-    emailTransporter = nodemailer.createTransporter({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
-    });
+    // Check if SMTP configuration is available
+    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      console.warn('[Email Transporter] SMTP configuration incomplete - email notifications disabled');
+      return null;
+    }
+
+    try {
+      emailTransporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.SMTP_PORT || '587'),
+        secure: process.env.SMTP_SECURE === 'true',
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS
+        }
+      });
+      console.log('[Email Transporter] Initialized successfully');
+    } catch (error) {
+      console.error('[Email Transporter] Failed to initialize:', error);
+      emailTransporter = null;
+      return null;
+    }
   }
   return emailTransporter;
 }
@@ -111,7 +124,15 @@ export async function sendEmailNotification(
   text?: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const info = await getEmailTransporter().sendMail({
+    const transporter = getEmailTransporter();
+    if (!transporter) {
+      return {
+        success: false,
+        error: 'Email transporter not available - SMTP not configured'
+      };
+    }
+
+    const info = await transporter.sendMail({
       from: process.env.SMTP_FROM || 'noreply@example.com',
       to,
       subject,

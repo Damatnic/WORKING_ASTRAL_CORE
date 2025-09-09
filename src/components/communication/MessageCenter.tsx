@@ -510,7 +510,7 @@ const MessageCenter: React.FC = () => {
                       <div className="relative">
                         <img
                           src={conversation.participants[0].avatar || '/api/placeholder/40/40'}
-                          alt={conversation.participants[0].name}
+                          alt={`Profile picture of ${conversation.participants[0].name}`}
                           className="w-12 h-12 rounded-full"
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
@@ -586,7 +586,7 @@ const MessageCenter: React.FC = () => {
                       <div className="relative">
                         <img
                           src={selectedConversation.participants[0].avatar || '/api/placeholder/40/40'}
-                          alt={selectedConversation.participants[0].name}
+                          alt={`Profile picture of ${selectedConversation.participants[0].name}`}
                           className="w-10 h-10 rounded-full"
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
@@ -849,7 +849,7 @@ const MessageCenter: React.FC = () => {
                       <div className="relative">
                         <img
                           src={participant.avatar || '/api/placeholder/40/40'}
-                          alt={participant.name}
+                          alt={`Profile picture of ${participant.name}`}
                           className="w-10 h-10 rounded-full"
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${

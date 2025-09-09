@@ -95,25 +95,38 @@ class KeyManagement {
    */
   private async loadDataKeys(): Promise<void> {
     try {
-      // Load existing keys from secure storage
-      const keys = await (prisma as any).encryptionKey.findMany({
-        where: { status: 'active' },
-        orderBy: { version: 'desc' }
-      });
+      // Check if prisma is available
+      if (!prisma) {
+        console.warn('[Encryption Service] Prisma not available - using emergency key');
+        this.generateEmergencyKey();
+        return;
+      }
 
-      if (keys.length === 0) {
-        // Generate initial key
-        await this.generateNewKey();
-      } else {
-        // Decrypt and load keys
-        keys.forEach(key => {
-          const decryptedKey = this.decryptKey(key.encryptedKey);
-          this.dataKeys.set(key.version, decryptedKey);
-          this.currentKeyVersion = Math.max(this.currentKeyVersion, key.version);
+      // Check if the encryptionKey table exists by trying to access it
+      try {
+        // Load existing keys from secure storage
+        const keys = await (prisma as any).encryptionKey.findMany({
+          where: { status: 'active' },
+          orderBy: { version: 'desc' }
         });
+
+        if (keys.length === 0) {
+          // Generate initial key
+          await this.generateNewKey();
+        } else {
+          // Decrypt and load keys
+          keys.forEach(key => {
+            const decryptedKey = this.decryptKey(key.encryptedKey);
+            this.dataKeys.set(key.version, decryptedKey);
+            this.currentKeyVersion = Math.max(this.currentKeyVersion, key.version);
+          });
+        }
+      } catch (tableError) {
+        console.warn('[Encryption Service] encryptionKey table not found or accessible - using emergency key');
+        this.generateEmergencyKey();
       }
     } catch (error) {
-      console.error('Error loading encryption keys:', error);
+      console.error('[Encryption Service] Error loading encryption keys:', error);
       // Generate emergency key if database is not available
       this.generateEmergencyKey();
     }
@@ -129,22 +142,30 @@ class KeyManagement {
     // Encrypt the data key with master key
     const encryptedKey = this.encryptKey(newKey);
 
-    // Store encrypted key in database
-    await (prisma as any).encryptionKey.create({
-      data: {
-        version,
-        encryptedKey,
-        algorithm: ALGORITHM,
-        status: 'active',
-        createdAt: new Date()
+    // Store encrypted key in database (if available)
+    if (prisma) {
+      try {
+        await (prisma as any).encryptionKey.create({
+          data: {
+            version,
+            encryptedKey,
+            algorithm: ALGORITHM,
+            status: 'active',
+            createdAt: new Date()
+          }
+        });
+
+        // Log key rotation for audit (only if prisma is available)
+        await this.logKeyRotation(version);
+      } catch (error) {
+        console.warn('[Encryption Service] Failed to store key in database:', error);
       }
-    });
+    } else {
+      console.warn('[Encryption Service] Prisma not available - key stored in memory only');
+    }
 
     this.dataKeys.set(version, newKey);
     this.currentKeyVersion = version;
-
-    // Log key rotation for audit
-    await this.logKeyRotation(version);
   }
 
   /**
@@ -223,11 +244,17 @@ class KeyManagement {
    * Rotate encryption keys
    */
   async rotateKeys(): Promise<void> {
-    // Mark current keys as retired
-    await (prisma as any).encryptionKey.updateMany({
-      where: { status: 'active' },
-      data: { status: 'retired', rotatedAt: new Date() }
-    });
+    // Mark current keys as retired (if database is available)
+    if (prisma) {
+      try {
+        await (prisma as any).encryptionKey.updateMany({
+          where: { status: 'active' },
+          data: { status: 'retired', rotatedAt: new Date() }
+        });
+      } catch (error) {
+        console.warn('[Encryption Service] Failed to retire old keys in database:', error);
+      }
+    }
 
     // Generate new key
     await this.generateNewKey();
@@ -248,19 +275,27 @@ class KeyManagement {
    * Log key rotation for audit trail
    */
   private async logKeyRotation(version: number): Promise<void> {
-    await prisma.auditLog.create({
-      data: {
-        action: 'KEY_ROTATION',
-        
-        details: {
-          keyVersion: version,
-          algorithm: ALGORITHM,
-          timestamp: new Date().toISOString()
-        },
-        ipAddress: 'system',
-        userAgent: 'KeyManagement'
-      }
-    });
+    if (!prisma) {
+      console.warn('[Encryption Service] Cannot log key rotation - prisma not available');
+      return;
+    }
+
+    try {
+      await prisma.auditLog.create({
+        data: {
+          action: 'KEY_ROTATION',
+          details: {
+            keyVersion: version,
+            algorithm: ALGORITHM,
+            timestamp: new Date().toISOString()
+          },
+          ipAddress: 'system',
+          userAgent: 'KeyManagement'
+        }
+      });
+    } catch (error) {
+      console.warn('[Encryption Service] Failed to log key rotation:', error);
+    }
   }
 }
 

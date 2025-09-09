@@ -2,8 +2,23 @@ import { prisma } from '@/lib/prisma';
 import { Redis } from 'ioredis';
 import Fuse from 'fuse.js';
 
-// Initialize Redis for caching
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+// Initialize Redis for caching with graceful fallback
+let redis: Redis | null = null;
+let cacheEnabled = false;
+
+if (process.env.REDIS_URL) {
+  try {
+    redis = new Redis(process.env.REDIS_URL);
+    cacheEnabled = true;
+    console.log('[Search Service] Redis cache initialized successfully');
+  } catch (error) {
+    console.warn('[Search Service] Failed to initialize Redis cache:', error);
+    redis = null;
+    cacheEnabled = false;
+  }
+} else {
+  console.warn('[Search Service] Redis URL not configured - search caching disabled');
+}
 
 export interface SearchQuery {
   query: string;
@@ -222,10 +237,16 @@ export class SearchService {
     const results: SearchResult[] = [];
     const cacheKey = `search:global:${JSON.stringify(query)}`;
 
-    // Check cache
-    const cached = await redis.get(cacheKey);
-    if (cached) {
-      return JSON.parse(cached);
+    // Check cache (if available)
+    if (cacheEnabled && redis) {
+      try {
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+          return JSON.parse(cached);
+        }
+      } catch (error) {
+        console.warn('[Search Service] Cache read failed:', error);
+      }
     }
 
     // Search across all indexes based on type
@@ -268,8 +289,14 @@ export class SearchService {
       (query.offset || 0) + (query.limit || 20)
     );
 
-    // Cache results for 5 minutes
-    await redis.setex(cacheKey, 300, JSON.stringify(paginated));
+    // Cache results for 5 minutes (if available)
+    if (cacheEnabled && redis) {
+      try {
+        await redis.setex(cacheKey, 300, JSON.stringify(paginated));
+      } catch (error) {
+        console.warn('[Search Service] Cache write failed:', error);
+      }
+    }
 
     // Log search analytics
     await this.logSearchAnalytics(query, paginated.length);
@@ -523,10 +550,16 @@ export class SearchService {
   async getSearchSuggestions(partial: string, userId?: string): Promise<string[]> {
     const cacheKey = `suggestions:${partial}`;
     
-    // Check cache
-    const cached = await redis.get(cacheKey);
-    if (cached) {
-      return JSON.parse(cached);
+    // Check cache (if available)
+    if (cacheEnabled && redis) {
+      try {
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+          return JSON.parse(cached);
+        }
+      } catch (error) {
+        console.warn('[Search Service] Cache read failed:', error);
+      }
     }
 
     // Get recent searches
@@ -559,8 +592,14 @@ export class SearchService {
       ]),
     ].slice(0, 10);
 
-    // Cache for 1 hour
-    await redis.setex(cacheKey, 3600, JSON.stringify(suggestions));
+    // Cache for 1 hour (if available)
+    if (cacheEnabled && redis) {
+      try {
+        await redis.setex(cacheKey, 3600, JSON.stringify(suggestions));
+      } catch (error) {
+        console.warn('[Search Service] Cache write failed:', error);
+      }
+    }
 
     return suggestions;
   }

@@ -18,7 +18,7 @@ import {
  * Enhanced middleware that integrates all monitoring capabilities
  */
 export function createMonitoringMiddleware() {
-  return async (request: NextRequest, response: NextResponse, next: Function) => {
+  return async (request: NextRequest, response: NextResponse, next: () => void) => {
     const startTime = Date.now();
     const requestId = generateRequestId();
     

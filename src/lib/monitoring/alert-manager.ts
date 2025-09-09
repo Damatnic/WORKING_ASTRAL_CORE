@@ -102,23 +102,35 @@ class AlertManager extends EventEmitter {
   }
 
   /**
-   * Initialize email transporter
+   * Initialize email transporter with graceful fallback
    */
   private initializeEmailTransporter(): void {
     if (this.config.notifications.email.enabled) {
       try {
-        this.emailTransporter = nodemailer.createTransporter({
-          host: this.config.notifications.email.smtp.host,
-          port: this.config.notifications.email.smtp.port,
-          secure: this.config.notifications.email.smtp.secure,
+        // Check if required email configuration is available
+        const emailConfig = this.config.notifications.email.smtp;
+        if (!emailConfig.host || !emailConfig.auth?.user || !emailConfig.auth?.pass) {
+          console.warn('[Alert Manager] Email configuration incomplete - email notifications disabled');
+          return;
+        }
+
+        this.emailTransporter = nodemailer.createTransport({
+          host: emailConfig.host,
+          port: emailConfig.port,
+          secure: emailConfig.secure,
           auth: {
-            user: this.config.notifications.email.smtp.auth.user,
-            pass: this.config.notifications.email.smtp.auth.pass,
+            user: emailConfig.auth.user,
+            pass: emailConfig.auth.pass,
           },
         });
+
+        console.log('[Alert Manager] Email transporter initialized successfully');
       } catch (error) {
-        console.error('Failed to initialize email transporter:', error);
+        console.error('[Alert Manager] Failed to initialize email transporter:', error);
+        this.emailTransporter = null;
       }
+    } else {
+      console.warn('[Alert Manager] Email notifications disabled in configuration');
     }
   }
 

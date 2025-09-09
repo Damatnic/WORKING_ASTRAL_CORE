@@ -187,7 +187,7 @@ export function VirtualMessageList({
               {message.sender.avatar ? (
                 <img 
                   src={message.sender.avatar} 
-                  alt={message.sender.name}
+                  alt={`Profile picture of ${message.sender.name}`}
                   className="w-8 h-8 rounded-full object-cover"
                 />
               ) : (

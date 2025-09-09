@@ -32,18 +32,37 @@ async function getBadWordsFilter() {
   return badWordsFilter;
 }
 
-// Initialize Redis for caching and rate limiting
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_URL!,
-  token: process.env.UPSTASH_REDIS_TOKEN!,
-});
+// Initialize Redis for caching and rate limiting with graceful fallback
+let redis: Redis | null = null;
+let ratelimit: Ratelimit | null = null;
+let redisEnabled = false;
 
-// Rate limiting configuration
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '60 s'), // 10 messages per minute
-  analytics: true,
-});
+// Check if Redis credentials are available
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  try {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+
+    // Rate limiting configuration
+    ratelimit = new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(10, '60 s'), // 10 messages per minute
+      analytics: true,
+    });
+    
+    redisEnabled = true;
+    console.log('[Socket Server] Redis initialized successfully');
+  } catch (error) {
+    console.warn('[Socket Server] Failed to initialize Redis:', error);
+    redis = null;
+    ratelimit = null;
+    redisEnabled = false;
+  }
+} else {
+  console.warn('[Socket Server] Redis credentials not configured - using in-memory fallback');
+}
 
 // Message validation schema
 const messageSchema = z.object({
@@ -324,13 +343,20 @@ export function initSocketServer(httpServer: HTTPServer) {
         // Validate message
         const validatedData = messageSchema.parse(data);
         
-        // Rate limiting
-        const identifier = `msg:${socket.data.userId}`;
-        const { success } = await ratelimit.limit(identifier);
-        
-        if (!success) {
-          socket.emit('error', { message: 'Too many messages. Please slow down.' });
-          return;
+        // Rate limiting (if enabled)
+        if (redisEnabled && ratelimit) {
+          const identifier = `msg:${socket.data.userId}`;
+          try {
+            const { success } = await ratelimit.limit(identifier);
+            
+            if (!success) {
+              socket.emit('error', { message: 'Too many messages. Please slow down.' });
+              return;
+            }
+          } catch (error) {
+            console.warn('[Socket Server] Rate limiting error:', error);
+            // Continue without rate limiting if Redis fails
+          }
         }
 
         // Check if user is in room
