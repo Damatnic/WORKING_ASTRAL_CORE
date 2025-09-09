@@ -111,6 +111,33 @@ export class CriticalPath {
   }
 
   /**
+   * Create a critical component with high-priority loading
+   */
+  static critical<P extends Record<string, any> = Record<string, any>>(
+    loader: () => Promise<{ default: ComponentType<P> } | ComponentType<P>>,
+    options: {
+      fallback?: ReactNode;
+      timeout?: number;
+      retries?: number;
+      preload?: boolean;
+    } = {}
+  ): ComponentType<P> {
+    const {
+      fallback = <div>Loading...</div>,
+      timeout = 5000,
+      retries = 3,
+      preload = false
+    } = options;
+
+    return createLazyComponent(loader, {
+      fallback,
+      priority: 'critical',
+      timeout,
+      ssr: true
+    });
+  }
+
+  /**
    * Get loading statistics
    */
   static getStats() {
