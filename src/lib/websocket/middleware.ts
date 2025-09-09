@@ -3,7 +3,8 @@
  * Validation, moderation, and security functions
  */
 
-import BadWordsFilter from "bad-words";
+// @ts-expect-error - bad-words module type issue
+const BadWordsFilter = require("bad-words");
 import { MessagePayload, MESSAGE_VALIDATION } from "./events";
 import { prisma } from "@/lib/prisma";
 

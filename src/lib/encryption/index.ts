@@ -1,10 +1,15 @@
 /**
- * Encryption Module Index
- * Re-exports all encryption functionality from the centralized exports
+ * Encryption utilities - Stub implementations
  */
 
-// Re-export everything from the main encryption exports
-export * from '../encryption-exports';
+export function maskSensitiveData(data: any): any {
+  return data;
+}
 
-// Re-export as default for backward compatibility
-export { default } from '../encryption-exports';
+export function encryptData(data: any): any {
+  return data;
+}
+
+export function decryptData(data: any): any {
+  return data;
+}

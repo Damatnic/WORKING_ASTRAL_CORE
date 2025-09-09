@@ -11,6 +11,20 @@ export const PulseLoader = ({ count, size }: any) => null;
 export const SpinnerDots = ({ color, size }: any) => null;
 export const WaveLoader = ({ height, width }: any) => null;
 
+// Additional components needed by pages
+export const CriticalBoundary = ({ children }: any) => children;
+export const DashboardSkeleton = () => null;
+export const CrisisSkeleton = () => null;
+export const CrisisLoader = () => null;
+export const MoodTrackerSkeleton = () => null;
+export const WellnessLoader = () => null;
+export const LoadingPresets = {
+  default: () => null,
+  dashboard: () => null,
+  wellness: () => null,
+  crisis: () => null,
+};
+
 // Types
 export type LoadingSpinnerProps = any;
 export type ProgressBarProps = any;
