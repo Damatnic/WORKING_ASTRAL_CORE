@@ -3,7 +3,7 @@
  * Enhanced loading state with performance optimization features
  */
 
-import { LoadingPresets } from '@/components/loading';
+import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 import { Brain, Heart } from 'lucide-react';
 
 export default function LoadingPage() {
@@ -29,7 +29,9 @@ export default function LoadingPage() {
           </div>
 
           {/* Enhanced loading component */}
-          <LoadingPresets.Minimal message="Loading your safe space..." />
+          <div className="flex items-center justify-center p-6">
+            <LoadingSpinner size="lg" variant="primary" showLabel label="Loading your safe space..." />
+          </div>
           
           {/* Loading tips */}
           <div className="mt-12 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-neutral-200 max-w-2xl mx-auto">

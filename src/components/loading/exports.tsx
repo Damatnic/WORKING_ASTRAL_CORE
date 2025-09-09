@@ -4,11 +4,11 @@
 
 import React from 'react';
 
-// Re-export components from actual implementations
+// Re-export components from actual implementations  
 export { LoadingSpinner } from './LoadingSpinner';
-export { CriticalBoundary, DashboardSkeleton, PageSkeleton, CardSkeleton, ListSkeleton, LoadingState, ErrorState, EmptyState } from '../loading';
 export { CrisisLoader } from './CrisisLoader';
-export { CrisisSkeleton, MoodTrackerSkeleton, DashboardSkeleton as DashboardSkeletonFromFile } from './SkeletonLoaders';
+export { CrisisSkeleton, MoodTrackerSkeleton } from './SkeletonLoaders';
+export { DashboardSkeleton } from './DashboardSkeleton';
 export { WellnessLoader } from './WellnessLoader';
 
 // Additional loading components
@@ -97,6 +97,13 @@ export const LoadingPresets = {
     </div>
   ),
   
+  Minimal: ({ message = 'Loading...' }: { message?: string } = {}) => (
+    <div className="flex items-center justify-center p-6">
+      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mr-3" />
+      <span className="text-gray-700 text-sm">{message}</span>
+    </div>
+  ),
+  
   dashboard: ({ message = 'Loading dashboard...' }: { message?: string } = {}) => (
     <div className="flex flex-col items-center justify-center p-12 space-y-4">
       <div className="relative">
@@ -155,6 +162,7 @@ const LoadingExports = {
   PulseLoader,
   SpinnerDots,
   WaveLoader,
+  LoadingPresets,
 };
 
 export default LoadingExports;

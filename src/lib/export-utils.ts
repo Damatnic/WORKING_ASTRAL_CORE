@@ -161,8 +161,11 @@ export async function exportToJSON(
   
   // Encrypt if requested
   if (options?.encrypt && options?.password) {
-    const cipher = crypto.createCipher('aes-256-cbc', options.password);
-    jsonString = cipher.update(jsonString, 'utf8', 'hex') + cipher.final('hex');
+    const key = crypto.pbkdf2Sync(options.password, 'salt', 10000, 32, 'sha256');
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    const encrypted = cipher.update(jsonString, 'utf8', 'hex') + cipher.final('hex');
+    jsonString = iv.toString('hex') + ':' + encrypted;
   }
   
   await fs.writeFile(outputPath, jsonString, 'utf8');

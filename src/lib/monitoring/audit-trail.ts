@@ -537,12 +537,14 @@ class AuditTrailService extends EventEmitter {
   private encrypt(data: string): string {
     if (!data || !this.config.audit.encryption.enabled) return data;
     
-    const cipher = crypto.createCipher('aes-256-gcm', this.encryptionKey);
+    const key = Buffer.from(this.encryptionKey.slice(0, 32)); // Ensure 32 bytes for AES-256
+    const iv = crypto.randomBytes(12); // 12 bytes IV for GCM
+    const cipher = crypto.createCipherGCM('aes-256-gcm', key, iv);
     let encrypted = cipher.update(data, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     const authTag = cipher.getAuthTag();
     
-    return `${encrypted}:${authTag.toString('hex')}`;
+    return `${iv.toString('hex')}:${encrypted}:${authTag.toString('hex')}`;
   }
 
   /**

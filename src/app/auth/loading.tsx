@@ -3,7 +3,7 @@
  * Secure loading state for auth pages
  */
 
-import { LoadingPresets } from '@/components/loading';
+import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 
 export default function AuthLoading() {
   return (
@@ -19,7 +19,9 @@ export default function AuthLoading() {
             </p>
           </div>
           
-          <LoadingPresets.Minimal message="Loading authentication..." />
+          <div className="flex items-center justify-center p-6">
+            <LoadingSpinner size="md" variant="primary" showLabel label="Loading authentication..." />
+          </div>
           
           <div className="text-center mt-8">
             <p className="text-xs text-gray-500">

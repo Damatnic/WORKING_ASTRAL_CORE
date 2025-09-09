@@ -549,8 +549,11 @@ export class AuditService {
   }
 
   private encryptEvent(event: AuditEvent): any {
-    // Encrypt sensitive fields
-    const cipher = crypto.createCipher('aes-256-gcm', Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex'));
+    // Encrypt sensitive fields using modern crypto API
+    const key = Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex');
+    const iv = crypto.randomBytes(12); // 12 bytes IV for GCM
+    const cipher = crypto.createCipherGCM('aes-256-gcm', key, iv);
+    
     const eventString = JSON.stringify(event);
     let encrypted = cipher.update(eventString, 'utf8', 'base64');
     encrypted += cipher.final('base64');
@@ -565,13 +568,16 @@ export class AuditService {
       outcome: event.outcome,
       encryptedData: encrypted,
       authTag: tag.toString('base64'),
+      iv: iv.toString('base64'),
       checksum: event.checksum,
     };
   }
 
   private decryptEvent(encryptedEvent: any): AuditEvent {
     try {
-      const decipher = crypto.createDecipher('aes-256-gcm', Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex'));
+      const key = Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex');
+      const iv = Buffer.from(encryptedEvent.iv, 'base64');
+      const decipher = crypto.createDecipherGCM('aes-256-gcm', key, iv);
       decipher.setAuthTag(Buffer.from(encryptedEvent.authTag, 'base64'));
       
       let decrypted = decipher.update(encryptedEvent.encryptedData, 'base64', 'utf8');
