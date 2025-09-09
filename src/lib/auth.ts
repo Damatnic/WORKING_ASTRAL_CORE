@@ -69,7 +69,8 @@ export const authOptions: NextAuthOptions = {
   
   session: { 
     strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 8 * 60 * 60, // 8 hours - HIPAA compliance for healthcare data
+    updateAge: 2 * 60 * 60, // Refresh session every 2 hours if active
   },
   
   callbacks: {

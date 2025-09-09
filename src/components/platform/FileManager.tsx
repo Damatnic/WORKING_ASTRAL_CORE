@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FolderIcon,
@@ -112,7 +113,7 @@ interface UploadTask {
   error?: string;
 }
 
-const FileManager: React.FC = () => {
+const FileManager: React.FC = React.memo(() => {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [currentPath, setCurrentPath] = useState<string>('/');
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
@@ -870,10 +871,13 @@ const FileManager: React.FC = () => {
                   <div className="text-center">
                     <div className="mb-3 flex justify-center">
                       {file.metadata?.thumbnailUrl && file.type === 'file' ? (
-                        <img
+                        <Image
                           src={file.metadata.thumbnailUrl}
                           alt={`Thumbnail preview of file: ${file.name}`}
-                          className="w-16 h-16 object-cover rounded"
+                          width={200}
+                          height={150}
+                          className="w-16 h-16 object-cover rounded-md"
+                          loading="lazy"
                         />
                       ) : (
                         getFileIcon(file)
@@ -1197,6 +1201,8 @@ const FileManager: React.FC = () => {
       </AnimatePresence>
     </div>
   );
-};
+});
+
+FileManager.displayName = 'FileManager';
 
 export default FileManager;

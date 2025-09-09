@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket, WSMessage } from '@/hooks/useWebSocket';
 import { useSession } from 'next-auth/react';
@@ -52,7 +53,7 @@ interface CrisisAlertNotificationsProps {
   onAlertClick?: (alert: CrisisAlert) => void;
 }
 
-const CrisisAlertNotifications: React.FC<CrisisAlertNotificationsProps> = ({
+const CrisisAlertNotifications: React.FC<CrisisAlertNotificationsProps> = React.memo(({
   userRole,
   userId,
   onAlertClick
@@ -389,10 +390,13 @@ const CrisisAlertNotifications: React.FC<CrisisAlertNotificationsProps> = ({
                   {/* User Info */}
                   {alert.userName && (
                     <div className="flex items-center space-x-2 mb-2">
-                      <img
+                      <Image
                         src={alert.userAvatar || '/api/placeholder/32/32'}
                         alt={`Profile picture of ${alert.userName}`}
-                        className="w-6 h-6 rounded-full"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6 rounded-full object-cover"
+                        loading="lazy"
                       />
                       <span className="text-sm text-gray-700">{alert.userName}</span>
                     </div>
@@ -484,6 +488,8 @@ const CrisisAlertNotifications: React.FC<CrisisAlertNotificationsProps> = ({
       </AnimatePresence>
     </>
   );
-};
+});
+
+CrisisAlertNotifications.displayName = 'CrisisAlertNotifications';
 
 export default CrisisAlertNotifications;

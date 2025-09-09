@@ -3,6 +3,9 @@
 import React from 'react';
 import { LoadingSpinner } from './loading/LoadingSpinner';
 
+// Export LoadingPresets from the proper location
+export { LoadingPresets } from './loading/exports';
+
 /**
  * Error boundary for critical components
  */

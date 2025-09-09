@@ -9,18 +9,27 @@ const SALT_LENGTH = 32;
 const TAG_LENGTH = 16;
 const ITERATIONS = 100000; // PBKDF2 iterations
 
-// Get encryption key from environment or use a default for development
+// Get encryption key from environment - NEVER use defaults for PHI data
 const getEncryptionKey = (): string => {
   const key = process.env.ENCRYPTION_KEY;
   if (!key) {
-    // In production, this should throw an error
-    // For development/build, use a default key
-    if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
-      console.warn('ENCRYPTION_KEY is not set - using default key (NOT SECURE FOR PRODUCTION)');
-    }
-    // Use a deterministic key for development/build
-    return 'development-key-do-not-use-in-production-' + 'a'.repeat(20);
+    // CRITICAL SECURITY FIX: Always throw error if encryption key is missing
+    // This prevents accidental deployment without proper encryption
+    throw new Error(
+      'CRITICAL SECURITY ERROR: ENCRYPTION_KEY environment variable is not set. ' +
+      'This is required for HIPAA compliance and PHI protection. ' +
+      'Application cannot start without proper encryption configuration.'
+    );
   }
+  
+  // Validate key strength (minimum 256 bits / 32 bytes for AES-256)
+  if (key.length < 64) {
+    throw new Error(
+      'CRITICAL SECURITY ERROR: ENCRYPTION_KEY must be at least 64 characters (256 bits) ' +
+      'for HIPAA-compliant AES-256 encryption. Current key length: ' + key.length
+    );
+  }
+  
   return key;
 };
 
@@ -59,7 +68,8 @@ export const encryptData = (data: any): string => {
     
     return combined.toString('base64');
   } catch (error) {
-    console.error('Encryption error:', error);
+    // SECURITY FIX: Don't log the actual error which might contain sensitive data
+    console.error('Encryption failed - check encryption key configuration');
     throw new Error('Failed to encrypt data');
   }
 };
@@ -94,7 +104,8 @@ export const decryptData = (encryptedData: string): any => {
       return decrypted;
     }
   } catch (error) {
-    console.error('Decryption error:', error);
+    // SECURITY FIX: Don't log the actual error which might contain sensitive data
+    console.error('Decryption failed - check data integrity and encryption key');
     throw new Error('Failed to decrypt data');
   }
 };

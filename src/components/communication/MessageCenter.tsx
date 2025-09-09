@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import Image from 'next/image';
 import { useWebSocket, WSMessage } from '@/hooks/useWebSocket';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -104,7 +105,7 @@ interface Conversation {
   };
 }
 
-const MessageCenter: React.FC = () => {
+const MessageCenter: React.FC = React.memo(() => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -256,30 +257,32 @@ const MessageCenter: React.FC = () => {
         leaveRoom(selectedConversation.id);
       }
     };
-  }, [selectedConversation, isConnected, joinRoom, leaveRoom]);
+  }, [selectedConversation, isConnected, joinRoom, leaveRoom, conversations]);
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const filteredConversations = conversations.filter(conv => {
-    if (filter === 'unread' && conv.unreadCount === 0) return false;
-    if (filter === 'pinned' && !conv.isPinned) return false;
-    if (filter === 'archived' && !conv.isArchived) return false;
-    if (filter === 'all' && conv.isArchived) return false;
-    
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return conv.title?.toLowerCase().includes(query) ||
-             conv.participants.some(p => p.name.toLowerCase().includes(query)) ||
-             conv.lastMessage?.content.toLowerCase().includes(query);
-    }
-    
-    return true;
-  });
+  const filteredConversations = useMemo(() => {
+    return conversations.filter(conv => {
+      if (filter === 'unread' && conv.unreadCount === 0) return false;
+      if (filter === 'pinned' && !conv.isPinned) return false;
+      if (filter === 'archived' && !conv.isArchived) return false;
+      if (filter === 'all' && conv.isArchived) return false;
+      
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        return conv.title?.toLowerCase().includes(query) ||
+               conv.participants.some(p => p.name.toLowerCase().includes(query)) ||
+               conv.lastMessage?.content.toLowerCase().includes(query);
+      }
+      
+      return true;
+    });
+  }, [conversations, filter, searchQuery]);
 
-  const sendMessage = async () => {
+  const sendMessage = useCallback(async () => {
     if (!newMessage.trim() || !selectedConversation || !isConnected) return;
 
     try {
@@ -322,16 +325,16 @@ const MessageCenter: React.FC = () => {
       console.error('Failed to send message:', error);
       // Could show error toast here
     }
-  };
+  }, [newMessage, selectedConversation, isConnected, sendWSMessage, sendTyping]);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
-  };
+  }, [sendMessage]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewMessage(e.target.value);
     
     // Handle typing indicators
@@ -349,7 +352,7 @@ const MessageCenter: React.FC = () => {
         sendTyping(selectedConversation.id, false);
       }, 3000);
     }
-  };
+  }, [selectedConversation, isConnected, sendTyping]);
 
   const addReaction = (messageId: string, reactionType: 'like' | 'love' | 'care' | 'concern') => {
     setMessages(prev => prev.map(msg => {
@@ -508,10 +511,15 @@ const MessageCenter: React.FC = () => {
                   <div className="relative flex-shrink-0">
                     {conversation.participants.length === 1 ? (
                       <div className="relative">
-                        <img
+                        <Image
                           src={conversation.participants[0].avatar || '/api/placeholder/40/40'}
                           alt={`Profile picture of ${conversation.participants[0].name}`}
-                          className="w-12 h-12 rounded-full"
+                          width={48}
+                          height={48}
+                          className="w-12 h-12 rounded-full object-cover"
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyLR8/sB5Ox2moOSfwhqTzYLvvdG4zWDUL6Wf8AbVh6KGIEYjZZo1JMgNUcjxAc3PJ9JF0Bb7VrWJPzv7W2y7yzWDYa5SGFM7gHKLbCBKn+g8qfLQfWcVKnpxvjjg5yDgNJiLMIFxOAK7VrTzJKMgQ+0xWoF9OhWiEYyE4z+/jjy8y8fPCiZ3aR5Oma1oxwVW9Vz1PUYX8rWIh2vBWGcWJO+M=" 
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
                           getStatusColor(conversation.participants[0].status)
@@ -584,10 +592,14 @@ const MessageCenter: React.FC = () => {
                   <div className="relative">
                     {selectedConversation.participants.length === 1 ? (
                       <div className="relative">
-                        <img
+                        <Image
                           src={selectedConversation.participants[0].avatar || '/api/placeholder/40/40'}
                           alt={`Profile picture of ${selectedConversation.participants[0].name}`}
-                          className="w-10 h-10 rounded-full"
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full object-cover"
+                          loading="eager"
+                          priority
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
                           getStatusColor(selectedConversation.participants[0].status)
@@ -847,10 +859,13 @@ const MessageCenter: React.FC = () => {
                   {selectedConversation.participants.map((participant) => (
                     <div key={participant.id} className="flex items-center space-x-3">
                       <div className="relative">
-                        <img
+                        <Image
                           src={participant.avatar || '/api/placeholder/40/40'}
                           alt={`Profile picture of ${participant.name}`}
-                          className="w-10 h-10 rounded-full"
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full object-cover"
+                          loading="lazy"
                         />
                         <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
                           getStatusColor(participant.status)
@@ -919,6 +934,8 @@ const MessageCenter: React.FC = () => {
       </AnimatePresence>
     </div>
   );
-};
+});
+
+MessageCenter.displayName = 'MessageCenter';
 
 export default MessageCenter;

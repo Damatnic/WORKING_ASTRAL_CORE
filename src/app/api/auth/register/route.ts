@@ -31,8 +31,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Hash password (password is already validated and sanitized by the enhanced schema)
-    const hashedPassword = await bcrypt.hash(validatedData.password, 12);
+    // Hash password with secure rounds (HIPAA compliance)
+    // Use 14 rounds for healthcare applications - higher security
+    const hashedPassword = await bcrypt.hash(validatedData.password, 14);
 
     // Generate verification token
     const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -115,19 +116,25 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Log audit event
+    // HIPAA Compliant Audit Logging
     await (prisma.auditLog as any).create({
         data: {
           id: crypto.randomUUID(),
         userId: user.id,
-        action: "user_registration",
-        resource: "user",
+        action: "USER_REGISTRATION",
+        resource: "User",
         resourceId: user.id,
         details: {
           role: validatedData.role,
-          email: validatedData.email,
+          emailDomain: validatedData.email.split('@')[1], // Log domain, not full email
+          userAgent: request.headers.get('user-agent')?.substring(0, 200),
+          registrationSource: "web_form",
         },
         outcome: "success",
+        ipAddress: request.headers.get('x-forwarded-for') || 
+                  request.headers.get('x-real-ip') || 
+                  'unknown',
+        userAgent: request.headers.get('user-agent')?.substring(0, 500),
       },
     });
 

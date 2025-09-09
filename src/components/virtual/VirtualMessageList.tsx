@@ -7,6 +7,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import Image from 'next/image';
 import { FixedSizeList as List } from 'react-window';
 import { MessageCircle, Check, CheckCheck, Clock, AlertCircle, Heart } from 'lucide-react';
 import { useVirtualScroll, useScrollRestoration, useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
@@ -185,10 +186,13 @@ export function VirtualMessageList({
           {!isOwn && (
             <div className="flex-shrink-0">
               {message.sender.avatar ? (
-                <img 
+                <Image 
                   src={message.sender.avatar} 
                   alt={`Profile picture of ${message.sender.name}`}
+                  width={32}
+                  height={32}
                   className="w-8 h-8 rounded-full object-cover"
+                  loading="lazy"
                 />
               ) : (
                 <div className={cn(

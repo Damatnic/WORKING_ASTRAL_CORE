@@ -89,7 +89,9 @@
       "Bash(mv:*)",
       "Bash(cp:*)",
       "Bash(cmd /c \"dir src\\app\\about\\page.tsx\")",
-      "Bash(attrib:*)"
+      "Bash(attrib:*)",
+      "Bash(timeout 30 npm run build)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []

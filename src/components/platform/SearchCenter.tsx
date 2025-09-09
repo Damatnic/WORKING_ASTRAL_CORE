@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   MagnifyingGlassIcon,
@@ -113,7 +114,7 @@ interface SavedSearch {
   useCount: number;
 }
 
-const SearchCenter: React.FC = () => {
+const SearchCenter: React.FC = React.memo(() => {
   const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -163,7 +164,7 @@ const SearchCenter: React.FC = () => {
       const response = await fetch('/api/platform/search/saved');
       if (response.ok) {
         const data = await response.json();
-        setSavedSearches(data.savedSearches.map((search: any) => ({
+        setSavedSearches(data.savedSearches.map((search: SavedSearch) => ({
           ...search,
           createdAt: new Date(search.createdAt),
           lastUsed: new Date(search.lastUsed)
@@ -180,7 +181,7 @@ const SearchCenter: React.FC = () => {
       const response = await fetch('/api/platform/search/recent');
       if (response.ok) {
         const data = await response.json();
-        setSearchHistory(data.searches.map((search: any) => ({
+        setSearchHistory(data.searches.map((search: SearchHistoryItem) => ({
           ...search,
           createdAt: new Date(search.createdAt)
         })));
@@ -275,7 +276,7 @@ const SearchCenter: React.FC = () => {
       const data = await response.json();
       
       // Transform results to match interface
-      const transformedResults = data.results.map((result: any) => ({
+      const transformedResults = data.results.map((result: SearchResult) => ({
         ...result,
         createdAt: new Date(result.createdAt),
         modifiedAt: new Date(result.modifiedAt)
@@ -888,10 +889,13 @@ const SearchCenter: React.FC = () => {
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
                       {result.metadata?.thumbnailUrl ? (
-                        <img
+                        <Image
                           src={result.metadata.thumbnailUrl}
                           alt={`Thumbnail for search result: ${result.title}`}
-                          className="w-12 h-12 object-cover rounded"
+                          width={80}
+                          height={60}
+                          className="w-20 h-15 rounded-md object-cover"
+                          loading="lazy"
                         />
                       ) : (
                         getTypeIcon(result.type)
@@ -1192,6 +1196,8 @@ const SearchCenter: React.FC = () => {
       </AnimatePresence>
     </div>
   );
-};
+});
+
+SearchCenter.displayName = 'SearchCenter';
 
 export default SearchCenter;

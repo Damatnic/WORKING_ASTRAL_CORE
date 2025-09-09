@@ -7,6 +7,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import Image from 'next/image';
 import { Heart, MessageCircle, Share2, Flag, MoreHorizontal, Eye, Bookmark, ChevronUp, ChevronDown } from 'lucide-react';
 import { useInfiniteScroll, useVirtualScroll, useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
 import { cn } from '@/lib/utils';
@@ -263,10 +264,13 @@ export function VirtualPostFeed({
             {post.media.map((media, idx) => (
               <div key={idx} className="rounded-lg overflow-hidden bg-gray-100">
                 {media.type === 'image' ? (
-                  <img 
+                  <Image 
                     src={media.url} 
-                    alt={media.alt || 'Image attached to post'} 
+                    alt={media.alt || 'Image attached to post'}
+                    width={400}
+                    height={300}
                     className="w-full h-auto max-h-96 object-cover"
+                    loading="lazy"
                   />
                 ) : media.type === 'video' ? (
                   <video 
@@ -387,10 +391,13 @@ export function VirtualPostFeed({
                       <span className="text-gray-600 font-medium">?</span>
                     </div>
                   ) : post.author.avatar ? (
-                    <img 
+                    <Image 
                       src={post.author.avatar} 
                       alt={`Profile picture of ${post.author.name}`}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full object-cover"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
