@@ -10,6 +10,7 @@ export { CrisisLoader } from './CrisisLoader';
 export { CrisisSkeleton, MoodTrackerSkeleton } from './SkeletonLoaders';
 export { DashboardSkeleton } from './DashboardSkeleton';
 export { WellnessLoader } from './WellnessLoader';
+export { CriticalBoundary } from './CriticalBoundary';
 
 // Additional loading components
 export const ProgressBar = ({ progress = 0, className = '' }: { progress?: number; className?: string }) => (
