@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Dashboard Loading Component
  * Provides progressive loading states optimized for dashboard content
