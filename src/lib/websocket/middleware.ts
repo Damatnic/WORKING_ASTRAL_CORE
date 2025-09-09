@@ -3,13 +3,47 @@
  * Validation, moderation, and security functions
  */
 
-// @ts-expect-error - bad-words module type issue
-import BadWordsFilter from 'bad-words';
+// Create a simple bad words filter instead of using the module
+class BadWordsFilter {
+  private badWords: Set<string>;
+  
+  constructor() {
+    this.badWords = new Set();
+  }
+  
+  addWords(...words: string[]) {
+    words.forEach(word => this.badWords.add(word.toLowerCase()));
+  }
+  
+  isProfane(text: string): boolean {
+    const lowerText = text.toLowerCase();
+    for (const word of this.badWords) {
+      if (lowerText.includes(word)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  clean(text: string): string {
+    let cleaned = text;
+    for (const word of this.badWords) {
+      const regex = new RegExp(word, 'gi');
+      cleaned = cleaned.replace(regex, '*'.repeat(word.length));
+    }
+    return cleaned;
+  }
+}
 import { MessagePayload, MESSAGE_VALIDATION } from "./events";
 import { prisma } from "@/lib/prisma";
 
 // Initialize bad words filter
 const filter = new BadWordsFilter();
+
+// Add basic profanity
+filter.addWords(
+  "fuck", "shit", "ass", "damn", "hell", "bitch", "crap", "piss"
+);
 
 // Add custom bad words for mental health context
 filter.addWords(
