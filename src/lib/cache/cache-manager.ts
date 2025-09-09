@@ -12,7 +12,7 @@
  * - Cache analytics and insights
  */
 
-import LRU from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import { redisCacheService, CacheType } from './redis-cache';
 import { cacheStrategyManager } from './cache-strategies';
 import { EventEmitter } from 'events';
@@ -148,9 +148,27 @@ class CircuitBreaker {
  * Multi-Tier Cache Manager
  */
 export class MultiTierCacheManager extends EventEmitter {
-  private l1Cache: LRU<string, any>;
+  private l1Cache: LRUCache<string, any>;
   private circuitBreaker: CircuitBreaker;
-  private stats: CacheStats;
+  private stats: CacheStats = {
+    l1Hits: 0,
+    l1Misses: 0,
+    l2Hits: 0,
+    l2Misses: 0,
+    totalHits: 0,
+    totalMisses: 0,
+    hitRatio: 0,
+    l1HitRatio: 0,
+    l2HitRatio: 0,
+    operations: 0,
+    errors: 0,
+    avgResponseTime: 0,
+    memoryUsage: {
+      l1Size: 0,
+      l1MaxSize: 0,
+      l1Utilization: 0
+    }
+  };
   private refreshIntervals: Map<string, NodeJS.Timeout> = new Map();
   private isInitialized: boolean = false;
   
@@ -158,12 +176,12 @@ export class MultiTierCacheManager extends EventEmitter {
     super();
     
     // Initialize L1 cache (Memory)
-    this.l1Cache = new LRU({
+    this.l1Cache = new LRUCache({
       max: CACHE_TIER_CONFIG.L1.maxSize,
-      maxAge: CACHE_TIER_CONFIG.L1.maxAge,
+      ttl: CACHE_TIER_CONFIG.L1.maxAge,
       updateAgeOnGet: CACHE_TIER_CONFIG.L1.updateAgeOnGet,
       allowStale: CACHE_TIER_CONFIG.L1.allowStale,
-      dispose: (key, value) => {
+      dispose: (key: any, value: any) => {
         this.emit('l1-evict', key, value);
       },
     });
@@ -579,7 +597,7 @@ export class MultiTierCacheManager extends EventEmitter {
    * Get cache statistics
    */
   getStats(): CacheStats {
-    const l1Size = this.l1Cache.length;
+    const l1Size = this.l1Cache.size;
     const l1MaxSize = this.l1Cache.max;
     const l1Utilization = l1Size / l1MaxSize;
     
@@ -728,4 +746,4 @@ export class MultiTierCacheManager extends EventEmitter {
 export const multiTierCacheManager = new MultiTierCacheManager();
 
 // Export types and interfaces
-export { CacheStats, CacheOperationResult, CacheRefreshConfig, CircuitBreakerState };
+export type { CacheStats, CacheOperationResult, CacheRefreshConfig, CircuitBreakerState };

@@ -6,7 +6,6 @@ import {
   LanguageIcon,
   GlobeAltIcon,
   CogIcon,
-  TranslateIcon,
   CheckIcon,
   XMarkIcon,
   PlusIcon,
@@ -351,7 +350,7 @@ const LanguageManager: React.FC = () => {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'languages', label: 'Languages', icon: FlagIcon },
-              { id: 'translations', label: 'Translations', icon: TranslateIcon },
+              { id: 'translations', label: 'Translations', icon: LanguageIcon },
               { id: 'projects', label: 'Projects', icon: DocumentTextIcon },
               { id: 'settings', label: 'Settings', icon: CogIcon }
             ].map((tab) => (
@@ -534,7 +533,7 @@ const LanguageManager: React.FC = () => {
             <div className="divide-y divide-gray-200">
               {filteredTranslations.length === 0 ? (
                 <div className="p-12 text-center text-gray-500">
-                  <TranslateIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                  <LanguageIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No translations found</h3>
                   <p>Try adjusting your search or filters</p>
                 </div>

@@ -193,7 +193,7 @@ export function withRateLimit(maxRequests: number = 60, windowMs: number = 60000
 }
 
 // Request validation middleware
-export function withValidation<T>(schema: z.ZodSchema<T>) {
+export function withValidation<T>(schema: any) {
   return (handler: (req: AuthenticatedRequest, validatedData: T) => Promise<NextResponse>) => {
     return async (req: AuthenticatedRequest) => {
       try {
@@ -214,7 +214,7 @@ export function withValidation<T>(schema: z.ZodSchema<T>) {
         return await handler(req, validatedData);
       } catch (error) {
         if (error instanceof z.ZodError) {
-          const validationErrors = error.issues.map(issue => ({
+          const validationErrors = (error as any).issues.map((issue: any) => ({
             field: issue.path.join('.'),
             message: issue.message,
             code: issue.code,

@@ -31,14 +31,14 @@ const PHI_FIELDS = [
   'sessionNotes'
 ];
 
-interface EncryptedData {
+export interface EncryptedData {
   encrypted: string;
   iv: string;
   tag: string;
   keyVersion: number;
 }
 
-interface KeyMetadata {
+export interface KeyMetadata {
   id: string;
   version: number;
   createdAt: Date;
@@ -115,7 +115,7 @@ class KeyManagement {
           await this.generateNewKey();
         } else {
           // Decrypt and load keys
-          keys.forEach(key => {
+          keys.forEach((key: any) => {
             const decryptedKey = this.decryptKey(key.encryptedKey);
             this.dataKeys.set(key.version, decryptedKey);
             this.currentKeyVersion = Math.max(this.currentKeyVersion, key.version);
@@ -283,7 +283,10 @@ class KeyManagement {
     try {
       await prisma.auditLog.create({
         data: {
+          id: crypto.randomUUID(),
           action: 'KEY_ROTATION',
+          resource: 'encryption_key',
+          outcome: 'success',
           details: {
             keyVersion: version,
             algorithm: ALGORITHM,
@@ -367,7 +370,7 @@ export class EncryptionService {
             ? encrypted[field] 
             : JSON.stringify(encrypted[field])
         );
-        encrypted[field] = JSON.stringify(encryptedData);
+        (encrypted as any)[field] = JSON.stringify(encryptedData);
       }
     }
 
@@ -387,9 +390,9 @@ export class EncryptionService {
           const decryptedValue = this.decrypt(encryptedData);
           
           try {
-            decrypted[field] = JSON.parse(decryptedValue);
+            (decrypted as any)[field] = JSON.parse(decryptedValue);
           } catch {
-            decrypted[field] = decryptedValue;
+            (decrypted as any)[field] = decryptedValue;
           }
         } catch (error) {
           console.error(`Failed to decrypt field ${field}:`, error);

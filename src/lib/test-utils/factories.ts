@@ -1,160 +1,149 @@
-/**
- * Test Data Factories
- * Generate realistic test data for various entities
- */
+import { faker } from '@faker-js/faker';
+import { User, UserRole, Post, Comment, Session, CrisisAlert, SafetyPlan } from '@prisma/client';
 
-import { faker } from '@faker-js/faker'
-import { UserRole } from '@prisma/client'
-import type { User, CrisisSession, SafetyPlan, MoodEntry } from '@prisma/client'
-
-// User Factory
-export const userFactory = {
-  create: (overrides: Partial<User> = {}): User => ({
+// User factory
+export const createMockUser = (overrides: Partial<User> = {}): User => {
+  return {
     id: faker.string.uuid(),
+    name: faker.person.fullName(),
+    anonymousId: faker.string.uuid(),
     email: faker.internet.email(),
-    hashedPassword: faker.string.alphanumeric(60), // Bcrypt hash length
+    hashedPassword: faker.internet.password(),
+    role: UserRole.USER,
+    permissions: [],
+    isActive: true,
+    isEmailVerified: false,
+    avatar: faker.image.avatar(),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    role: UserRole.USER,
-    isActive: true,
+    dateOfBirth: faker.date.past(),
+    phoneNumber: faker.phone.number(),
+    emergencyContact: faker.person.fullName(),
+    emergencyPhone: faker.phone.number(),
+    preferredLanguage: 'en',
+    timezone: 'UTC',
     isVerified: true,
-    failedLoginAttempts: 0,
-    lockedUntil: null,
+    mfaEnabled: false,
     lastLoginAt: faker.date.recent(),
-    lastActiveAt: faker.date.recent(),
+    loginAttempts: 0,
+    lockedUntil: null,
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
-    deletedAt: null,
-    avatar: faker.image.avatar(),
-    timezone: 'America/New_York',
-    preferences: {
-      language: 'en',
-      theme: 'light',
-      notifications: {
-        email: true,
-        push: true,
-        crisis: true,
-      },
-    },
-    mfaEnabled: false,
-    mfaSecret: null,
-    mfaBackupCodes: [],
-    privacySettings: {
-      shareData: false,
-      analytics: false,
-      marketing: false,
-    },
     ...overrides,
-  }),
+  };
+};
 
-  createBatch: (count: number, overrides: Partial<User> = {}): User[] => {
-    return Array.from({ length: count }, () => userFactory.create(overrides))
-  },
+// Enhanced user factory with specific roles
+export const createMockUserWithRole = (role: UserRole, overrides: Partial<User> = {}): User => {
+  const baseUser = createMockUser(overrides);
+  return {
+    ...baseUser,
+    role,
+    permissions: role === UserRole.ADMIN ? ['admin', 'user'] : ['user'],
+  };
+};
 
-  admin: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ role: UserRole.ADMIN, ...overrides }),
-
-  therapist: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ role: UserRole.THERAPIST, ...overrides }),
-
-  crisisCounselor: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ role: UserRole.CRISIS_COUNSELOR, ...overrides }),
-
-  helper: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ role: UserRole.HELPER, ...overrides }),
-
-  superAdmin: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ role: UserRole.SUPER_ADMIN, ...overrides }),
-
-  inactive: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ isActive: false, ...overrides }),
-
-  unverified: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ isVerified: false, ...overrides }),
-
-  locked: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ 
-      failedLoginAttempts: 5,
-      lockedUntil: faker.date.future(),
-      ...overrides 
-    }),
-
-  withMFA: (overrides: Partial<User> = {}): User => 
-    userFactory.create({ 
-      mfaEnabled: true,
-      mfaSecret: faker.string.alphanumeric(32),
-      mfaBackupCodes: Array.from({ length: 10 }, () => faker.string.numeric(8)),
-      ...overrides 
-    }),
-}
-
-// API Response Factories
-export const apiResponseFactory = {
-  success: <T>(data: T) => ({
-    success: true,
-    data,
-    message: 'Operation completed successfully',
-    timestamp: new Date().toISOString(),
-  }),
-
-  error: (message: string, code = 500) => ({
-    success: false,
-    error: {
-      message,
-      code,
-      timestamp: new Date().toISOString(),
-    },
-  }),
-
-  validationError: (errors: Record<string, string[]>) => ({
-    success: false,
-    error: {
-      message: 'Validation failed',
-      code: 400,
-      details: errors,
-      timestamp: new Date().toISOString(),
-    },
-  }),
-}
-
-// Form Data Factories
-export const formDataFactory = {
-  loginForm: (overrides = {}) => ({
-    email: faker.internet.email(),
-    password: 'TestPassword123!',
-    rememberMe: false,
+// Admin user factory
+export const createMockAdmin = (overrides: Partial<User> = {}): User => {
+  return createMockUserWithRole(UserRole.ADMIN, {
+    email: 'admin@example.com',
+    isEmailVerified: true,
     ...overrides,
-  }),
+  });
+};
 
-  registrationForm: (overrides = {}) => ({
-    email: faker.internet.email(),
-    password: 'TestPassword123!',
-    confirmPassword: 'TestPassword123!',
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    acceptTerms: true,
+// Therapist user factory
+export const createMockTherapist = (overrides: Partial<User> = {}): User => {
+  return createMockUserWithRole(UserRole.THERAPIST, {
+    email: 'therapist@example.com',
+    isEmailVerified: true,
     ...overrides,
-  }),
+  });
+};
 
-  moodForm: (overrides = {}) => ({
-    mood: faker.helpers.arrayElement(['VERY_LOW', 'LOW', 'NEUTRAL', 'GOOD', 'VERY_GOOD']),
-    energy: faker.number.int({ min: 1, max: 10 }),
-    stress: faker.number.int({ min: 1, max: 10 }),
-    anxiety: faker.number.int({ min: 1, max: 10 }),
-    sleep: faker.number.int({ min: 1, max: 12 }),
-    notes: faker.lorem.sentence(),
-    tags: [],
-    activities: [],
-    triggers: [],
+// Patient user factory
+export const createMockPatient = (overrides: Partial<User> = {}): User => {
+  return createMockUserWithRole(UserRole.USER, {
+    email: 'patient@example.com',
     ...overrides,
-  }),
-}
+  });
+};
 
-// Export all factories
-export const factories = {
-  user: userFactory,
-  apiResponse: apiResponseFactory,
-  formData: formDataFactory,
-}
+// Post factory
+export const createMockPost = (overrides: Partial<Post> = {}): Post => {
+  return {
+    id: faker.string.uuid(),
+    title: faker.lorem.sentence(),
+    content: faker.lorem.paragraphs(),
+    authorId: faker.string.uuid(),
+    published: true,
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    ...overrides,
+  };
+};
 
-export default factories
+// Comment factory
+export const createMockComment = (overrides: Partial<Comment> = {}): Comment => {
+  return {
+    id: faker.string.uuid(),
+    content: faker.lorem.paragraph(),
+    authorId: faker.string.uuid(),
+    postId: faker.string.uuid(),
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    ...overrides,
+  };
+};
+
+// Session factory
+export const createMockSession = (overrides: Partial<Session> = {}): Session => {
+  return {
+    id: faker.string.uuid(),
+    sessionToken: faker.string.alphanumeric(32),
+    userId: faker.string.uuid(),
+    expires: faker.date.future(),
+    ...overrides,
+  };
+};
+
+// Crisis Alert factory
+export const createMockCrisisAlert = (overrides: Partial<CrisisAlert> = {}): CrisisAlert => {
+  return {
+    id: faker.string.uuid(),
+    userId: faker.string.uuid(),
+    severity: 'MEDIUM',
+    message: faker.lorem.sentence(),
+    resolved: false,
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    ...overrides,
+  };
+};
+
+// Safety Plan factory
+export const createMockSafetyPlan = (overrides: Partial<SafetyPlan> = {}): SafetyPlan => {
+  return {
+    id: faker.string.uuid(),
+    userId: faker.string.uuid(),
+    title: faker.lorem.words(3),
+    content: faker.lorem.paragraphs(),
+    isActive: true,
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    ...overrides,
+  };
+};
+
+// Batch factories
+export const createMockUsers = (count: number = 5): User[] => {
+  return Array.from({ length: count }, () => createMockUser());
+};
+
+export const createMockPosts = (count: number = 5): Post[] => {
+  return Array.from({ length: count }, () => createMockPost());
+};
+
+export const createMockComments = (count: number = 5): Comment[] => {
+  return Array.from({ length: count }, () => createMockComment());
+};

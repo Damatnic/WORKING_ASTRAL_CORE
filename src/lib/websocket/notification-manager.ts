@@ -53,6 +53,18 @@ export class NotificationManager {
         ...payload,
         timestamp: new Date().toISOString()
       });
+
+      // Store in database for persistence
+      await prisma.notification.create({
+        data: {
+          userId,
+          type: payload.type,
+          title: payload.title,
+          message: payload.message,
+          isPriority: payload.priority === 'high' || payload.priority === 'urgent',
+          metadata: payload.metadata || {},
+        }
+      });
     } catch (error) {
       console.error('Error sending notification:', error);
     }
@@ -68,7 +80,7 @@ export class NotificationManager {
       // Get users with specified roles
       const users = await prisma.user.findMany({
         where: { role: { in: roles } },
-        select: { id: true },
+        select: { id: true }
       });
 
       // Send to each user
@@ -97,6 +109,19 @@ export class NotificationManager {
       if (payload.userId) {
         await this.notifyUser(payload.userId, payload);
       }
+
+      // Create crisis alert record
+      await prisma.safetyAlert.create({
+        data: {
+          type: 'crisis',
+          severity: payload.severity,
+          userId: payload.userId || '',
+          context: payload.message,
+          indicators: [payload.alertId],
+          handled: false,
+          actions: ['notification_sent'],
+        }
+      });
     } catch (error) {
       console.error('Error sending crisis notification:', error);
     }
@@ -115,8 +140,8 @@ export class NotificationManager {
       const count = await prisma.notification.count({
         where: {
           userId,
-          read: false,
-        },
+          isRead: false,
+        }
       });
       return count;
     } catch (error) {
@@ -129,14 +154,42 @@ export class NotificationManager {
     try {
       const whereClause = notificationId 
         ? { id: notificationId, userId }
-        : { userId, read: false };
+        : { userId, isRead: false };
 
       await prisma.notification.updateMany({
         where: whereClause,
-        data: { read: true },
+        data: { isRead: true, readAt: new Date() }
       });
     } catch (error) {
       console.error('Error marking notifications as read:', error);
+    }
+  }
+
+  public async markAllAsRead(userId: string): Promise<void> {
+    try {
+      await prisma.notification.updateMany({
+        where: { userId, isRead: false },
+        data: { isRead: true, readAt: new Date() }
+      });
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+    }
+  }
+
+  public async broadcast(payload: NotificationPayload): Promise<void> {
+    if (!this.io) {
+      console.warn('Socket.IO not initialized');
+      return;
+    }
+
+    try {
+      // Broadcast to all connected users
+      this.io.emit('broadcast_notification', {
+        ...payload,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Error broadcasting notification:', error);
     }
   }
 }

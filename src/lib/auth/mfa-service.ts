@@ -117,7 +117,7 @@ export class MFAService {
       const isRequired = this.isMFARequired(user.role);
       const mfaSettings = (user as any).mfaSettings || [];
       const enabledMethods = mfaSettings
-        .filter(setting => setting.status === MFAStatus.ENABLED)
+        .filter((setting: any) => setting.status === MFAStatus.ENABLED)
         .map((setting: any) => setting.method as MFAMethod);
 
       return {
@@ -396,7 +396,7 @@ export class MFAService {
       });
 
       // Get decrypted backup codes
-      const backupCodes = updatedSettings.backupCodes?.map(code => this.decryptSecret(code)) || [];
+      const backupCodes = updatedSettings.backupCodes?.map((code: any) => this.decryptSecret(code)) || [];
 
       await auditService.logEvent({
         category: AuditEventCategory.MFA_ENABLED,

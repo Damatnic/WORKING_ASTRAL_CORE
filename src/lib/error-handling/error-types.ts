@@ -77,7 +77,10 @@ export class AppError extends Error {
     severity: ErrorSeverity = ErrorSeverity.MEDIUM,
     statusCode: number = 500,
     isOperational: boolean = true,
-    context?: Record<string, any>
+    context?: Record<string, any>,
+    requestId?: string,
+    userId?: string,
+    sessionId?: string
   ) {
     super(message);
     
@@ -88,6 +91,9 @@ export class AppError extends Error {
     this.statusCode = statusCode;
     this.isOperational = isOperational;
     this.context = context;
+    this.requestId = requestId;
+    this.userId = userId;
+    this.sessionId = sessionId;
     this.stackTrace = this.stack;
     
     // Ensure prototype chain is properly set
@@ -159,14 +165,25 @@ export class ValidationError extends AppError {
 }
 
 export class DatabaseError extends AppError {
-  constructor(message: string, originalError?: Error, context?: Record<string, any>) {
+  constructor(
+    message: string, 
+    originalError?: Error, 
+    context?: Record<string, any>,
+    severity: ErrorSeverity = ErrorSeverity.HIGH,
+    requestId?: string,
+    userId?: string,
+    sessionId?: string
+  ) {
     super(
       message,
       ErrorCategory.DATABASE,
-      ErrorSeverity.HIGH,
+      severity,
       500,
       true,
-      { ...context, originalError }
+      { ...context, originalError },
+      requestId,
+      userId,
+      sessionId
     );
   }
 }

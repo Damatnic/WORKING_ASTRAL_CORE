@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       period: searchParams.get('period'),
       startDate: searchParams.get('startDate'),
       endDate: searchParams.get('endDate'),
-    });
+    }) as any;
     
     // Calculate date range
     const { startDate, endDate } = calculateDateRange(params);

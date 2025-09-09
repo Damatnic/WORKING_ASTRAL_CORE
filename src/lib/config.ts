@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 
 // Environment validation schema
 const envSchema = z.object({
@@ -45,13 +45,13 @@ const envSchema = z.object({
   SENTRY_DSN: z.string().optional(),
   
   // Rate limiting
-  RATE_LIMIT_ENABLED: z.string().transform(val => val === 'true').default('true'),
+  RATE_LIMIT_ENABLED: z.string().transform((val: string) => val === 'true').default('true'),
   
   // Feature flags
-  ENABLE_CRISIS_INTERVENTION: z.string().transform(val => val === 'true').default('true'),
-  ENABLE_THERAPIST_BOOKING: z.string().transform(val => val === 'true').default('true'),
-  ENABLE_AI_FEATURES: z.string().transform(val => val === 'true').default('false'),
-  ENABLE_ANALYTICS: z.string().transform(val => val === 'true').default('true'),
+  ENABLE_CRISIS_INTERVENTION: z.string().transform((val: string) => val === 'true').default('true'),
+  ENABLE_THERAPIST_BOOKING: z.string().transform((val: string) => val === 'true').default('true'),
+  ENABLE_AI_FEATURES: z.string().transform((val: string) => val === 'true').default('false'),
+  ENABLE_ANALYTICS: z.string().transform((val: string) => val === 'true').default('true'),
   
   // Security
   ALLOWED_ORIGINS: z.string().optional(),
@@ -59,16 +59,16 @@ const envSchema = z.object({
   
   // WebSocket
   WEBSOCKET_PORT: z.string().optional(),
-  WEBSOCKET_ENABLED: z.string().transform(val => val === 'true').default('true'),
+  WEBSOCKET_ENABLED: z.string().transform((val: string) => val === 'true').default('true'),
 });
 
 // Parse and validate environment variables
 function validateEnv() {
   try {
     return envSchema.parse(process.env);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      const errorMessages = error.errors.map(
+  } catch (error: unknown) {
+    if (error instanceof ZodError) {
+      const errorMessages = (error as ZodError).issues.map(
         (err: any) => `${err.path.join('.')}: ${err.message}`
       );
       throw new Error(

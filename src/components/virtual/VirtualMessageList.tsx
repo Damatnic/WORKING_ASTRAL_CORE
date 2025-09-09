@@ -8,7 +8,7 @@
 
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
-import { FixedSizeList as List } from 'react-window';
+import { VariableSizeList as List } from 'react-window';
 import { MessageCircle, Check, CheckCheck, Clock, AlertCircle, Heart } from 'lucide-react';
 import { useVirtualScroll, useScrollRestoration, useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
 import { cn } from '@/lib/utils';
@@ -366,6 +366,7 @@ export function VirtualMessageList({
         <List
           ref={listRef}
           height={height - (onSendMessage ? 80 : 0)}
+          width="100%"
           itemCount={messages.length}
           itemSize={estimateItemHeight}
           onScroll={handleScroll}

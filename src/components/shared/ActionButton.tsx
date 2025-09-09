@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
  * Provides consistent button styling and behavior across dashboards
  */
 
-export interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ActionButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onAnimationEnd' | 'onDrag' | 'onDragStart' | 'onDragEnd'> {
   /** Button variant */
   variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'ghost' | 'outline';
   /** Button size */

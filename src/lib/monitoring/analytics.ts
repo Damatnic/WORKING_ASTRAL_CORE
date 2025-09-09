@@ -202,7 +202,7 @@ class AnalyticsService extends EventEmitter {
   private featureUsage: Map<string, FeatureUsage> = new Map();
   private treatmentOutcomes: Map<string, TreatmentOutcome> = new Map();
   private hashingSalt: string;
-  private aggregationTimer: NodeJS.Timer | null = null;
+  private aggregationTimer: ReturnType<typeof setTimeout> | null = null;
   private isInitialized = false;
 
   constructor(analyticsConfig?: Partial<AnalyticsConfig>) {
@@ -1110,16 +1110,5 @@ class AnalyticsService extends EventEmitter {
 
 // Singleton instance
 export const analyticsService = new AnalyticsService();
-
-export type {
-  AnalyticsEvent,
-  AnalyticsEventType,
-  UserJourney,
-  FeatureUsage,
-  TreatmentOutcome,
-  CrisisAnalytics,
-  EngagementMetrics,
-  AnalyticsConfig,
-};
 
 export default analyticsService;

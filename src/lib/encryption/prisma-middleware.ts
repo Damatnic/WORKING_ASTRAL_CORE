@@ -208,8 +208,8 @@ function getRelatedModelName(relationName: string): ModelName | undefined {
 /**
  * Create the encryption middleware
  */
-export function createEncryptionMiddleware(): Prisma.Middleware {
-  return async (params, next) => {
+export function createEncryptionMiddleware(): (params: any, next: any) => Promise<any> {
+  return async (params: any, next: any) => {
     const { model, action } = params;
 
     // Skip if no model or not a relevant model

@@ -162,7 +162,7 @@ export const initWebSocket = (httpServer: HTTPServer): any => {
     }).catch(console.error);
     
     // Crisis-specific event handlers
-    socket.on('crisis:subscribe', async (data) => {
+    socket.on('crisis:subscribe', async (data: any) => {
       // Verify permissions for crisis subscription
       if (![UserRole.CRISIS_COUNSELOR, UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(userRole)) {
         socket.emit('error', { message: 'Unauthorized to subscribe to crisis events' });
@@ -174,7 +174,7 @@ export const initWebSocket = (httpServer: HTTPServer): any => {
     });
     
     // Handle crisis alert acknowledgment
-    socket.on('crisis:alert:acknowledge', async (data) => {
+    socket.on('crisis:alert:acknowledge', async (data: any) => {
       const { alertId } = data;
       
       // Verify counselor permissions

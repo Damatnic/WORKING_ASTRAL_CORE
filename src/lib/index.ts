@@ -2,10 +2,12 @@
 // Central export point for all library modules
 
 // Auth and middleware exports
-export {
+export type {
   // Types
   AuthenticatedRequest,
-  
+} from './auth-middleware';
+
+export {
   // Core middleware functions
   withAuth,
   withRoles,

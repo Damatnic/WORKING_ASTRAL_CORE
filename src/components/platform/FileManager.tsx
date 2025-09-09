@@ -134,11 +134,6 @@ const FileManager: React.FC = React.memo(() => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
 
-  // Load files from API
-  useEffect(() => {
-    loadFiles();
-  }, [loadFiles]);
-
   const loadFiles = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -165,6 +160,11 @@ const FileManager: React.FC = React.memo(() => {
       setIsLoading(false);
     }
   }, [currentPath, sortBy, sortOrder, searchQuery, filterType]);
+
+  // Load files from API
+  useEffect(() => {
+    loadFiles();
+  }, [loadFiles]);
 
   const getFileIcon = (file: FileItem) => {
     if (file.type === 'folder') {

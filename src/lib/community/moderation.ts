@@ -306,12 +306,13 @@ async function logCrisisDetection(
           severityLevel: 9, // High severity
           triggerType: "content_detection",
           interventionType: "automated_detection",
-          encryptedDetails: {
+          encryptedDetails: JSON.parse(JSON.stringify({
             detection: detection,
             timestamp: new Date(),
-          },
+          })),
           responseTime: 0, // Immediate
           resolved: false,
+          updatedAt: new Date(),
         },
       });
     }

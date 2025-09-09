@@ -1,52 +1,92 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Force dynamic rendering for API routes
-export const dynamic = 'force-dynamic';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(request: NextRequest) {
   try {
-    return NextResponse.json({ 
-      data: [
-        { id: '1', title: 'Goal 1', description: 'Description 1' },
-        { id: '2', title: 'Goal 2', description: 'Description 2' }
-      ] 
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to get wellness goals' }, { status: 500 });
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    // TODO: Implement GET logic
+    return NextResponse.json({ message: 'GET endpoint not implemented' });
+  } catch (error) {
+    console.error('GET error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    return NextResponse.json({ 
-      data: { id: 'new-goal', ...body }, 
-      message: 'Wellness goal created' 
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to create wellness goal' }, { status: 500 });
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    // TODO: Implement POST logic
+    return NextResponse.json({ message: 'POST endpoint not implemented' });
+  } catch (error) {
+    console.error('POST error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
-    const body = await request.json();
-    return NextResponse.json({ 
-      data: { id: body.id || 'updated-goal', ...body }, 
-      message: 'Wellness goal updated' 
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to update wellness goal' }, { status: 500 });
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    // TODO: Implement PUT logic
+    return NextResponse.json({ message: 'PUT endpoint not implemented' });
+  } catch (error) {
+    console.error('PUT error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
-    return NextResponse.json({ 
-      data: null, 
-      message: 'Wellness goal deleted' 
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to delete wellness goal' }, { status: 500 });
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    // TODO: Implement DELETE logic
+    return NextResponse.json({ message: 'DELETE endpoint not implemented' });
+  } catch (error) {
+    console.error('DELETE error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

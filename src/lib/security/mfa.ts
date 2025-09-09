@@ -67,7 +67,7 @@ export class MFAService {
   private constructor() {
     // Configure TOTP settings
     authenticator.options = {
-      algorithm: MFA_CONFIG.algorithm,
+      algorithm: MFA_CONFIG.algorithm as any,
       digits: MFA_CONFIG.digits,
       period: MFA_CONFIG.period,
       window: MFA_CONFIG.window
@@ -111,7 +111,7 @@ export class MFAService {
     // Get user details
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { email: true }
+      select: { id: true, email: true }
     });
 
     if (!user) {
@@ -120,7 +120,7 @@ export class MFAService {
 
     // Generate QR code
     const otpauth = authenticator.keyuri(
-      user.email,
+      user.email || user.id,
       MFA_CONFIG.issuer,
       secret
     );
@@ -384,12 +384,13 @@ export class MFAService {
 
     // Store encrypted SMS code
     const encryptedCode = encryptionService.encrypt(code);
-    await prisma.smsVerification.create({
+    await prisma.emailVerification.create({
       data: {
         userId,
-        code: JSON.stringify(encryptedCode),
-        expiresAt: expiry,
-        attempts: 0
+        token: JSON.stringify(encryptedCode),
+        expires: expiry,
+        email: '',
+        verified: false
       }
     });
 
@@ -427,10 +428,10 @@ export class MFAService {
    * Verify SMS code
    */
   async verifySMSCode(userId: string, code: string): Promise<MFAVerification> {
-    const verification = await prisma.smsVerification.findFirst({
+    const verification = await prisma.emailVerification.findFirst({
       where: {
         userId,
-        expiresAt: { gt: new Date() },
+        expires: { gt: new Date() },
         verified: false
       },
       orderBy: { createdAt: 'desc' }
@@ -441,7 +442,10 @@ export class MFAService {
     }
 
     // Check attempts
-    if (verification.attempts >= MFA_CONFIG.maxAttempts) {
+    // Check attempt limit using external tracking
+    const attemptKey = `sms-${userId}`;
+    const attemptInfo = this.attemptTracker.get(attemptKey);
+    if (attemptInfo && attemptInfo.count >= MFA_CONFIG.maxAttempts) {
       return {
         valid: false,
         remainingAttempts: 0
@@ -449,12 +453,12 @@ export class MFAService {
     }
 
     // Decrypt and verify code
-    const encryptedCode = JSON.parse(verification.code);
+    const encryptedCode = JSON.parse(verification.token);
     const storedCode = encryptionService.decrypt(encryptedCode);
 
     if (code === storedCode) {
       // Mark as verified
-      await prisma.smsVerification.update({
+      await prisma.emailVerification.update({
         where: { id: verification.id },
         data: { verified: true }
       });
@@ -476,10 +480,11 @@ export class MFAService {
       return { valid: true };
     }
 
-    // Increment attempts
-    await prisma.smsVerification.update({
-      where: { id: verification.id },
-      data: { attempts: verification.attempts + 1 }
+    // Increment attempts in tracker
+    const currentCount = attemptInfo?.count || 0;
+    this.attemptTracker.set(attemptKey, {
+      count: currentCount + 1,
+      lastAttempt: new Date()
     });
 
     // Log failed verification
@@ -487,13 +492,13 @@ export class MFAService {
       AuditEventType.MFA_CHALLENGE_FAILURE,
       'SMS code verification failed',
       { userId },
-      { attemptNumber: verification.attempts + 1 },
+      { attemptNumber: currentCount + 1 },
       false
     );
 
     return {
       valid: false,
-      remainingAttempts: MFA_CONFIG.maxAttempts - verification.attempts - 1
+      remainingAttempts: MFA_CONFIG.maxAttempts - (attemptInfo?.count || 0) - 1
     };
   }
 

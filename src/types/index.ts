@@ -12,15 +12,19 @@ export type {
   NoteType,
   SessionStatus,
   User,
+  HelperProfile,
+  ClientStatus
+} from './prisma';
+
+// Import Prisma generated types directly
+export type {
   Session,
   CrisisReport,
   MoodEntry,
   JournalEntry,
   SafetyPlan,
-  Notification,
-  HelperProfile,
-  ClientStatus
-} from './prisma';
+  Notification
+} from '@prisma/client';
 
 // Export API types with no conflicts
 export type {
@@ -43,6 +47,45 @@ export type {
   Message,
   MessageReaction
 } from './api';
+
+// Add missing validation types
+export interface ValidationError {
+  field: string;
+  message: string;
+  code?: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
+export interface SecurityContext {
+  userId?: string;
+  sessionId?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  permissions: string[];
+}
+
+// Add missing utility functions
+export const isUUID = (value: string): boolean => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(value);
+};
+
+export const isEmail = (value: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(value);
+};
+
+// Add missing enum types
+export enum PostCategory {
+  GENERAL = 'GENERAL',
+  SUPPORT = 'SUPPORT',
+  RESOURCES = 'RESOURCES',
+  DISCUSSION = 'DISCUSSION'
+}
 
 // Export API functions (these are not types, so they need regular export)
 export {

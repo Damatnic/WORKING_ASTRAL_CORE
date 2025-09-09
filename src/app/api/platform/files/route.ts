@@ -330,7 +330,7 @@ export async function POST(request: NextRequest) {
     
     if (isEncrypted) {
       encryptionKey = crypto.randomBytes(32).toString('hex');
-      finalBuffer = encryptFile(buffer, encryptionKey);
+      finalBuffer = Buffer.from(encryptFile(buffer, encryptionKey));
     }
 
     // Write file to disk
@@ -339,17 +339,19 @@ export async function POST(request: NextRequest) {
     // Create database record
     const fileRecord = await prisma.file.create({
         data: {
-          id: generatePrismaCreateFields().id, id: fileId,
+          id: fileId,
         
+        filename: file.name,
+        originalName: file.name,
         mimeType: file.type,
         size: file.size,
         path: parentPath + file.name,
-        storagePath: filePath,
-        ownerId: user.id,
+        userId: user.id,
         isEncrypted,
         encryptionKey: isEncrypted ? encryptionKey : null,
         tags,
         version: 1,
+        checksum: crypto.createHash('sha256').update(finalBuffer).digest('hex'),
         virusScanStatus: 'clean',
         virusScanDate: new Date(),
         metadata: {
@@ -362,12 +364,14 @@ export async function POST(request: NextRequest) {
     // Create initial version record
     await prisma.fileVersion.create({
         data: {
-          id: generatePrismaCreateFields().id,fileId: fileRecord.id,
-        version: 1,
-        size: file.size,
-        
-        userId: user.id,
-        comment: 'Initial upload'
+          id: generatePrismaCreateFields().id,
+          fileId: fileRecord.id,
+          version: 1,
+          path: parentPath + file.name,
+          size: file.size,
+          checksum: crypto.createHash('sha256').update(finalBuffer).digest('hex'),
+          changedBy: user.id,
+          changeNotes: 'Initial upload'
       }
     });
 

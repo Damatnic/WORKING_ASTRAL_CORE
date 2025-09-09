@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { prisma } from "@/lib/prisma";
 
 // Force dynamic rendering for API routes
@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validation failed", details: error.issues },
+        { error: "Validation failed", details: (error as ZodError).issues },
         { status: 400 }
       );
     }

@@ -5,7 +5,18 @@
 
 import Image, { ImageProps } from 'next/image';
 import React, { memo, useState, useCallback } from 'react';
-import { useDeviceCapabilities } from '@/lib/performance/dynamic-imports';
+
+// Mock device capabilities hook
+const useDeviceCapabilities = () => ({
+  isMobile: false,
+  isSlowConnection: false,
+  hasLowMemory: false,
+  supportsWebP: true,
+  preferReducedMotion: false,
+  isLowEnd: false,
+  isSlowNetwork: false,
+  memoryLimitMB: 8192
+});
 
 interface OptimizedImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   src: string;

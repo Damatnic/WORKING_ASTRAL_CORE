@@ -302,6 +302,24 @@ export function usePerformanceMonitor() {
     };
   }, [stopMonitoring]);
 
+  // Mock measurement functions for compatibility
+  const startMeasurement = useCallback((name: string) => {
+    if (typeof performance !== 'undefined' && performance.mark) {
+      performance.mark(`${name}-start`);
+    }
+  }, []);
+
+  const endMeasurement = useCallback((name: string) => {
+    if (typeof performance !== 'undefined' && performance.mark && performance.measure) {
+      performance.mark(`${name}-end`);
+      try {
+        performance.measure(name, `${name}-start`, `${name}-end`);
+      } catch (e) {
+        // Ignore measurement errors
+      }
+    }
+  }, []);
+
   return {
     metrics,
     isMonitoring,
@@ -311,5 +329,7 @@ export function usePerformanceMonitor() {
     getPerformanceScore,
     getRecommendations,
     thresholds: DEFAULT_THRESHOLDS,
+    startMeasurement,
+    endMeasurement,
   };
 }

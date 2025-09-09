@@ -95,7 +95,7 @@ export async function GET(req: NextRequest) {
       status: searchParams.get('status'),
       sortBy: searchParams.get('sortBy'),
       sortOrder: searchParams.get('sortOrder'),
-    });
+    }) as any;
     
     // Build query filters
     const where: any = {
@@ -216,7 +216,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createSessionSchema, body);
+    const data = validateInput(createSessionSchema, body) as any;
     
     // Verify consent for client
     const hasConsent = await verifyClientConsent((session as any).user.id, data.clientId);
@@ -388,7 +388,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateSessionSchema, body);
+    const data = validateInput(updateSessionSchema, body) as any;
     
     // Get existing appointment
     const appointment = await prisma.appointment.findUnique({

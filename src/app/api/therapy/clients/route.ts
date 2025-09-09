@@ -13,7 +13,7 @@ import {
   verifyClientConsent,
   addSecurityHeaders,
 } from '@/lib/api-middleware';
-import { encrypt, decrypt, encryptJSON, decryptJSON } from '@/lib/encryption';
+import { encryptData as encrypt, decryptData as decrypt, encryptJSON, decryptJSON } from '@/lib/encryption';
 import { therapyRateLimiter, getClientIdentifier } from '@/lib/rate-limit';
 
 // Force dynamic rendering for API routes
@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
       status: searchParams.get('status'),
       sortBy: searchParams.get('sortBy'),
       sortOrder: searchParams.get('sortOrder'),
-    });
+    }) as any;
     
     // Build query filters
     const where: any = {
@@ -240,7 +240,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createClientSchema, body);
+    const data = validateInput(createClientSchema, body) as any;
     
     // Check if client user exists
     const clientUser = await prisma.user.findUnique({
@@ -359,7 +359,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateClientSchema, body);
+    const data = validateInput(updateClientSchema, body) as any;
     
     // Verify therapist has access to this client
     const hasConsent = await verifyClientConsent((session as any).user.id, data.clientId);

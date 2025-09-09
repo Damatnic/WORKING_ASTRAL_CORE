@@ -756,7 +756,7 @@ export default function ScheduleManager({ className = "" }: ScheduleManagerProps
       <AnimatePresence>
         {(isEditing || showNewSlotModal) && (
           <TimeSlotEditor
-            slot={selectedTimeSlot}
+            slot={selectedTimeSlot || undefined}
             onSave={(slot) => {
               if (selectedTimeSlot?.id) {
                 // Edit existing

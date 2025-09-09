@@ -93,8 +93,7 @@ export function isEncryptedDataValid(data: string): boolean {
 
 // Type exports for comprehensive typing
 export type {
-  EncryptedData as SecurityEncryptedData,
-  EncryptedField as EncryptionField
+  EncryptedData as SecurityEncryptedData
 } from './security/encryption';
 
 export interface EncryptionOptions {

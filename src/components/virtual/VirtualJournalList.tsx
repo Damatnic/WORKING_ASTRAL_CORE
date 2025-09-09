@@ -7,7 +7,7 @@
 'use client';
 
 import React, { useCallback, useState, useMemo } from 'react';
-import { Calendar, Mood, Lock, Eye, Edit, Download, Search, Filter, Heart, Zap, Sun, Cloud, CloudRain, Snowflake } from 'lucide-react';
+import { Calendar, Smile, Lock, Eye, Edit, Download, Search, Filter, Heart, Zap, Sun, Cloud, CloudRain, Snowflake } from 'lucide-react';
 import { useVirtualScroll, useScrollRestoration, useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
 import { cn } from '@/lib/utils';
 

@@ -198,7 +198,11 @@ const PeerChat: React.FC<PeerChatProps> = ({
 
     // Send via WebSocket
     try {
-      await ws.sendPeerMessage(match.matchId, message.content);
+      await ws.sendPeerMessage({
+        matchId: match.matchId,
+        content: message.content,
+        messageId: message.id
+      });
     } catch (error) {
       console.error('Failed to send message:', error);
       // Remove optimistic message on failure
@@ -215,7 +219,8 @@ const PeerChat: React.FC<PeerChatProps> = ({
     if (!isTyping) {
       setIsTyping(true);
       const ws = getWebSocketInstance();
-      ws?.sendMessage('peer:typing', {
+      ws?.sendMessage({
+        type: 'peer:typing',
         matchId: match.matchId,
         isTyping: true
       });
@@ -230,7 +235,8 @@ const PeerChat: React.FC<PeerChatProps> = ({
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
       const ws = getWebSocketInstance();
-      ws?.sendMessage('peer:typing', {
+      ws?.sendMessage({
+        type: 'peer:typing',
         matchId: match.matchId,
         isTyping: false
       });
@@ -262,7 +268,8 @@ const PeerChat: React.FC<PeerChatProps> = ({
   const toggleAudio = () => {
     setAudioEnabled(!audioEnabled);
     const ws = getWebSocketInstance();
-    ws?.sendMessage('peer:media', {
+    ws?.sendMessage({
+      type: 'peer:media',
       matchId: match.matchId,
       audio: !audioEnabled,
       video: videoEnabled
@@ -272,7 +279,8 @@ const PeerChat: React.FC<PeerChatProps> = ({
   const toggleVideo = () => {
     setVideoEnabled(!videoEnabled);
     const ws = getWebSocketInstance();
-    ws?.sendMessage('peer:media', {
+    ws?.sendMessage({
+      type: 'peer:media',
       matchId: match.matchId,
       audio: audioEnabled,
       video: !videoEnabled

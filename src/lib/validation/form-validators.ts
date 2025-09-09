@@ -110,7 +110,7 @@ export function useFormValidation<T extends Record<string, any>>(
 
       // Sanitize input if configured
       if (sanitizeInputs && typeof value === 'string') {
-        const validationService = ValidationService.getInstance();
+        const validationService = ValidationService;
         const securityResult = validationService.validateSecurity(value, 'text');
         
         validationResult.sanitizedValue = securityResult.sanitized;
@@ -432,7 +432,7 @@ export function useFieldValidation<T>(
 
       // Sanitize if configured
       if (sanitizeInputs && typeof inputValue === 'string') {
-        const validationService = ValidationService.getInstance();
+        const validationService = ValidationService;
         const securityResult = validationService.validateSecurity(inputValue, 'text');
         processedValue = securityResult.sanitized as T;
         
@@ -504,7 +504,7 @@ function getFieldSchema(mainSchema: ZodSchema, fieldName: string): ZodSchema | n
  * Sanitize form values
  */
 async function sanitizeFormValues(values: Record<string, any>): Promise<Record<string, any>> {
-  const validationService = ValidationService.getInstance();
+  const validationService = ValidationService;
   const sanitized: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(values)) {
@@ -612,7 +612,7 @@ export function createMedicalTextRule<T>(fieldName: keyof T): CustomValidationRu
     validator: (text: string) => {
       if (!text) return { isValid: true };
 
-      const validationService = ValidationService.getInstance();
+      const validationService = ValidationService;
       const medicalCheck = validationService.validateMedicalText(text);
       
       if (!medicalCheck.isValid) {

@@ -45,32 +45,32 @@ export async function GET(request: NextRequest) {
       version: systemHealth.version,
       environment: systemHealth.environment,
       responseTime,
-      services: systemHealth.services.map(service => ({
+      services: systemHealth.services?.map((service: any) => ({
         name: service.name,
         status: service.status,
         responseTime: service.responseTime,
         message: service.message,
         lastCheck: service.timestamp,
-      })),
-      resources: {
+      })) || [],
+      resources: systemHealth.resources ? {
         memory: {
-          status: systemHealth.resources.memory.status,
+          status: systemHealth.resources.memory?.percentage > 90 ? 'critical' : systemHealth.resources.memory?.percentage > 70 ? 'warning' : 'healthy',
           usage: `${systemHealth.resources.memory.percentage.toFixed(1)}%`,
           used: formatBytes(systemHealth.resources.memory.used),
           total: formatBytes(systemHealth.resources.memory.total),
         },
         cpu: {
-          status: systemHealth.resources.cpu.status,
+          status: systemHealth.resources.cpu?.usage > 90 ? 'critical' : systemHealth.resources.cpu?.usage > 70 ? 'warning' : 'healthy',
           usage: `${systemHealth.resources.cpu.usage.toFixed(1)}%`,
-          loadAverage: systemHealth.resources.cpu.loadAverage,
+          loadAverage: (systemHealth.resources.cpu as any).loadAverage || 'N/A',
         },
         disk: {
-          status: systemHealth.resources.disk.status,
+          status: systemHealth.resources.disk?.percentage > 90 ? 'critical' : systemHealth.resources.disk?.percentage > 70 ? 'warning' : 'healthy',
           usage: `${systemHealth.resources.disk.percentage.toFixed(1)}%`,
           used: formatBytes(systemHealth.resources.disk.used),
           total: formatBytes(systemHealth.resources.disk.total),
         },
-      },
+      } : {},
     };
 
     return NextResponse.json(response, { status: statusCode });
@@ -110,12 +110,12 @@ export async function HEAD(request: NextRequest) {
     const systemHealth = await healthCheckService.getSystemHealth();
     
     if (systemHealth.overall === 'unhealthy') {
-      return new NextResponse(null, { status: 503 });
+      return new Response('', { status: 503 });
     }
     
-    return new NextResponse(null, { status: 200 });
+    return new Response('', { status: 200 });
   } catch (error) {
-    return new NextResponse(null, { status: 500 });
+    return new Response('', { status: 500 });
   }
 }
 

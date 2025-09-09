@@ -352,7 +352,7 @@ export async function processNotificationQueue(limit: number = 100): Promise<{
             content: notification.content,
             status: 'delivered',
             deliveredAt: new Date(),
-            metadata: notification.metadata
+            metadata: JSON.parse(JSON.stringify(notification.metadata || {}))
           }
         });
         
@@ -380,7 +380,7 @@ export async function processNotificationQueue(limit: number = 100): Promise<{
             content: notification.content,
             status: 'failed',
             errorDetails: { error: result.error },
-            metadata: notification.metadata
+            metadata: JSON.parse(JSON.stringify(notification.metadata || {}))
           }
         });
         
@@ -450,7 +450,7 @@ export async function sendTemplatedNotification(
   
   // Process template content
   const content = processTemplate(template.contentTemplate, fullVariables);
-  const subject = template.subject ? processTemplate(template.subject, fullVariables) : undefined;
+  const subject = template.subject ? processTemplate(template.subject, fullVariables) : null;
   
   // Send to each channel
   for (const channel of targetChannels) {

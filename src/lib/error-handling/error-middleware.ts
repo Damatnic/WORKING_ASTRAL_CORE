@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { errorHandler } from './error-handler';
-import { AppError, ValidationError, AuthenticationError, AuthorizationError } from './error-types';
+import { AppError, ValidationError, AuthenticationError, AuthorizationError, ErrorCategory, ErrorSeverity } from './error-types';
 import { logger } from './logger';
 import { z } from 'zod';
 
@@ -69,7 +69,7 @@ export function withErrorHandler<T = any>(
  * Validation middleware using Zod schemas
  */
 export function withValidation<T>(
-  schema: z.ZodSchema<T>,
+  schema: any,
   handler: (request: NextRequest, data: T) => Promise<NextResponse>
 ) {
   return withErrorHandler(async (request: NextRequest) => {
@@ -163,8 +163,8 @@ export function withRateLimit(
     if (isLimited) {
       throw new AppError(
         'Rate limit exceeded',
-        'RATE_LIMIT',
-        'MEDIUM',
+        ErrorCategory.RATE_LIMIT,
+        ErrorSeverity.MEDIUM,
         429,
         true,
         { limit, window }

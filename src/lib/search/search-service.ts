@@ -93,16 +93,17 @@ export class SearchService {
       },
       select: {
         id: true,
-        
+        displayName: true,
         email: true,
-        bio: true,
+        firstName: true,
+        lastName: true,
         role: true,
         createdAt: true,
       },
     });
 
     const fuseOptions = {
-      keys: ['name', 'email', 'bio'],
+      keys: ['displayName', 'firstName', 'lastName', 'email'],
       threshold: 0.3,
       includeScore: true,
     };
@@ -146,21 +147,29 @@ export class SearchService {
     // Only index public journals or those shared with search
     const journals = await prisma.journalEntry.findMany({
       where: {
-        
+        isPrivate: false
       },
       select: {
         id: true,
-        
-        content: true,
-        tags: true,
-        mood: true,
+        encryptedTitle: true,
+        encryptedContent: true,
+        encryptedTags: true,
+        sentiment: true,
         userId: true,
         createdAt: true,
+        User: {
+          select: {
+            displayName: true,
+            firstName: true,
+            lastName: true,
+            avatarUrl: true
+          }
+        }
       },
     });
 
     const fuseOptions = {
-      keys: ['title', 'content', 'tags', 'mood'],
+      keys: ['encryptedTitle', 'encryptedContent', 'encryptedTags'],
       threshold: 0.4,
       includeScore: true,
     };
@@ -255,6 +264,7 @@ export class SearchService {
       : [query.type];
 
     for (const type of typesToSearch) {
+      if (!type) continue;
       const index = this.searchIndexes.get(type);
       if (!index) continue;
 
@@ -363,7 +373,7 @@ export class SearchService {
         case 'posts':
           const postAuthor = await prisma.user.findUnique({
             where: { id: item.authorId },
-            select: { id: true,  avatar: true },
+            select: { id: true, displayName: true, avatarUrl: true },
           });
 
           return {
@@ -372,7 +382,11 @@ export class SearchService {
             title: item.title,
             description: this.truncateContent(item.content, 200),
             url: `/community/posts/${item.id}`,
-            author: postAuthor || undefined,
+            author: postAuthor ? {
+              id: postAuthor.id,
+              name: postAuthor.displayName || 'Anonymous',
+              avatar: postAuthor.avatarUrl || undefined
+            } : undefined,
             metadata: {
               viewCount: item.viewCount,
               likeCount: item.likeCount,
@@ -607,7 +621,7 @@ export class SearchService {
   // Cleanup
   destroy() {
     if (this.indexUpdateInterval) {
-      clearInterval(this.indexUpdateInterval);
+      clearInterval(this.indexUpdateInterval as NodeJS.Timeout);
     }
   }
 }

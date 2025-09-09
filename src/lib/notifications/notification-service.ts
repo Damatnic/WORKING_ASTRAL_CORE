@@ -94,7 +94,7 @@ export class NotificationService {
   private setupSocketHandlers() {
     if (!this.io) return;
 
-    (this as any).io.on('connection', (socket) => {
+    (this as any).io.on('connection', (socket: any) => {
       console.log('Client connected:', socket.id);
 
       // Handle user authentication
@@ -160,14 +160,14 @@ export class NotificationService {
           type: payload.type,
           title: payload.title,
           message: payload.message,
-          priority: payload.priority,
-          data: payload.data || {},
-          actionUrl: payload.actionUrl,
-          actionText: payload.actionText,
+          isPriority: payload.priority === 'high' || payload.priority === 'urgent',
+          metadata: {
+            ...payload.data,
+            actionUrl: payload.actionUrl,
+            actionText: payload.actionText,
+            expiresAt: payload.expiresAt,
+          },
           isRead: false,
-          expiresAt: payload.expiresAt,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 
@@ -354,7 +354,7 @@ export class NotificationService {
           channel: 'email',
           status: 'failed',
           
-          attemptedAt: new Date(),
+          lastAttemptAt: new Date(),
         },
       });
     }
@@ -388,7 +388,7 @@ export class NotificationService {
           );
         } catch (error) {
           // Remove invalid subscriptions
-          if (error.statusCode === 410) {
+          if ((error as any)?.statusCode === 410) {
             await (prisma as any).pushSubscription.delete({
               where: { id: subscription.id },
             });
@@ -409,7 +409,10 @@ export class NotificationService {
   // Get email template
   private async getEmailTemplate(type: string): Promise<string> {
     const template = await prisma.notificationTemplate.findFirst({
-      where: { type, channel: 'email' },
+      where: { 
+        category: type,
+        channels: { has: 'email' }
+      },
     });
 
     return (template as any)?.template || this.getDefaultEmailTemplate();
@@ -467,10 +470,6 @@ export class NotificationService {
       where: {
         userId,
         isRead: false,
-        OR: [
-          { expiresAt: null },
-          { expiresAt: { gt: new Date() } }
-        ],
       },
       orderBy: { createdAt: 'desc' },
       take: 20,

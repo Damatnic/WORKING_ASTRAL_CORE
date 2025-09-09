@@ -268,7 +268,7 @@ export class SecurityValidator {
       }
 
       // Check debug modes
-      if (process.env.DEBUG === 'true' || process.env.NODE_ENV === 'development') {
+      if (process.env.DEBUG === 'true' || String(process.env.NODE_ENV) === 'development') {
         warnings.push('Debug mode should be disabled in production');
         score -= 5;
       }

@@ -3,14 +3,25 @@
  * Implements OAuth providers and secure session management
  */
 
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, DefaultSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
+import { UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
+// Note: Session and User interfaces are declared in src/types/next-auth.ts to avoid conflicts
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: UserRole;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     // Google OAuth Provider
     GoogleProvider({
@@ -38,7 +49,10 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const user = await prisma.user.findUnique({
-            where: { email: credentials.email }
+            where: { email: credentials.email },
+            include: {
+              UserProfile: true
+            }
           });
 
           if (!user || !user.hashedPassword) {
@@ -56,8 +70,11 @@ export const authOptions: NextAuthOptions = {
 
           return {
             id: user.id,
-            email: user.email,
-            name: user.name,
+            email: user.email || "",
+            name: user.displayName || user.firstName || "",
+            role: user.role,
+            isEmailVerified: user.isEmailVerified,
+            onboardingCompleted: user.onboardingCompleted,
           };
         } catch (error) {
           console.error("Authentication error:", error);
@@ -67,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   
-  session: { 
+  session: {
     strategy: 'jwt',
     maxAge: 8 * 60 * 60, // 8 hours - HIPAA compliance for healthcare data
     updateAge: 2 * 60 * 60, // Refresh session every 2 hours if active
@@ -78,6 +95,9 @@ export const authOptions: NextAuthOptions = {
       // Persist user data to the token
       if (user) {
         token.id = user.id;
+        token.role = user.role;
+        token.isEmailVerified = user.isEmailVerified;
+        token.onboardingCompleted = user.onboardingCompleted;
       }
       
       // Handle OAuth account linking
@@ -91,7 +111,10 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       // Send properties to the client
       if (token && session.user) {
-        (session.user as any).id = token.id as string;
+        session.user.id = token.id as string;
+        session.user.role = token.role as UserRole;
+        session.user.isEmailVerified = token.isEmailVerified as boolean;
+        session.user.onboardingCompleted = token.onboardingCompleted as boolean;
       }
       
       return session;
@@ -128,7 +151,24 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'development',
 };
 
-// Re-export auth utilities
-export { hasRole, hasPermission } from './auth/index';
+// Helper functions for role and permission checking
+export function hasRole(userRole: UserRole, requiredRoles: UserRole[]): boolean {
+  return requiredRoles.includes(userRole);
+}
+
+export function hasPermission(userRole: UserRole, permission: string): boolean {
+  // Basic permission mapping - can be expanded
+  const rolePermissions: Record<UserRole, string[]> = {
+    [UserRole.USER]: ['read:own'],
+    [UserRole.HELPER]: ['read:own', 'read:clients', 'write:sessions'],
+    [UserRole.THERAPIST]: ['read:own', 'read:clients', 'write:sessions', 'write:notes'],
+    [UserRole.CRISIS_COUNSELOR]: ['read:own', 'read:crisis', 'write:crisis', 'escalate:crisis'],
+    [UserRole.ADMIN]: ['read:all', 'write:all', 'delete:all', 'manage:users'],
+    [UserRole.SUPER_ADMIN]: ['*'], // All permissions
+  };
+
+  const permissions = rolePermissions[userRole] || [];
+  return permissions.includes('*') || permissions.includes(permission);
+}
 
 export default authOptions;

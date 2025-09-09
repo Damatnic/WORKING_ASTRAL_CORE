@@ -4,8 +4,19 @@
  */
 
 import React, { memo, useEffect, useState } from 'react';
-import { useDeviceCapabilities } from '@/lib/performance/dynamic-imports.tsx';
 import { Activity, Zap } from '@/lib/performance/tree-shaking-optimization';
+
+// Mock device capabilities hook
+const useDeviceCapabilities = () => ({
+  isMobile: false,
+  isSlowConnection: false,
+  hasLowMemory: false,
+  supportsWebP: true,
+  preferReducedMotion: false,
+  isLowEnd: false,
+  isSlowNetwork: false,
+  memoryLimitMB: 8192
+});
 
 interface PerformanceLoaderProps {
   message?: string;

@@ -4,7 +4,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   WifiIcon,
-  WifiSlashIcon,
+  NoSymbolIcon,
   CloudIcon,
   CloudArrowDownIcon,
   CloudArrowUpIcon,
@@ -13,7 +13,7 @@ import {
   CheckCircleIcon,
   ClockIcon,
   ServerIcon,
-  DatabaseIcon,
+  CircleStackIcon,
   DocumentIcon,
   PhotoIcon,
   ChatBubbleLeftIcon,
@@ -434,7 +434,7 @@ const OfflineManager: React.FC = () => {
             {isOnline ? (
               <WifiIconSolid className="w-8 h-8 text-green-600" />
             ) : (
-              <WifiSlashIcon className="w-8 h-8 text-red-600" />
+              <NoSymbolIcon className="w-8 h-8 text-red-600" />
             )}
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Offline Mode & Sync</h1>
@@ -496,7 +496,7 @@ const OfflineManager: React.FC = () => {
               {isOnline ? (
                 <WifiIcon className="w-5 h-5 text-green-600" />
               ) : (
-                <WifiSlashIcon className="w-5 h-5 text-red-600" />
+                <NoSymbolIcon className="w-5 h-5 text-red-600" />
               )}
               <div>
                 <p className="text-xs font-medium text-gray-700">Connection</p>
@@ -535,7 +535,7 @@ const OfflineManager: React.FC = () => {
             )}
 
             <div className="flex items-center space-x-2">
-              <DatabaseIcon className="w-5 h-5 text-gray-600" />
+              <CircleStackIcon className="w-5 h-5 text-gray-600" />
               <div>
                 <p className="text-xs font-medium text-gray-700">Storage</p>
                 <p className="text-sm text-gray-900">{formatBytes(storageUsed * 1024)}</p>
@@ -559,7 +559,7 @@ const OfflineManager: React.FC = () => {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'status', label: 'Status Overview', icon: InformationCircleIcon },
-              { id: 'data', label: 'Offline Data', icon: DatabaseIcon },
+              { id: 'data', label: 'Offline Data', icon: CircleStackIcon },
               { id: 'sync', label: 'Sync Queue', icon: ArrowPathIcon },
               { id: 'settings', label: 'Settings', icon: CogIcon }
             ].map((tab) => (
@@ -592,7 +592,7 @@ const OfflineManager: React.FC = () => {
                   <p className="text-2xl font-bold text-gray-900">{formatBytes(storageUsed * 1024)}</p>
                 </div>
                 <div className="rounded-full p-2 bg-blue-100">
-                  <DatabaseIcon className="w-6 h-6 text-blue-600" />
+                  <CircleStackIcon className="w-6 h-6 text-blue-600" />
                 </div>
               </div>
               <div className="mt-2">
@@ -724,7 +724,7 @@ const OfflineManager: React.FC = () => {
           <div className="divide-y divide-gray-200">
             {offlineData.length === 0 ? (
               <div className="p-12 text-center text-gray-500">
-                <DatabaseIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                <CircleStackIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No offline data</h3>
                 <p>Data will appear here when available offline</p>
               </div>

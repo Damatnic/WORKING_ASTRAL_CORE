@@ -461,7 +461,7 @@ export function VirtualAuditLog({
 
               {/* Anomaly indicator */}
               {entry.isAnomaly && (
-                <AlertTriangle className="w-4 h-4 text-red-500" title="Anomaly detected" />
+                <AlertTriangle className="w-4 h-4 text-red-500" aria-label="Anomaly detected" />
               )}
 
               {/* Status */}
@@ -484,10 +484,10 @@ export function VirtualAuditLog({
                     </button>
                   )}
                   {entry.reviewStatus === 'reviewed' && (
-                    <CheckCircle className="w-4 h-4 text-green-500" title="Reviewed" />
+                    <CheckCircle className="w-4 h-4 text-green-500" aria-label="Reviewed" />
                   )}
                   {entry.reviewStatus === 'flagged' && (
-                    <AlertTriangle className="w-4 h-4 text-red-500" title="Flagged" />
+                    <AlertTriangle className="w-4 h-4 text-red-500" aria-label="Flagged" />
                   )}
                 </div>
               )}

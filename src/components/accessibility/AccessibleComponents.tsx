@@ -28,6 +28,7 @@ export function AccessibleSkipLink({ targetId = "main-content", href, children }
 interface BreadcrumbItem {
   label: string;
   href?: string;
+  current?: boolean;  // Missing property causing TS2353 errors
 }
 
 interface AccessibleBreadcrumbProps {
@@ -59,11 +60,13 @@ export function AccessibleBreadcrumb({ items }: AccessibleBreadcrumbProps) {
 
 interface AccessibleLoadingProps {
   message?: string;
+  size?: string;  // Added to support dashboard usage
+  className?: string;  // Added to support dashboard usage
 }
 
-export function AccessibleLoading({ message = "Loading..." }: AccessibleLoadingProps) {
+export function AccessibleLoading({ message = "Loading...", size, className }: AccessibleLoadingProps) {
   return (
-    <div className="flex flex-col items-center justify-center p-8" role="status" aria-live="polite">
+    <div className={`flex flex-col items-center justify-center p-8 ${className || ''}`} role="status" aria-live="polite">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" aria-hidden="true"></div>
       <span className="mt-4 text-neutral-600">{message}</span>
       <span className="sr-only">{message}</span>
@@ -72,7 +75,7 @@ export function AccessibleLoading({ message = "Loading..." }: AccessibleLoadingP
 }
 
 interface AccessibleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';  // Added ghost variant
   children: React.ReactNode;
 }
 
@@ -87,7 +90,8 @@ export function AccessibleButton({
   const variantClasses = {
     primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 disabled:bg-primary-300',
     secondary: 'bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-50 focus:ring-primary-500 disabled:bg-neutral-100',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300'
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300',
+    ghost: 'bg-transparent text-primary-600 hover:bg-primary-50 focus:ring-primary-500 disabled:bg-transparent disabled:text-neutral-400'  // Added ghost variant styles
   };
   
   return (
@@ -104,10 +108,17 @@ export function AccessibleButton({
 interface AccessibleAlertProps {
   type?: 'info' | 'success' | 'warning' | 'error';
   message: string;
+  title?: string;  // Added to support dashboard usage
+  actions?: Array<{  // Added to support dashboard usage
+    label: string;
+    onClick: () => void;
+    variant?: string;
+  }>;
+  className?: string;  // Added to support dashboard usage
   onClose?: () => void;
 }
 
-export function AccessibleAlert({ type = 'info', message, onClose }: AccessibleAlertProps) {
+export function AccessibleAlert({ type = 'info', message, title, actions, className, onClose }: AccessibleAlertProps) {
   const typeClasses = {
     info: 'bg-blue-50 border-blue-500 text-blue-700',
     success: 'bg-green-50 border-green-500 text-green-700',

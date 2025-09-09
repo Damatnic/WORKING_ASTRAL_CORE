@@ -99,8 +99,8 @@ interface PerformanceAlert {
  * Main Database Performance Monitor Class
  */
 export class DatabasePerformanceMonitor {
-  private pool: Pool;
-  private prisma: PrismaClient;
+  private pool!: Pool;
+  private prisma!: PrismaClient;
   private performanceAlerts: Map<string, PerformanceAlert> = new Map();
   private metricsHistory: Map<string, any[]> = new Map();
   private monitoringInterval: NodeJS.Timeout | null = null;

@@ -576,16 +576,16 @@ export default function TherapistDashboard({ className = "" }: TherapistDashboar
                       </div>
                       <div className="flex items-center space-x-3">
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          session.type === 'video' ? 'bg-blue-100 text-blue-800' :
-                          session.type === 'in_person' ? 'bg-green-100 text-green-800' :
+                          session.type === 'VIDEO' ? 'bg-blue-100 text-blue-800' :
+                          session.type === 'IN_PERSON' ? 'bg-green-100 text-green-800' :
                           'bg-purple-100 text-purple-800'
                         }`}>
-                          {session.type === 'in_person' ? 'In-Person' : session.type}
+                          {session.type === 'IN_PERSON' ? 'In-Person' : session.type}
                         </span>
                         <span className="text-sm text-gray-600">${session.fee}</span>
                         <button className="p-2 text-gray-400 hover:text-indigo-600 rounded-lg transition-colors">
-                          {session.type === 'video' ? <VideoCameraIcon className="w-4 h-4" /> :
-                           session.type === 'in_person' ? <UserIcon className="w-4 h-4" /> :
+                          {session.type === 'VIDEO' ? <VideoCameraIcon className="w-4 h-4" /> :
+                           session.type === 'IN_PERSON' ? <UserIcon className="w-4 h-4" /> :
                            <PhoneIcon className="w-4 h-4" />}
                         </button>
                       </div>
@@ -603,7 +603,7 @@ export default function TherapistDashboard({ className = "" }: TherapistDashboar
                 <h3 className="text-lg font-semibold text-gray-900">High Priority Clients</h3>
               </div>
               <div className="divide-y divide-gray-200">
-                {clients.filter(client => client.riskLevel === 'high' || client.riskLevel === 'crisis').map(client => (
+                {clients.filter(client => client.riskLevel === 'HIGH' || client.riskLevel === 'CRISIS').map(client => (
                   <div key={client.id} className="px-6 py-4">
                     <div className="flex items-center justify-between">
                       <div>
@@ -634,7 +634,7 @@ export default function TherapistDashboard({ className = "" }: TherapistDashboar
                 <h3 className="text-lg font-semibold text-gray-900">Treatment Progress</h3>
               </div>
               <div className="p-6 space-y-4">
-                {clients.filter(c => c.status === 'active').slice(0, 4).map(client => (
+                {clients.filter(c => c.status === 'ACTIVE').slice(0, 4).map(client => (
                   <div key={client.id}>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium text-gray-900">{client.name}</span>
@@ -708,7 +708,7 @@ export default function TherapistDashboard({ className = "" }: TherapistDashboar
                         <div className="flex items-center space-x-4 mt-1">
                           <p className="text-sm text-gray-500">{client.email}</p>
                           <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(client.status)}`}>
-                            {client.status === 'on_hold' ? 'On Hold' : client.status.charAt(0).toUpperCase() + client.status.slice(1)}
+                            {client.status === 'ON_HOLD' ? 'On Hold' : client.status.charAt(0).toUpperCase() + client.status.slice(1)}
                           </span>
                           <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getRiskLevelColor(client.riskLevel)}`}>
                             {client.riskLevel} risk
@@ -790,11 +790,11 @@ export default function TherapistDashboard({ className = "" }: TherapistDashboar
                       )}
                     </div>
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      session.type === 'video' ? 'bg-blue-100 text-blue-800' :
-                      session.type === 'in_person' ? 'bg-green-100 text-green-800' :
+                      session.type === 'VIDEO' ? 'bg-blue-100 text-blue-800' :
+                      session.type === 'IN_PERSON' ? 'bg-green-100 text-green-800' :
                       'bg-purple-100 text-purple-800'
                     }`}>
-                      {session.type === 'in_person' ? 'In-Person' : session.type}
+                      {session.type === 'IN_PERSON' ? 'In-Person' : session.type}
                     </span>
                     <button className="p-2 text-gray-400 hover:text-indigo-600 rounded-lg transition-colors">
                       <DocumentTextIcon className="w-4 h-4" />

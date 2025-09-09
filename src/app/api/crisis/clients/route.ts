@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth/next';
 import { Session } from 'next-auth';
 import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -243,7 +243,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid request data', details: error.issues },
+        { error: 'Invalid request data', details: (error as ZodError).issues },
         { status: 400 }
       );
     }

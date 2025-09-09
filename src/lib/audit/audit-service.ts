@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { z } from 'zod';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { 
   AuditEvent,
   AuditEventCategory,
@@ -359,10 +359,10 @@ export class AuditService {
       }
 
       // Get total count
-      const totalCount = await (prisma as any).auditEvent.count({ where: whereClause });
+      const totalCount = await prisma.auditLog.count({ where: whereClause });
 
       // Get events with pagination
-      const events = await (prisma as any).auditEvent.findMany({
+      const events = await prisma.auditLog.findMany({
         where: whereClause,
         orderBy: {
           [validatedFilters.sortBy]: validatedFilters.sortOrder,
@@ -372,7 +372,7 @@ export class AuditService {
       });
 
       // Decrypt and return events
-      const decryptedEvents = events.map(event => this.decryptEvent(event));
+      const decryptedEvents = events.map((event: any) => this.decryptEvent(event));
 
       return {
         events: decryptedEvents,
@@ -403,8 +403,8 @@ export class AuditService {
     try {
       // Query events for the period
       const { events } = await this.queryEvents({
-        startDate: params.startDate,
-        endDate: params.endDate,
+        startDate: new Date(params.startDate),
+        endDate: new Date(params.endDate),
         limit: 10000, // Large limit for complete analysis
       });
 
@@ -475,7 +475,7 @@ export class AuditService {
       const encryptedEvents = events.map(event => this.encryptEvent(event));
 
       // Batch insert to database
-      await (prisma as any).auditEvent.createMany({
+      await prisma.auditLog.createMany({
         data: encryptedEvents,
         skipDuplicates: true,
       });
@@ -524,9 +524,7 @@ export class AuditService {
 
   private calculateChecksum(event: AuditEvent): string {
     // Create checksum without including checksum and signature fields
-    const eventCopy = { ...event };
-    delete eventCopy.checksum;
-    delete eventCopy.digitalSignature;
+    const { checksum, digitalSignature, ...eventCopy } = event;
     
     const eventString = JSON.stringify(eventCopy, Object.keys(eventCopy).sort());
     return crypto.createHash('sha256').update(eventString).digest('hex');
@@ -550,9 +548,10 @@ export class AuditService {
 
   private encryptEvent(event: AuditEvent): any {
     // Encrypt sensitive fields using modern crypto API
-    const key = Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex');
+    const keyBuffer = Buffer.from(AUDIT_CONFIG.auditLogKey || 'default-audit-key-32-chars-long!', 'utf8');
+    const key = keyBuffer.length >= 32 ? keyBuffer.subarray(0, 32) : Buffer.concat([keyBuffer, Buffer.alloc(32 - keyBuffer.length)]);
     const iv = crypto.randomBytes(12); // 12 bytes IV for GCM
-    const cipher = crypto.createCipherGCM('aes-256-gcm', key, iv);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
     
     const eventString = JSON.stringify(event);
     let encrypted = cipher.update(eventString, 'utf8', 'base64');
@@ -575,10 +574,14 @@ export class AuditService {
 
   private decryptEvent(encryptedEvent: any): AuditEvent {
     try {
-      const key = Buffer.from(AUDIT_CONFIG.auditLogKey, 'hex');
+      const keyBuffer = Buffer.from(AUDIT_CONFIG.auditLogKey || 'default-audit-key-32-chars-long!', 'utf8');
+      const key = keyBuffer.length >= 32 ? keyBuffer.subarray(0, 32) : Buffer.concat([keyBuffer, Buffer.alloc(32 - keyBuffer.length)]);
       const iv = Buffer.from(encryptedEvent.iv, 'base64');
-      const decipher = crypto.createDecipherGCM('aes-256-gcm', key, iv);
-      decipher.setAuthTag(Buffer.from(encryptedEvent.authTag, 'base64'));
+      const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+      
+      if (encryptedEvent.authTag) {
+        decipher.setAuthTag(Buffer.from(encryptedEvent.authTag, 'base64'));
+      }
       
       let decrypted = decipher.update(encryptedEvent.encryptedData, 'base64', 'utf8');
       decrypted += decipher.final('utf8');
@@ -640,13 +643,13 @@ export class AuditService {
 
     events.forEach(event => {
       // Category counts
-      stats.eventsByCategory[event.category]++;
+      (stats.eventsByCategory as any)[event.category]++;
       
       // Outcome counts
-      stats.eventsByOutcome[event.outcome]++;
+      (stats.eventsByOutcome as any)[event.outcome]++;
       
       // Risk level counts
-      stats.eventsByRiskLevel[event.riskLevel]++;
+      (stats.eventsByRiskLevel as any)[event.riskLevel]++;
 
       // User counts
       if (event.userId && event.userEmail) {

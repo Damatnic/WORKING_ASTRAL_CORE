@@ -156,7 +156,65 @@ export const BaseAuditEventSchema = z.object({
   digitalSignature: z.string().nullable(), // For high-risk events
 });
 
-export type BaseAuditEvent = z.infer<typeof BaseAuditEventSchema>;
+export type BaseAuditEvent = {
+  // Event identification
+  eventId: string;
+  timestamp: string;
+  category: AuditEventCategory;
+  
+  // Event details  
+  action: string;
+  outcome: AuditOutcome;
+  riskLevel: RiskLevel;
+  description: string;
+  
+  // Actor information
+  userId: string | null;
+  userEmail: string | null;
+  userRole: string | null;
+  sessionId: string | null;
+  
+  // Source information
+  sourceIp: string | null;
+  userAgent: string | null;
+  deviceId: string | null;
+  geolocation: {
+    country: string;
+    region: string;
+    city: string;
+    latitude?: number;
+    longitude?: number;
+  } | null;
+  
+  // Target information
+  resourceType: string | null;
+  resourceId: string | null;
+  resourceOwner: string | null;
+  dataSensitivity: DataSensitivity;
+  
+  // Technical details
+  requestId: string | null;
+  apiEndpoint: string | null;
+  httpMethod: string | null;
+  httpStatusCode: number | null;
+  responseTime: number | null;
+  
+  // Additional context
+  metadata: Record<string, unknown> | null;
+  errorDetails: {
+    errorCode: string;
+    errorMessage: string;
+    stackTrace?: string;
+  } | null;
+  
+  // Compliance flags
+  requiresNotification: boolean;
+  retentionPeriod: number | null;
+  
+  // Integrity protection
+  checksum: string;
+  digitalSignature: string | null;
+};
 
 // Specialized audit event types
 
@@ -173,7 +231,14 @@ export const PHIAccessEventSchema = BaseAuditEventSchema.extend({
   }).nullable(),
 });
 
-export type PHIAccessEvent = z.infer<typeof PHIAccessEventSchema>;
+export type PHIAccessEvent = BaseAuditEvent & {
+  category: AuditEventCategory.PHI_ACCESS;
+  patientId: string;
+  accessType: 'read' | 'write' | 'delete' | 'export';
+  dataType: string;
+  justification: string;
+  consentStatus: boolean;
+};
 
 // Authentication Event
 export const AuthenticationEventSchema = BaseAuditEventSchema.extend({
@@ -190,7 +255,13 @@ export const AuthenticationEventSchema = BaseAuditEventSchema.extend({
   sessionDuration: z.number().nullable(), // For logout events
 });
 
-export type AuthenticationEvent = z.infer<typeof AuthenticationEventSchema>;
+export type AuthenticationEvent = BaseAuditEvent & {
+  category: AuditEventCategory.LOGIN_SUCCESS | AuditEventCategory.LOGIN_FAILURE | AuditEventCategory.LOGOUT | AuditEventCategory.SESSION_TIMEOUT;
+  authMethod: string;
+  mfaUsed: boolean;
+  deviceFingerprint: string | null;
+  loginAttempts: number;
+};
 
 // Administrative Event
 export const AdministrativeEventSchema = BaseAuditEventSchema.extend({
@@ -210,7 +281,12 @@ export const AdministrativeEventSchema = BaseAuditEventSchema.extend({
   approvedBy: z.string().uuid().nullable(),
 });
 
-export type AdministrativeEvent = z.infer<typeof AdministrativeEventSchema>;
+export type AdministrativeEvent = BaseAuditEvent & {
+  category: AuditEventCategory.USER_CREATED | AuditEventCategory.USER_MODIFIED | AuditEventCategory.USER_DEACTIVATED | AuditEventCategory.ROLE_CHANGED | AuditEventCategory.SYSTEM_CONFIGURATION_CHANGE;
+  adminAction: string;
+  targetUser: string | null;
+  configChanges: any;
+};
 
 // Security Event
 export const SecurityEventSchema = BaseAuditEventSchema.extend({
@@ -229,7 +305,12 @@ export const SecurityEventSchema = BaseAuditEventSchema.extend({
   investigationStatus: z.enum(['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED']),
 });
 
-export type SecurityEvent = z.infer<typeof SecurityEventSchema>;
+export type SecurityEvent = BaseAuditEvent & {
+  category: AuditEventCategory.SECURITY_INCIDENT | AuditEventCategory.SUSPICIOUS_ACTIVITY | AuditEventCategory.BRUTE_FORCE_ATTEMPT | AuditEventCategory.DATA_BREACH_DETECTED | AuditEventCategory.VULNERABILITY_DETECTED;
+  securityAction: string;
+  threatLevel: string;
+  mitigationActions: string[];
+};
 
 // Union type for all audit events
 export type AuditEvent = 
@@ -272,7 +353,18 @@ export const AuditQueryFiltersSchema = z.object({
   sortOrder: z.enum(['asc', 'desc']).default('desc'),
 });
 
-export type AuditQueryFilters = z.infer<typeof AuditQueryFiltersSchema>;
+export type AuditQueryFilters = {
+  startDate?: Date;
+  endDate?: Date;
+  userId?: string;
+  category?: AuditEventCategory;
+  outcome?: AuditOutcome;
+  riskLevel?: RiskLevel;
+  resource?: string;
+  action?: string;
+  page?: number;
+  limit?: number;
+};
 
 // Audit statistics
 export interface AuditStatistics {

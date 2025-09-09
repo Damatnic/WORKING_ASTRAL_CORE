@@ -1,10 +1,10 @@
+import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import { getServerSession } from 'next-auth/next';
 import { Session } from 'next-auth';
 import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -60,7 +60,7 @@ function getDateRange(preset?: string): { start: Date; end: Date } | null {
 }
 
 // Full-text search across multiple content types
-async function performSearch(userId: string, params: z.infer<typeof SearchSchema>) {
+async function performSearch(userId: string, params: any) {
   const results: any[] = [];
   const searchTerms = params.query.toLowerCase().split(' ');
   
@@ -89,7 +89,7 @@ async function performSearch(userId: string, params: z.infer<typeof SearchSchema
       where: {
         userId,
         ...commonWhere,
-        OR: searchTerms.map(term => ({
+        OR: searchTerms.map((term: string) => ({
           OR: [
             { encryptedTitle: { contains: term, mode: 'insensitive' } },
             { encryptedContent: { contains: term, mode: 'insensitive' } },
@@ -149,7 +149,7 @@ async function performSearch(userId: string, params: z.infer<typeof SearchSchema
           { therapistId: userId }
         ],
         ...commonWhere,
-        AND: searchTerms.map(term => ({
+        AND: searchTerms.map((term: string) => ({
           OR: [
             { notesEncrypted: { contains: term, mode: 'insensitive' } },
           ]
@@ -262,7 +262,7 @@ async function performSearch(userId: string, params: z.infer<typeof SearchSchema
         ...commonWhere,
         authorId: userId,
         AND: {
-          OR: searchTerms.map(term => ({
+          OR: searchTerms.map((term: string) => ({
             OR: [
               { title: { contains: term, mode: 'insensitive' } },
               { content: { contains: term, mode: 'insensitive' } },

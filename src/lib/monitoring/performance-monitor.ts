@@ -85,7 +85,7 @@ class PerformanceMonitor extends EventEmitter {
   private responseTimes: ResponseTimeEntry[] = [];
   private databaseQueries: DatabaseQueryEntry[] = [];
   private isMonitoring = false;
-  private monitoringInterval: NodeJS.Timer | null = null;
+  private monitoringInterval: ReturnType<typeof setTimeout> | null = null;
   private startTime = Date.now();
   
   // Metrics storage
@@ -546,10 +546,6 @@ export const performanceMiddleware = (req: any, res: any, next: any) => {
   next();
 };
 
-export type {
-  PerformanceMetrics,
-  ResponseTimeEntry,
-  DatabaseQueryEntry,
-};
+
 
 export default performanceMonitor;

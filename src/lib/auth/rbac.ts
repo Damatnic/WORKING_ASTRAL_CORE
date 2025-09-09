@@ -601,14 +601,14 @@ export async function requestEmergencyAccess(
     }
 
     // Only certain roles can request emergency access
-    const allowedRoles = [
+    const allowedRoles: UserRole[] = [
       UserRole.CRISIS_COUNSELOR,
       UserRole.THERAPIST,
       UserRole.ADMIN,
       UserRole.SUPER_ADMIN
     ];
 
-    if (!allowedRoles.includes(user.role)) {
+    if (!allowedRoles.includes(user.role as UserRole)) {
       await logSecurityEvent({
         userId,
         action: 'emergency_access_denied',

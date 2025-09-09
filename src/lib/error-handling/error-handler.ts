@@ -60,15 +60,13 @@ export class ErrorHandler {
     request?: NextRequest,
     context?: Record<string, any>
   ): Promise<NextResponse> {
-    // Convert to AppError if needed
-    const appError = this.normalizeError(error, context);
+    // Extract request context
+    const requestId = request?.headers.get('x-request-id') || undefined;
+    const userId = context?.userId;
+    const sessionId = context?.sessionId;
 
-    // Add request context
-    if (request) {
-      appError.requestId = request.headers.get('x-request-id') || undefined;
-      appError.userId = context?.userId;
-      appError.sessionId = context?.sessionId;
-    }
+    // Convert to AppError with context
+    const appError = this.normalizeError(error, context, requestId, userId, sessionId);
 
     // Log the error
     await this.logError(appError, request);
@@ -125,22 +123,39 @@ export class ErrorHandler {
   /**
    * Normalize error to AppError
    */
-  private normalizeError(error: Error | AppError, context?: Record<string, any>): AppError {
+  private normalizeError(
+    error: Error | AppError, 
+    context?: Record<string, any>,
+    requestId?: string,
+    userId?: string,
+    sessionId?: string
+  ): AppError {
     if (error instanceof AppError) {
-      if (context) {
-        error.context = { ...error.context, ...context };
+      // If we need to add context or request info, create a new instance
+      if (context || requestId || userId || sessionId) {
+        return new AppError(
+          error.message,
+          error.category,
+          error.severity,
+          error.statusCode,
+          error.isOperational,
+          { ...error.context, ...context },
+          requestId || error.requestId,
+          userId || error.userId,
+          sessionId || error.sessionId
+        );
       }
       return error;
     }
 
     // Handle Prisma errors
     if (this.isPrismaError(error)) {
-      return this.handlePrismaError(error, context);
+      return this.handlePrismaError(error, context, requestId, userId, sessionId);
     }
 
     // Handle validation errors
     if (this.isValidationError(error)) {
-      return this.handleValidationError(error, context);
+      return this.handleValidationError(error, context, requestId, userId, sessionId);
     }
 
     // Default to system error
@@ -150,7 +165,10 @@ export class ErrorHandler {
       ErrorSeverity.HIGH,
       500,
       true,
-      context
+      context,
+      requestId,
+      userId,
+      sessionId
     );
   }
 
@@ -164,7 +182,13 @@ export class ErrorHandler {
   /**
    * Handle Prisma-specific errors
    */
-  private handlePrismaError(error: any, context?: Record<string, any>): DatabaseError {
+  private handlePrismaError(
+    error: any, 
+    context?: Record<string, any>,
+    requestId?: string,
+    userId?: string,
+    sessionId?: string
+  ): DatabaseError {
     const prismaErrorMap: Record<string, { message: string; severity: ErrorSeverity }> = {
       P2002: { message: 'Unique constraint violation', severity: ErrorSeverity.MEDIUM },
       P2003: { message: 'Foreign key constraint violation', severity: ErrorSeverity.MEDIUM },
@@ -178,18 +202,19 @@ export class ErrorHandler {
       severity: ErrorSeverity.HIGH,
     };
 
-    const dbError = new DatabaseError(
+    return new DatabaseError(
       errorInfo.message,
       error,
       {
         ...context,
         prismaCode: error.code,
         meta: error.meta,
-      }
+      },
+      errorInfo.severity,
+      requestId,
+      userId,
+      sessionId
     );
-    dbError.severity = errorInfo.severity;
-
-    return dbError;
   }
 
   /**
@@ -202,7 +227,13 @@ export class ErrorHandler {
   /**
    * Handle validation errors
    */
-  private handleValidationError(error: any, context?: Record<string, any>): AppError {
+  private handleValidationError(
+    error: any, 
+    context?: Record<string, any>,
+    requestId?: string,
+    userId?: string,
+    sessionId?: string
+  ): AppError {
     return new AppError(
       'Validation failed',
       ErrorCategory.VALIDATION,
@@ -212,7 +243,10 @@ export class ErrorHandler {
       {
         ...context,
         validationErrors: error.errors || error.details,
-      }
+      },
+      requestId,
+      userId,
+      sessionId
     );
   }
 
@@ -334,7 +368,6 @@ export class ErrorHandler {
         
         errorCode: error.category,
         errorMessage: error.message,
-        context: error.context,
       },
     });
   }
@@ -451,13 +484,7 @@ export class ErrorHandler {
             type: 'CRITICAL_ERROR',
             title: `Critical Error: ${error.category}`,
             message: `A critical error occurred: ${error.message}`,
-            priority: 'URGENT',
-            data: {
-              errorId: error.id,
-              category: error.category,
-              severity: error.severity,
-              timestamp: error.timestamp,
-            },
+            isPriority: true,
           },
         });
       }

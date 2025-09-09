@@ -112,7 +112,7 @@ export function useVirtualScroll<T>(
 
   // Calculate virtual metrics
   const virtualMetrics = useMemo((): VirtualScrollMetrics => {
-    const measurementId = startMeasurement('virtual-scroll-calculation');
+    startMeasurement('virtual-scroll-calculation');
     
     let totalHeight = 0;
     let currentOffset = 0;
@@ -142,7 +142,7 @@ export function useVirtualScroll<T>(
     const overscanStart = Math.max(0, visibleStart - overscan);
     const overscanEnd = Math.min(items.length - 1, visibleEnd + overscan);
 
-    endMeasurement(measurementId);
+    endMeasurement('virtual-scroll-calculation');
 
     return {
       totalHeight,

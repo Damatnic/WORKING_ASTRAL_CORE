@@ -1,3 +1,4 @@
+import { z, ZodError } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,6 @@ import { Session } from 'next-auth';
 import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { encryptJSON as encryptApiField, decryptJSON as decryptApiField } from '@/lib/encryption';
-import { z } from 'zod';
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -319,7 +319,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid input', details: (error as z.ZodError).issues },
+        { error: 'Invalid input', details: (error as ZodError).issues },
         { status: 400 }
       );
     }

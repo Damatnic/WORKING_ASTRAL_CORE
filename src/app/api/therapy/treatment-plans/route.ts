@@ -112,7 +112,7 @@ export async function GET(req: NextRequest) {
       limit: searchParams.get('limit'),
       clientId: searchParams.get('clientId'),
       status: searchParams.get('status'),
-    });
+    }) as any;
     
     // Build query filters
     const where: any = {};
@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createTreatmentPlanSchema, body);
+    const data = validateInput(createTreatmentPlanSchema, body) as any;
     
     // Verify consent for client
     const hasConsent = await verifyClientConsent((session as any).user.id, data.clientId);
@@ -359,7 +359,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateTreatmentPlanSchema, body);
+    const data = validateInput(updateTreatmentPlanSchema, body) as any;
     
     // Get existing plan
     const existingPlan = await prisma.safetyPlan.findUnique({

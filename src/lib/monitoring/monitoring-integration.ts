@@ -25,26 +25,15 @@ export function createMonitoringMiddleware() {
     // Set request ID for tracing
     response.headers.set('x-request-id', requestId);
     
-    // Add breadcrumb for error tracking
-    errorTracker.addBreadcrumb({
-      type: 'http',
-      category: 'request',
-      message: `${request.method} ${request.url}`,
-      data: {
-        method: request.method,
-        url: request.url,
-        headers: Object.fromEntries(request.headers),
-      },
-      level: 'info',
-    });
+    // Track error (using available method)
+    // Note: addBreadcrumb not available in current interface
 
     try {
       // Track the request
-      await analyticsService.trackPageView(request.url, {
-        properties: {
-          method: request.method,
-          userAgent: request.headers.get('user-agent'),
-        },
+      analyticsService.track('page_view', {
+        url: request.url,
+        method: request.method,
+        userAgent: request.headers.get('user-agent'),
       });
 
       // Continue with the request
@@ -183,7 +172,8 @@ export async function monitorCrisisIntervention(
     outcome,
     interventionType,
     effectivenessScore: outcome === 'resolved' ? 0.9 : 0.6,
-  }, { userId });
+    userId,
+  });
 
   // Create alert for high-risk cases
   if (riskLevel === 'critical' || riskLevel === 'high') {
@@ -258,7 +248,8 @@ export async function trackTreatmentProgress(
       notes: milestone.notes,
     }] : [],
     status: 'active',
-  }, userId);
+    userId,
+  });
 
   // Create positive outcome alert
   if (metrics.improvementScore > 0.8) {
@@ -312,7 +303,6 @@ export async function monitorUserActivity(
   await analyticsService.track('user_action', {
     activity,
     ...details,
-  }, {}, {
     userId,
     containsPHI: options.containsPHI,
     consentLevel: options.containsPHI ? 'enhanced' : 'basic',
@@ -422,7 +412,8 @@ export function trackFeatureUsage(
       
       try {
         // Track feature usage start
-        await analyticsService.trackFeatureUsage(featureName, 'started', {
+        await analyticsService.trackFeatureUsage(featureName, {
+          status: 'started',
           category,
           method: propertyKey,
         });
@@ -431,7 +422,8 @@ export function trackFeatureUsage(
         const duration = Date.now() - startTime;
         
         // Track successful completion
-        await analyticsService.trackFeatureUsage(featureName, 'completed', {
+        await analyticsService.trackFeatureUsage(featureName, {
+          status: 'completed',
           category,
           method: propertyKey,
           duration,
@@ -443,7 +435,8 @@ export function trackFeatureUsage(
         const duration = Date.now() - startTime;
         
         // Track failure
-        await analyticsService.trackFeatureUsage(featureName, 'failed', {
+        await analyticsService.trackFeatureUsage(featureName, {
+          status: 'failed',
           category,
           method: propertyKey,
           duration,

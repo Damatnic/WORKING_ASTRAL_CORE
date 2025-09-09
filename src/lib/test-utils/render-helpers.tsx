@@ -1,371 +1,157 @@
-/**
- * Render Helpers
- * Custom render functions for testing React components
- */
+import React from 'react';
+import { render, RenderOptions } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { UserRole } from '@prisma/client';
 
-import React from 'react'
-import { render, RenderOptions, RenderResult } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { SessionProvider } from 'next-auth/react'
-import { ThemeProvider } from 'next-themes'
-import { Toaster } from 'react-hot-toast'
-import { sessionFixtures } from './fixtures'
-import type { Session } from 'next-auth'
-
-// Custom render options
-interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
-  session?: Session | null
-  queryClient?: QueryClient
-  theme?: 'light' | 'dark' | 'system'
-  initialEntries?: string[]
-  preloadedState?: any
+// Mock session types
+interface MockSession extends Omit<Session, 'user'> {
+  user: {
+    id: string;
+    email: string;
+    firstName: string | null;
+    lastName: string | null;
+    role: UserRole;
+    avatar: string | null;
+  };
+  expires: string;
 }
 
-// Create a new QueryClient for each test to ensure isolation
-const createTestQueryClient = () => new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      gcTime: 0,
-      staleTime: 0,
-    },
-    mutations: {
-      retry: false,
-    },
-  },
-  logger: {
-    log: () => {},
-    warn: () => {},
-    error: () => {},
-  },
-})
+// Test wrapper component
+interface TestWrapperProps {
+  children: React.ReactNode;
+  session?: MockSession | null;
+}
 
-// All Providers Wrapper
-const AllProvidersWrapper: React.FC<{
-  children: React.ReactNode
-  session?: Session | null
-  queryClient?: QueryClient
-  theme?: 'light' | 'dark' | 'system'
-}> = ({ 
-  children, 
-  session = null, 
-  queryClient, 
-  theme = 'light' 
-}) => {
-  const testQueryClient = queryClient || createTestQueryClient()
-  
+const TestWrapper: React.FC<TestWrapperProps> = ({ children, session = null }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
+
   return (
-    <QueryClientProvider client={testQueryClient}>
-      <SessionProvider session={session}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme={theme}
-          enableSystem={theme === 'system'}
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster position="top-right" />
-        </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session as Session}>
+        {children}
       </SessionProvider>
     </QueryClientProvider>
-  )
-}
+  );
+};
 
 // Custom render function
+interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+  session?: MockSession | null;
+}
+
 export const renderWithProviders = (
   ui: React.ReactElement,
   options: CustomRenderOptions = {}
-): RenderResult & { queryClient: QueryClient } => {
-  const {
-    session,
-    queryClient,
-    theme = 'light',
-    ...renderOptions
-  } = options
-
-  const testQueryClient = queryClient || createTestQueryClient()
-
-  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <AllProvidersWrapper
-      session={session}
-      queryClient={testQueryClient}
-      theme={theme}
-    >
-      {children}
-    </AllProvidersWrapper>
-  )
-
-  const renderResult = render(ui, { wrapper: Wrapper, ...renderOptions })
-
-  return {
-    ...renderResult,
-    queryClient: testQueryClient,
-  }
-}
-
-// Render with authenticated session
-export const renderWithAuth = (
-  ui: React.ReactElement,
-  options: Omit<CustomRenderOptions, 'session'> & {
-    userType?: 'regular' | 'admin' | 'therapist' | 'crisis_counselor' | 'super_admin'
-  } = {}
 ) => {
-  const { userType = 'regular', ...restOptions } = options
-  
+  const { session, ...renderOptions } = options;
+
+  const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <TestWrapper session={session}>{children}</TestWrapper>
+  );
+
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
+// Session fixtures
+export const sessionFixtures = {
+  adminSession: {
+    user: {
+      id: 'admin-id',
+      email: 'admin@example.com',
+      firstName: 'Admin',
+      lastName: 'User',
+      role: UserRole.ADMIN,
+      avatar: null,
+    },
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+  } as MockSession,
+
+  therapistSession: {
+    user: {
+      id: 'therapist-id',
+      email: 'therapist@example.com',
+      firstName: 'Therapist',
+      lastName: 'User',
+      role: UserRole.THERAPIST,
+      avatar: null,
+    },
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+  } as MockSession,
+
+  userSession: {
+    user: {
+      id: 'user-id',
+      email: 'user@example.com',
+      firstName: 'Regular',
+      lastName: 'User',
+      role: UserRole.USER,
+      avatar: null,
+    },
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+  } as MockSession,
+
+  expiredSession: {
+    user: {
+      id: 'expired-user-id',
+      email: 'expired@example.com',
+      firstName: 'Expired',
+      lastName: 'User',
+      role: UserRole.USER,
+      avatar: null,
+    },
+    expires: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+  } as MockSession,
+};
+
+// Helper functions for different user types
+export const renderWithUser = (ui: React.ReactElement, userType: keyof typeof sessionFixtures = 'userSession') => {
   const sessionMap = {
-    regular: sessionFixtures.authenticatedSession,
-    admin: sessionFixtures.adminSession,
-    therapist: sessionFixtures.therapistSession,
-    crisis_counselor: sessionFixtures.authenticatedSession, // Add specific if needed
-    super_admin: sessionFixtures.adminSession, // Add specific if needed
-  }
+    adminSession: sessionFixtures.adminSession,
+    therapistSession: sessionFixtures.therapistSession,
+    userSession: sessionFixtures.userSession,
+    expiredSession: sessionFixtures.expiredSession,
+  };
 
   return renderWithProviders(ui, {
-    ...restOptions,
     session: sessionMap[userType],
-  })
-}
+  });
+};
 
-// Render without authentication
-export const renderWithoutAuth = (
-  ui: React.ReactElement,
-  options: Omit<CustomRenderOptions, 'session'> = {}
-) => {
+export const renderWithAdmin = (ui: React.ReactElement) => {
   return renderWithProviders(ui, {
-    ...options,
-    session: null,
-  })
-}
+    session: sessionFixtures.adminSession,
+  });
+};
 
-// Render with expired session
-export const renderWithExpiredAuth = (
-  ui: React.ReactElement,
-  options: Omit<CustomRenderOptions, 'session'> = {}
-) => {
+export const renderWithTherapist = (ui: React.ReactElement) => {
   return renderWithProviders(ui, {
-    ...options,
+    session: sessionFixtures.therapistSession,
+  });
+};
+
+export const renderWithExpiredSession = (ui: React.ReactElement) => {
+  return renderWithProviders(ui, {
     session: sessionFixtures.expiredSession,
-  })
-}
+  });
+};
 
-// Render with dark theme
-export const renderWithDarkTheme = (
-  ui: React.ReactElement,
-  options: Omit<CustomRenderOptions, 'theme'> = {}
-) => {
+export const renderWithoutSession = (ui: React.ReactElement) => {
   return renderWithProviders(ui, {
-    ...options,
-    theme: 'dark',
-  })
-}
+    session: null,
+  });
+};
 
-// Render for mobile viewport
-export const renderForMobile = (
-  ui: React.ReactElement,
-  options: CustomRenderOptions = {}
-) => {
-  // Set mobile viewport before rendering
-  Object.defineProperty(window, 'innerWidth', {
-    writable: true,
-    configurable: true,
-    value: 375,
-  })
-  
-  Object.defineProperty(window, 'innerHeight', {
-    writable: true,
-    configurable: true,
-    value: 667,
-  })
-  
-  // Dispatch resize event
-  window.dispatchEvent(new Event('resize'))
-  
-  return renderWithProviders(ui, options)
-}
-
-// Render for tablet viewport
-export const renderForTablet = (
-  ui: React.ReactElement,
-  options: CustomRenderOptions = {}
-) => {
-  Object.defineProperty(window, 'innerWidth', {
-    writable: true,
-    configurable: true,
-    value: 768,
-  })
-  
-  Object.defineProperty(window, 'innerHeight', {
-    writable: true,
-    configurable: true,
-    value: 1024,
-  })
-  
-  window.dispatchEvent(new Event('resize'))
-  
-  return renderWithProviders(ui, options)
-}
-
-// Render for desktop viewport
-export const renderForDesktop = (
-  ui: React.ReactElement,
-  options: CustomRenderOptions = {}
-) => {
-  Object.defineProperty(window, 'innerWidth', {
-    writable: true,
-    configurable: true,
-    value: 1280,
-  })
-  
-  Object.defineProperty(window, 'innerHeight', {
-    writable: true,
-    configurable: true,
-    value: 720,
-  })
-  
-  window.dispatchEvent(new Event('resize'))
-  
-  return renderWithProviders(ui, options)
-}
-
-// Create wrapper for component testing
-export const createWrapper = (options: CustomRenderOptions = {}) => {
-  const {
-    session,
-    queryClient,
-    theme = 'light',
-  } = options
-
-  const testQueryClient = queryClient || createTestQueryClient()
-
-  return ({ children }: { children: React.ReactNode }) => (
-    <AllProvidersWrapper
-      session={session}
-      queryClient={testQueryClient}
-      theme={theme}
-    >
-      {children}
-    </AllProvidersWrapper>
-  )
-}
-
-// Utility for testing hooks
-export const createHookWrapper = (options: CustomRenderOptions = {}) => {
-  return createWrapper(options)
-}
-
-// Wait for loading states to complete
-export const waitForLoadingToComplete = async () => {
-  // Wait for any pending promises
-  await new Promise(resolve => setTimeout(resolve, 0))
-  
-  // Wait for React to update
-  await new Promise(resolve => {
-    if (typeof window !== 'undefined' && window.requestAnimationFrame) {
-      window.requestAnimationFrame(resolve as FrameRequestCallback)
-    } else {
-      setTimeout(resolve, 16)
-    }
-  })
-}
-
-// Clean up after render tests
-export const cleanupAfterRender = () => {
-  // Reset viewport
-  Object.defineProperty(window, 'innerWidth', {
-    writable: true,
-    configurable: true,
-    value: 1024,
-  })
-  
-  Object.defineProperty(window, 'innerHeight', {
-    writable: true,
-    configurable: true,
-    value: 768,
-  })
-  
-  // Clear any pending timers
-  jest.clearAllTimers()
-  
-  // Clear all mocks
-  jest.clearAllMocks()
-}
-
-// Export the default render for convenience
-export { render as defaultRender } from '@testing-library/react'
-
-// Export common testing utilities
-export {
-  screen,
-  fireEvent,
-  waitFor,
-  waitForElementToBeRemoved,
-  within,
-  getByRole,
-  getByText,
-  getByLabelText,
-  getByPlaceholderText,
-  getByDisplayValue,
-  getByAltText,
-  getByTitle,
-  getByTestId,
-  queryByRole,
-  queryByText,
-  queryByLabelText,
-  queryByPlaceholderText,
-  queryByDisplayValue,
-  queryByAltText,
-  queryByTitle,
-  queryByTestId,
-  findByRole,
-  findByText,
-  findByLabelText,
-  findByPlaceholderText,
-  findByDisplayValue,
-  findByAltText,
-  findByTitle,
-  findByTestId,
-  getAllByRole,
-  getAllByText,
-  getAllByLabelText,
-  getAllByPlaceholderText,
-  getAllByDisplayValue,
-  getAllByAltText,
-  getAllByTitle,
-  getAllByTestId,
-  queryAllByRole,
-  queryAllByText,
-  queryAllByLabelText,
-  queryAllByPlaceholderText,
-  queryAllByDisplayValue,
-  queryAllByAltText,
-  queryAllByTitle,
-  queryAllByTestId,
-  findAllByRole,
-  findAllByText,
-  findAllByLabelText,
-  findAllByPlaceholderText,
-  findAllByDisplayValue,
-  findAllByAltText,
-  findAllByTitle,
-  findAllByTestId,
-} from '@testing-library/react'
-
-export { userEvent } from '@testing-library/user-event'
-
-// Export all render helpers
-export const renderHelpers = {
-  renderWithProviders,
-  renderWithAuth,
-  renderWithoutAuth,
-  renderWithExpiredAuth,
-  renderWithDarkTheme,
-  renderForMobile,
-  renderForTablet,
-  renderForDesktop,
-  createWrapper,
-  createHookWrapper,
-  waitForLoadingToComplete,
-  cleanupAfterRender,
-}
-
-export default renderWithProviders
+// Re-export everything from testing-library
+export * from '@testing-library/react';
+export { renderWithProviders as render };

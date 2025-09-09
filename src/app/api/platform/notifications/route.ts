@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Create delivery records for each channel
-    const deliveryRecords = validatedData.channels.map(channel => ({
+    const deliveryRecords = validatedData.channels.map((channel: string) => ({
       notificationId: notification.id,
       channel,
       status: 'pending'

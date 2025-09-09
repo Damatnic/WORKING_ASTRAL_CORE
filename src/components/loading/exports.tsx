@@ -1,15 +1,11 @@
 /**
- * Loading Exports - Working Components for Build Success
+ * Loading Exports - Re-exports for loading components
  */
 
-import React from 'react';
-
 // Re-export components from actual implementations  
-export { LoadingSpinner } from './LoadingSpinner';
-export { CrisisLoader } from './CrisisLoader';
-export { CrisisSkeleton, MoodTrackerSkeleton } from './SkeletonLoaders';
-export { DashboardSkeleton } from './DashboardSkeleton';
-export { WellnessLoader } from './WellnessLoader';
+export { LoadingSpinner, CrisisLoader, WellnessLoader } from './LoadingSpinner';
+export { CrisisSkeleton } from './CrisisSkeleton';
+export { MoodTrackerSkeleton, DashboardSkeleton } from './SkeletonLoaders';
 export { CriticalBoundary } from './CriticalBoundary';
 
 // Additional loading components
@@ -53,20 +49,7 @@ export const LoadingOverlay = ({ show = true, message = 'Loading...' }: { show?:
   );
 };
 
-export const PulseLoader = ({ count = 3, size = 'md' }: { count?: number; size?: 'sm' | 'md' | 'lg' }) => {
-  const sizeClasses = { sm: 'h-2 w-2', md: 'h-3 w-3', lg: 'h-4 w-4' };
-  return (
-    <div className="flex space-x-2">
-      {Array.from({ length: count }).map((_, i) => (
-        <div 
-          key={i}
-          className={`${sizeClasses[size]} bg-blue-600 rounded-full animate-pulse`}
-          style={{ animationDelay: `${i * 0.2}s` }}
-        />
-      ))}
-    </div>
-  );
-};
+// PulseLoader is re-exported from LoadingSpinner.tsx
 
 export const SpinnerDots = ({ color = 'blue', size = 'md' }: { color?: string; size?: 'sm' | 'md' | 'lg' }) => (
   <div className="flex space-x-1">
@@ -155,14 +138,8 @@ export type WaveLoaderProps = any;
 
 // Named default export object
 const LoadingExports = {
-  LoadingSpinner,
   ProgressBar,
   SkeletonLoader,
-  ProgressiveLoader,
-  LoadingOverlay,
-  PulseLoader,
-  SpinnerDots,
-  WaveLoader,
   LoadingPresets,
 };
 

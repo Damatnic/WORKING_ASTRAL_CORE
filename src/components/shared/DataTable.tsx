@@ -182,9 +182,13 @@ function DataTable<T extends Record<string, any>>({
               {showCheckboxes && (
                 <th className="px-6 py-3 text-left">
                   <input
+                    ref={(input) => {
+                      if (input) {
+                        input.indeterminate = selectedRows.length > 0 && selectedRows.length < paginatedData.length;
+                      }
+                    }}
                     type="checkbox"
                     checked={selectedRows.length === paginatedData.length && paginatedData.length > 0}
-                    indeterminate={selectedRows.length > 0 && selectedRows.length < paginatedData.length}
                     onChange={handleSelectAll}
                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     aria-label="Select all rows"

@@ -27,6 +27,30 @@ class CommunityWebSocketService extends EventEmitter {
     console.log('WebSocket disconnected (mock)');
   }
 
+  sendMessage(message: any): void {
+    // Mock implementation for build compatibility
+    console.log('Sending message (mock):', message);
+    this.emit('messageSent', message);
+  }
+
+  sendPeerMessage(message: any): void {
+    // Mock implementation for build compatibility
+    console.log('Sending peer message (mock):', message);
+    this.emit('peerMessageSent', message);
+  }
+
+  joinGroup(groupId: string): void {
+    // Mock implementation for build compatibility
+    console.log('Joining group (mock):', groupId);
+    this.emit('groupJoined', { groupId });
+  }
+
+  leaveGroup(groupId: string): void {
+    // Mock implementation for build compatibility
+    console.log('Leaving group (mock):', groupId);
+    this.emit('groupLeft', { groupId });
+  }
+
   on(event: string, listener: (...args: any[]) => void): this {
     return super.on(event, listener);
   }

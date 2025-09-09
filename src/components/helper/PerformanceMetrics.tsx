@@ -178,7 +178,7 @@ export default function PerformanceMetrics({ className = "" }: PerformanceMetric
 
   const MetricCard = ({ metric }: { metric: PerformanceMetric }) => {
     const IconComponent = getMetricIcon(metric.category);
-    const isImprovement = (metric.category === 'response_time' || metric.category === 'no_show_rate') ? 
+    const isImprovement = (metric.category === 'response_time' || metric.category === 'availability') ? 
       metric.trend === 'up' && metric.trendPercentage < 0 : metric.trend === 'up';
     
     return (

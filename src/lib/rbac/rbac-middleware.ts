@@ -118,7 +118,7 @@ export function withRBAC(
       
       await auditService.logEvent({
         category: (AuditEventCategory as any).SYSTEM_ERROR,
-        action: 'RBAC_MIDDLEWARE_ERROR',
+        action: options.action || 'RBAC_MIDDLEWARE_ERROR',
         outcome: AuditOutcome.FAILURE,
         riskLevel: RiskLevel.HIGH,
         description: 'RBAC middleware encountered an error',
@@ -129,8 +129,6 @@ export function withRBAC(
         errorDetails: {
           errorCode: 'RBAC_ERROR',
           errorMessage: error instanceof Error ? error.message : 'Unknown error',
-          
-          action: options.action,
         },
       });
 

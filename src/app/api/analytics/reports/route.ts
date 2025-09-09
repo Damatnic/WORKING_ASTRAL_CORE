@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 
     if (format === 'csv') {
       const csv = convertToCSV(reportData);
-      return new NextResponse(csv, {
+      return new Response(csv, {
         headers: {
           'Content-Type': 'text/csv',
           'Content-Disposition': `attachment; filename="${type}-report-${startDate}-${endDate}.csv"`

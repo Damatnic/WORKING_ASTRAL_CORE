@@ -1,3 +1,4 @@
+import { z, ZodError } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import { getServerSession } from 'next-auth/next';
@@ -6,7 +7,6 @@ import { authOptions } from "@/lib/auth";
 import * as crypto from 'crypto';
 import { prisma } from '@/lib/prisma';
 import { encryptJSON as encryptApiField, decryptJSON as decryptApiField } from '@/lib/encryption';
-import { z } from 'zod';
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -132,19 +132,22 @@ export async function GET(request: NextRequest) {
 
     // Decrypt notes for sessions if they exist
     const decryptedSessions = sessions.map(session => {
-      const decrypted = { ...session };
+      const { notesEncrypted, ...sessionWithoutNotes } = session;
       
-      if (session.notesEncrypted) {
+      let decryptedNotes = null;
+      if (notesEncrypted) {
         try {
-          decrypted.notesEncrypted = decryptApiField(session.notesEncrypted as any);
+          decryptedNotes = decryptApiField(notesEncrypted as any);
         } catch (error) {
           console.error('Failed to decrypt session notes:', error);
-          decrypted.notesEncrypted = null;
+          decryptedNotes = null;
         }
       }
       
-      delete decrypted.notesEncrypted;
-      return decrypted;
+      return {
+        ...sessionWithoutNotes,
+        notes: decryptedNotes
+      };
     });
 
     // Get statistics for dashboard
@@ -345,7 +348,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid input', details: (error as z.ZodError).issues },
+        { error: 'Invalid input', details: (error as ZodError).issues },
         { status: 400 }
       );
     }

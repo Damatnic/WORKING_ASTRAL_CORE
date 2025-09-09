@@ -105,10 +105,14 @@ model AuditLog {
   ipAddress  String?
   userAgent  String?
   outcome    String
+  eventType  String?  // Added for analytics compatibility
+  eventName  String?  // Added for analytics compatibility
   timestamp  DateTime @default(now())
   User       User?    @relation(fields: [userId], references: [id])
 
   @@index([action])
+  @@index([eventType])
+  @@index([eventName])
   @@index([outcome])
   @@index([timestamp])
   @@index([userId])
@@ -268,6 +272,35 @@ model CrisisReport {
   @@index([severityLevel])
   @@index([userId])
   @@index([assignedToUserId])
+}
+
+model CrisisAlert {
+  id                  String    @id @default(cuid())
+  userId              String
+  severity            String    // CrisisSeverity enum value
+  type                String    // CrisisType enum value  
+  message             String
+  location            Json?     // CrisisLocation data
+  triggers            String[]
+  currentMood         Int?
+  suicidalIdeation    Boolean   @default(false)
+  selfHarmRisk        Boolean   @default(false)
+  assignedCounselors  String[]
+  status              String    // CrisisStatus enum value
+  escalationLevel     Int       @default(1)
+  previousAlerts      String[]
+  contactedEmergency  Boolean   @default(false)
+  notes               Json[]    // Array of crisis notes
+  interventions       Json[]    // Array of interventions
+  resolvedAt          DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime
+  User                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([severity])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model EmailVerification {
@@ -521,6 +554,23 @@ model MoodEntry {
   @@index([userId])
 }
 
+model MoodScoreEntry {
+  id           String   @id @default(cuid())
+  userId       String
+  moodScore    Int
+  anxietyLevel Int?
+  energyLevel  Int?
+  notes        String?
+  tags         String[]
+  date         DateTime @default(now())
+  createdAt    DateTime @default(now())
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([date])
+  @@index([moodScore])
+  @@index([userId])
+}
+
 model Notification {
   id         String    @id @default(cuid())
   userId     String
@@ -618,6 +668,7 @@ model SafetyAlert {
   handledBy  String?
   actions    String[]
   notes      String?
+  metadata   Json?     // Added for crisis manager compatibility
   detectedAt DateTime  @default(now())
   handledAt  DateTime?
 
@@ -769,10 +820,12 @@ model User {
   ConversationParticipant                      ConversationParticipant[]
   DirectMessage                                DirectMessage[]
   CrisisReport                                 CrisisReport[]
+  CrisisAlert                                  CrisisAlert[]
   EmailVerification                            EmailVerification[]
   HelperProfile                                HelperProfile?
   JournalEntry                                 JournalEntry[]
   MoodEntry                                    MoodEntry[]
+  MoodScoreEntry                               MoodScoreEntry[]
   Notification                                 Notification[]
   PasswordReset                                PasswordReset[]
   SafetyPlan                                   SafetyPlan[]

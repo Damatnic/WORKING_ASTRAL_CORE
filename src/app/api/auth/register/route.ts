@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import bcrypt from "bcryptjs";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { prisma } from "@/lib/prisma";
 import { UserRole } from "@/types/enums";
 import { EnhancedUserSchemas } from "@/lib/validation/schemas";
@@ -155,10 +155,10 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Registration error:", error);
 
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       return NextResponse.json(
         { error: "Validation failed", details: error.issues },
         { status: 400 }

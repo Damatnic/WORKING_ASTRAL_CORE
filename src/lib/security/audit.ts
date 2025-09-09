@@ -381,6 +381,7 @@ export class AuditService {
       await prisma.auditLog.createMany({
         data: batch.map(entry => ({
           ...entry,
+          outcome: entry.success ? 'success' : 'failure',
           details: entry.details ? JSON.stringify(entry.details) : undefined,
           beforeState: entry.beforeState ? JSON.stringify(entry.beforeState) : undefined,
           afterState: entry.afterState ? JSON.stringify(entry.afterState) : undefined,
@@ -410,8 +411,8 @@ export class AuditService {
     await prisma.auditLog.create({
       data: {
         ...entry,
+        outcome: entry.success ? 'success' : 'failure',
         details: entry.details ? JSON.stringify(entry.details) : undefined,
-        
       }
     });
   }

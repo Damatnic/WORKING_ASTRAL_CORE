@@ -85,7 +85,7 @@ interface AccessibilityTest {
   wcagLevel: 'A' | 'AA' | 'AAA';
   wcagCriteria: string;
   description: string;
-  status: 'pass' | 'fail' | 'warning' | 'not-tested';
+  status: 'pass' | 'fail' | 'warning' | 'not-tested' | 'running';
   lastTested: Date;
   issues: Array<{
     id: string;

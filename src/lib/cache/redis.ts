@@ -271,7 +271,7 @@ export class CacheManager {
       if (keys.length === 0) return 0;
       
       const pipeline = this.client!.pipeline();
-      keys.forEach(key => pipeline.del(key));
+      keys.forEach((key: any) => pipeline.del(key));
       await pipeline.exec();
       
       return keys.length;
@@ -295,7 +295,7 @@ export class CacheManager {
       });
       
       const results = await pipeline.exec();
-      return results?.filter(([err, result]) => !err && result === 1).length || 0;
+      return results?.filter(([err, result]: [Error | null, any]) => !err && result === 1).length || 0;
     } catch (error) {
       console.error('[Cache] Invalidate many error:', error);
       return 0;
@@ -373,7 +373,7 @@ export class CacheManager {
       });
       
       const results = await pipeline.exec();
-      return results?.every(([err, result]) => !err && result === 'OK') || false;
+      return results?.every(([err, result]: [Error | null, any]) => !err && result === 'OK') || false;
     } catch (error) {
       console.error('[Cache] Batch set error:', error);
       return false;
@@ -391,7 +391,7 @@ export class CacheManager {
       const result: Record<string, number> = {};
       
       Object.entries(metrics).forEach(([key, value]) => {
-        result[key] = parseInt(value) || 0;
+        result[key] = parseInt(String(value)) || 0;
       });
       
       return result;
@@ -525,7 +525,7 @@ export const sessionStore = new RedisSessionStore(cacheManager);
  * Rate limiter using Redis
  */
 export class RedisRateLimiter {
-  private client: Redis | null = null;
+  private client: any | null = null;
   
   async initialize(): Promise<void> {
     this.client = await getRedisClient();

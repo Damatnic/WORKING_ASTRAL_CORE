@@ -370,7 +370,7 @@ export function withSuspenseBoundary<P extends object>(
 ) {
   const WrappedComponent = React.forwardRef<any, P>((props, ref) => (
     <SuspenseBoundary {...options}>
-      <Component {...props} ref={ref} />
+      <Component {...(props as P)} />
     </SuspenseBoundary>
   ));
 

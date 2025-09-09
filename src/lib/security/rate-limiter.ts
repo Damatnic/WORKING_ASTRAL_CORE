@@ -394,7 +394,7 @@ export class RateLimiter {
         },
       });
 
-      return requests.map(r => ({
+      return requests.map((r: any) => ({
         timestamp: r.timestamp,
         weight: r.weight || 1,
       }));

@@ -90,7 +90,7 @@ class AlertManager extends EventEmitter {
   private rules: Map<string, AlertRule> = new Map();
   private suppressionRules: Map<string, number> = new Map(); // fingerprint -> until timestamp
   private lastAlertTime: Map<string, number> = new Map(); // type -> timestamp
-  private escalationTimers: Map<string, NodeJS.Timer> = new Map();
+  private escalationTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
   private emailTransporter: any;
 
   constructor() {

@@ -11,7 +11,13 @@ export const performanceMonitor = {
   start: (operation: string): void => {},
   end: (operation: string): void => {},
   recordMetric: (metric: string, value: number): void => {},
+  recordCustomMetric: (metric: string, value: number): void => {},
   getMetrics: (): any => ({}),
+  recordResponseTime: (entry: any): void => {},
+  recordDatabaseQuery: (entry: any): void => {},
+  captureError: (error: Error, context?: any): void => {},
+  trackCrisisIntervention: (data: any): void => {},
+  trackTreatmentOutcome: (data: any): void => {},
 };
 
 export const performanceMiddleware = (req: any, res: any, next: any): void => {
@@ -64,6 +70,18 @@ export const analytics = {
   increment: (metric: string): void => {},
   gauge: (metric: string, value: number): void => {},
   histogram: (metric: string, value: number): void => {},
+  trackCrisisIntervention: (data: any): void => {},
+  trackTreatmentOutcome: (data: any): void => {},
+  trackFeatureUsage: (feature: string, data: any): void => {},
+};
+
+export const analyticsService = analytics;
+
+export const errorTracker = {
+  trackError: (error: Error, context?: any): void => {},
+  captureError: (error: Error, context?: any): void => {},
+  getErrorStats: (): any => ({}),
+  clearErrors: (): void => {},
 };
 
 export type AnalyticsEvent = any;

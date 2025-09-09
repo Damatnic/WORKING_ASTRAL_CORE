@@ -127,7 +127,7 @@ class ErrorTracker extends EventEmitter {
   private breadcrumbs: Breadcrumb[] = [];
   private isInitialized = false;
   private maxBreadcrumbs = 100;
-  private cleanupInterval: NodeJS.Timer | null = null;
+  private cleanupInterval: ReturnType<typeof setTimeout> | null = null;
 
   constructor(reportConfig: ErrorReportConfig = {}) {
     super();
@@ -855,12 +855,5 @@ export const withErrorTracking = (Component: any) => {
   };
 };
 
-export type {
-  ErrorInfo,
-  ErrorGroup,
-  ErrorStats,
-  Breadcrumb,
-  ErrorReportConfig,
-};
 
 export default errorTracker;

@@ -8,6 +8,44 @@ import { UserRole } from '@prisma/client';
 // Re-export useSession for convenience
 export { useSession, signOut } from 'next-auth/react';
 
+// AuthContext type definition
+export interface AuthContextType {
+  // Session data
+  user: any | null;
+  session: any;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+
+  // User properties
+  role: UserRole | null;
+  isEmailVerified: boolean;
+  onboardingCompleted: boolean;
+
+  // Auth methods
+  loginAnonymously: () => Promise<void>;
+  logout: () => Promise<void>;
+  updateProfile: (data: any) => Promise<any>;
+
+  // Role and permission helpers
+  hasRole: (roles: UserRole | UserRole[]) => boolean;
+  isRole: (role: UserRole) => boolean;
+  canAccess: (resource: string) => boolean;
+
+  // Role checks
+  isUser: boolean;
+  isHelper: boolean;
+  isTherapist: boolean;
+  isCrisisCounselor: boolean;
+  isAdmin: boolean;
+  isSuperAdmin: boolean;
+
+  // Permission checks
+  canModerate: boolean;
+  canManageUsers: boolean;
+  canProvideSupport: boolean;
+  canHandleCrisis: boolean;
+}
+
 interface AuthProviderProps {
   children: ReactNode;
   session?: any;

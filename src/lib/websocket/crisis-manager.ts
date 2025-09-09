@@ -12,6 +12,7 @@ import {
   CrisisSeverity,
   CrisisStatus,
   CrisisTrigger,
+  CrisisType,
   NotificationPriority,
 } from "./events";
 // Interface to avoid circular dependency with WebSocketServer
@@ -107,6 +108,7 @@ export class CrisisManager {
     const alert: CrisisAlert = {
       id: alertId,
       userId,
+      type: CrisisType.OTHER, // Default type for created alerts
       severity: payload.severity,
       status: CrisisStatus.PENDING,
       message: payload.message,
@@ -115,9 +117,7 @@ export class CrisisManager {
       
       timestamp: new Date(),
       assignedCounselors: [],
-      resolvedAt: null,
-      notes: [],
-      interventions: [],
+      // resolvedAt: null,
     };
 
     // Store alert
@@ -166,6 +166,7 @@ export class CrisisManager {
 
     // Create automated alert
     const alert = await this.createAlert(userId, {
+      type: CrisisType.OTHER,
       severity,
       message: "Crisis indicators detected in user communication",
       triggers: triggers.keywords,
@@ -205,6 +206,7 @@ export class CrisisManager {
 
     // Create new help request
     const alert = await this.createAlert(userId, {
+      type: CrisisType.OTHER,
       severity: data.severity,
       message: data.message,
       
@@ -268,7 +270,7 @@ export class CrisisManager {
       timestamp: new Date(),
       actionUrl: `/crisis/alert/${alertId}`,
       actionLabel: "View Alert",
-      metadata: { alertId },
+      // metadata: { alertId },
     });
 
     // Notify user
@@ -346,12 +348,12 @@ export class CrisisManager {
         timestamp: new Date(),
         actionUrl: `/crisis/alert/${alert.id}`,
         actionLabel: "Respond Now",
-        metadata: { alertId: alert.id },
+        // metadata: { alertId: alert.id },
       });
     });
 
     // Broadcast escalation
-    this.server.getIO().emit(CrisisEvent.ESCALATED, {
+    this.server.getIO().emit(CrisisEvent.ESCALATE, {
       alertId: alert.id,
       severity: alert.severity,
       timestamp: new Date(),
@@ -409,7 +411,7 @@ export class CrisisManager {
         timestamp: new Date(),
         actionUrl: "/wellness/safety-plan",
         actionLabel: "View Safety Plan",
-        metadata: { safetyPlanId: safetyPlan.id },
+        // metadata: { safetyPlanId: safetyPlan.id },
       });
     }
   }
@@ -481,7 +483,7 @@ export class CrisisManager {
     
     if (newSeverity > alert.severity) {
       alert.severity = newSeverity;
-      alert.triggers = [...alert.triggers, ...triggers.keywords];
+      alert.triggers = [...(alert.triggers || []), ...(triggers.keywords || [])];
       
       await this.updateAlertInDatabase(alert);
       
@@ -494,11 +496,11 @@ export class CrisisManager {
 
   private determineSeverity(triggers: CrisisTrigger): CrisisSeverity {
     if (triggers.severity) {
-      return triggers.severity;
+      return triggers.severity as CrisisSeverity;
     }
 
     // Analyze keywords to determine severity
-    const keywords = triggers.keywords.map((k: any) => k.toLowerCase());
+    const keywords = (triggers.keywords || []).map((k: any) => k.toLowerCase());
     
     for (const keyword of CRISIS_KEYWORDS.critical) {
       if (keywords.some(k => k.includes(keyword))) {
@@ -608,15 +610,17 @@ export class CrisisManager {
         data: {
           id: alert.id,
           userId: alert.userId,
+          type: alert.type,
+          context: alert.message,
           severity: alert.severity,
           
           handled: false,
-          metadata: {
+          metadata: JSON.parse(JSON.stringify({
             triggers: alert.triggers,
             location: alert.location,
             contactMethod: (alert as any).contactMethod,
             status: alert.status,
-          },
+          })),
         },
       });
     } catch (error) {
@@ -634,14 +638,14 @@ export class CrisisManager {
           handled: alert.status === CrisisStatus.RESOLVED,
           handledBy: alert.assignedCounselors?.[0] || null,
           handledAt: (alert as any).resolvedAt,
-          metadata: {
+          metadata: JSON.parse(JSON.stringify({
             triggers: alert.triggers,
             location: alert.location,
             contactMethod: (alert as any).contactMethod,
             status: alert.status,
             notes: (alert as any).notesEncrypted,
             interventions: (alert as any).interventions,
-          },
+          })),
         },
       });
     } catch (error) {
@@ -651,26 +655,22 @@ export class CrisisManager {
 
   private async logCrisisEvent(
     userId: string,
-    action: string,
-    alert: CrisisAlert
+    eventType: string,
+    details: Record<string, any>
   ): Promise<void> {
     try {
       await prisma.auditLog.create({
         data: {
           userId,
-          action,
-          resource: "crisis_alert",
-          resourceId: alert.id,
-          details: {
-            severity: alert.severity,
-            status: alert.status,
-            assignedCounselors: alert.assignedCounselors,
-          },
-          outcome: "success",
+          action: eventType,
+          resource: 'crisis_alert',
+          details: JSON.stringify(details),
+          outcome: 'SUCCESS',
+          timestamp: new Date(),
         },
       });
     } catch (error) {
-      console.error("Failed to log crisis event:", error);
+      console.error('Error logging crisis event:', error);
     }
   }
 

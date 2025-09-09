@@ -80,6 +80,8 @@ export interface MonitoringConfig {
     privacy: {
       anonymizeUsers: boolean;
       hashUserIds: boolean;
+      excludeFields: string[];
+      consentRequired: boolean;
     };
   };
 
@@ -227,6 +229,8 @@ export const defaultMonitoringConfig: MonitoringConfig = {
     privacy: {
       anonymizeUsers: true,
       hashUserIds: true,
+      excludeFields: ['password', 'ssn', 'email', 'phone'],
+      consentRequired: true,
     },
   },
 
@@ -313,18 +317,6 @@ export const getMonitoringConfig = (): MonitoringConfig => {
         },
       };
 
-    case 'staging':
-      return {
-        ...baseConfig,
-        analytics: {
-          ...baseConfig.analytics,
-          sampling: {
-            rate: 0.2, // 20% in staging
-            strategy: 'random',
-          },
-        },
-      };
-
     case 'development':
     default:
       return {
@@ -373,5 +365,3 @@ export const validateMonitoringConfig = (config: MonitoringConfig): boolean => {
     return false;
   }
 };
-
-export type { MonitoringConfig };

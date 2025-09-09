@@ -499,7 +499,7 @@ class PerformanceMonitor {
     
     // Check chunk load time budget
     const chunkType = this.getChunkType(chunkName);
-    const budget = PERFORMANCE_BUDGETS.chunkLoadTime[chunkType] || PERFORMANCE_BUDGETS.chunkLoadTime.default;
+    const budget = (PERFORMANCE_BUDGETS.chunkLoadTime as any)[chunkType] || PERFORMANCE_BUDGETS.chunkLoadTime.default;
     
     if (duration > budget) {
       console.warn(`[Performance] Slow chunk load: ${chunkName} took ${duration}ms (budget: ${budget}ms)`);

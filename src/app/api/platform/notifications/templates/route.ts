@@ -127,14 +127,10 @@ export async function POST(request: NextRequest) {
         category: validatedData.category,
         subject: validatedData.subject,
         
-        contentTemplate: validatedData.content.message,
-        emailTemplate: validatedData.content.emailTemplate,
-        smsTemplate: validatedData.content.smsTemplate,
-        pushTemplate: validatedData.content.pushTemplate,
-        triggers: validatedData.triggers,
+        contentTemplate: validatedData.content.message || validatedData.content.emailTemplate || '',
         channels: validatedData.channels,
         priority: validatedData.priority,
-        userRoles: validatedData.userRoles,
+        variables: validatedData.variables || {},
         isActive: validatedData.isActive
       }
     });
@@ -187,14 +183,10 @@ export async function PUT(request: NextRequest) {
         category: body.category,
         subject: body.subject,
         
-        message: body.content?.message,
-        emailTemplate: body.content?.emailTemplate,
-        smsTemplate: body.content?.smsTemplate,
-        pushTemplate: body.content?.pushTemplate,
-        triggers: body.triggers,
+        contentTemplate: body.content?.message || body.content?.emailTemplate || '',
         channels: body.channels,
         priority: body.priority,
-        userRoles: body.userRoles,
+        variables: body.variables || {},
         isActive: body.isActive,
         updatedAt: new Date()
       }

@@ -135,7 +135,7 @@ export function createCachedResponse(
     tags?: string[];
     vary?: string;
   } = {}
-): Response {
+): NextResponse {
   const { staleWhileRevalidate = ttlSeconds * 2, tags = [], vary } = options;
   
   const headers: Record<string, string> = {

@@ -139,7 +139,7 @@ export async function GET(req: NextRequest) {
       startDate: searchParams.get('startDate'),
       endDate: searchParams.get('endDate'),
       noteType: searchParams.get('noteType'),
-    });
+    }) as any;
     
     // Verify consent for client
     const hasConsent = await verifyClientConsent((session as any).user.id, params.clientId);
@@ -260,7 +260,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createNoteSchema, body);
+    const data = validateInput(createNoteSchema, body) as any;
     
     // Verify consent for client
     const hasConsent = await verifyClientConsent((session as any).user.id, data.clientId);
@@ -399,7 +399,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateNoteSchema, body);
+    const data = validateInput(updateNoteSchema, body) as any;
     
     // Get existing note
     const existingNote = await prisma.journalEntry.findUnique({

@@ -38,12 +38,13 @@ export interface AnalyticsEvent {
   eventName: string;
   properties: Record<string, any>;
   timestamp: Date;
-  privacyLevel: PrivacyLevel;
+  // privacyLevel: PrivacyLevel;
   metadata?: {
     userAgent?: string;
     ipAddress?: string;
     location?: string;
     deviceType?: string;
+    privacyLevel?: PrivacyLevel;
   };
 }
 
@@ -100,17 +101,14 @@ class AnalyticsService {
       const processedEvent = await this.applyPrivacyProtection(event);
       
       // Store event in analytics database
-      await prisma.analyticsEvent.create({
+      await prisma.auditLog.create({
         data: {
-          id: processedEvent.id || crypto.randomUUID(),
-          userId: processedEvent.userId,
-          sessionId: processedEvent.sessionId,
-          eventType: processedEvent.eventType,
-          eventName: processedEvent.eventName,
-          properties: processedEvent.properties,
-          privacyLevel: processedEvent.privacyLevel,
-          metadata: processedEvent.metadata || {},
-          createdAt: processedEvent.timestamp
+          userId: processedEvent.userId || 'anonymous',
+          action: processedEvent.eventType,
+          resource: processedEvent.eventName,
+          details: JSON.stringify(processedEvent.properties),
+          outcome: 'SUCCESS',
+          timestamp: processedEvent.timestamp
         }
       });
 
@@ -130,7 +128,7 @@ class AnalyticsService {
   private async applyPrivacyProtection(event: AnalyticsEvent): Promise<AnalyticsEvent> {
     const processedEvent = { ...event };
 
-    switch (event.privacyLevel) {
+    switch (event.metadata?.privacyLevel) {
       case PrivacyLevel.PUBLIC:
         // Remove all identifying information
         delete processedEvent.userId;
@@ -167,8 +165,7 @@ class AnalyticsService {
       case PrivacyLevel.CONFIDENTIAL:
         // Encrypt sensitive properties
         processedEvent.properties = await this.encryptSensitiveProperties(
-          event.properties,
-          event.privacyLevel
+          event.properties
         );
         break;
     }
@@ -209,7 +206,7 @@ class AnalyticsService {
    */
   private async encryptSensitiveProperties(
     properties: Record<string, any>,
-    privacyLevel: PrivacyLevel
+    // privacyLevel: PrivacyLevel
   ): Promise<Record<string, any>> {
     const encrypted: Record<string, any> = {};
 
@@ -219,7 +216,7 @@ class AnalyticsService {
         encrypted[key] = {
           encrypted: true,
           data: encryptionResult,
-          privacyLevel
+          privacyLevel: PrivacyLevel.PROTECTED
         };
       } else {
         encrypted[key] = value;
@@ -286,7 +283,7 @@ class AnalyticsService {
   async generateWellnessInsights(userId: string): Promise<WellnessTrend[]> {
     try {
       // Get user's mood and wellness tracking data
-      const moodEntries = await prisma.moodTracking.findMany({
+      const moodEntries = await prisma.moodScoreEntry.findMany({
         where: {
           userId,
           createdAt: {
@@ -303,7 +300,7 @@ class AnalyticsService {
         const moodTrend = this.analyzeTrend(
           moodEntries.map(entry => ({
             timestamp: entry.createdAt,
-            value: entry.mood,
+            value: entry.moodScore,
             context: entry.notes || undefined
           }))
         );
@@ -313,7 +310,7 @@ class AnalyticsService {
           metric: 'mood',
           values: moodEntries.map(entry => ({
             timestamp: entry.createdAt,
-            value: entry.mood,
+            value: entry.moodScore,
             context: entry.notes || undefined
           })),
           trend: moodTrend.direction,
@@ -322,7 +319,7 @@ class AnalyticsService {
       }
 
       // Get anxiety tracking if available
-      const anxietyEntries = await prisma.anxietyTracking.findMany({
+      const anxietyEntries = await prisma.moodScoreEntry.findMany({
         where: {
           userId,
           createdAt: {
@@ -334,21 +331,25 @@ class AnalyticsService {
 
       if (anxietyEntries.length > 0) {
         const anxietyTrend = this.analyzeTrend(
-          anxietyEntries.map(entry => ({
-            timestamp: entry.createdAt,
-            value: entry.anxietyLevel,
-            context: entry.triggers || undefined
-          }))
+          anxietyEntries
+            .filter(entry => entry.anxietyLevel !== null)
+            .map(entry => ({
+              timestamp: entry.createdAt,
+              value: entry.anxietyLevel!,
+              context: entry.tags?.join(', ') || undefined
+            }))
         );
 
         trends.push({
           userId,
           metric: 'anxiety',
-          values: anxietyEntries.map(entry => ({
-            timestamp: entry.createdAt,
-            value: entry.anxietyLevel,
-            context: entry.triggers || undefined
-          })),
+          values: anxietyEntries
+            .filter(entry => entry.anxietyLevel !== null)
+            .map(entry => ({
+              timestamp: entry.createdAt,
+              value: entry.anxietyLevel!,
+              context: entry.tags?.join(', ') || undefined
+            })),
           trend: anxietyTrend.direction,
           confidenceScore: anxietyTrend.confidence
         });
@@ -419,15 +420,12 @@ class AnalyticsService {
       const metrics: AggregatedMetric[] = [];
 
       // Active users metric
-      const activeUsers = await prisma.analyticsEvent.groupBy({
+      const activeUsers = await prisma.auditLog.groupBy({
         by: ['eventType'],
         where: {
-          createdAt: {
+          timestamp: {
             gte: startDate,
             lte: endDate
-          },
-          privacyLevel: {
-            in: [PrivacyLevel.PUBLIC, PrivacyLevel.ANONYMIZED]
           }
         },
         _count: {
@@ -439,7 +437,7 @@ class AnalyticsService {
         metrics.push({
           id: crypto.randomUUID(),
           metricName: 'active_users',
-          dataType: metric.eventType as AnalyticsDataType,
+          dataType: (metric.eventType as AnalyticsDataType) || AnalyticsDataType.USER_ENGAGEMENT,
           value: metric._count.userId,
           periodStart: startDate,
           periodEnd: endDate,
@@ -451,11 +449,11 @@ class AnalyticsService {
       });
 
       // Feature usage metrics
-      const featureUsage = await prisma.analyticsEvent.groupBy({
+      const featureUsage = await prisma.auditLog.groupBy({
         by: ['eventName'],
         where: {
-          eventType: AnalyticsDataType.FEATURE_USAGE,
-          createdAt: {
+          action: AnalyticsDataType.FEATURE_USAGE,
+          timestamp: {
             gte: startDate,
             lte: endDate
           }
@@ -509,14 +507,11 @@ class AnalyticsService {
   async exportUserAnalytics(userId: string): Promise<any> {
     try {
       // Get only non-sensitive analytics for the user
-      const userEvents = await prisma.analyticsEvent.findMany({
+      const userEvents = await prisma.auditLog.findMany({
         where: {
-          userId,
-          privacyLevel: {
-            in: [PrivacyLevel.PUBLIC, PrivacyLevel.ANONYMIZED]
-          }
+          userId
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { timestamp: 'desc' },
         take: 1000 // Limit export size
       });
 
@@ -524,14 +519,14 @@ class AnalyticsService {
         userId,
         totalEvents: userEvents.length,
         dateRange: {
-          earliest: userEvents[userEvents.length - 1]?.createdAt,
-          latest: userEvents[0]?.createdAt
+          earliest: userEvents[userEvents.length - 1]?.timestamp,
+          latest: userEvents[0]?.timestamp
         },
         events: userEvents.map(event => ({
-          eventType: event.eventType,
+          eventType: event.eventName,
           eventName: event.eventName,
-          properties: event.properties,
-          timestamp: event.createdAt
+          properties: event.details,
+          timestamp: event.timestamp
         }))
       };
     } catch (error) {
@@ -546,7 +541,7 @@ class AnalyticsService {
   async deleteUserAnalytics(userId: string): Promise<void> {
     try {
       // Delete analytics events
-      await prisma.analyticsEvent.deleteMany({
+      await prisma.auditLog.deleteMany({
         where: { userId }
       });
 

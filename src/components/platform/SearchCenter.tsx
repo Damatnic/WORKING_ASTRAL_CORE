@@ -25,7 +25,7 @@ import {
   CheckIcon,
   SparklesIcon,
   FireIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   EyeIcon,
   ArrowUpIcon,
   ArrowDownIcon,
@@ -112,6 +112,13 @@ interface SavedSearch {
   createdAt: Date;
   lastUsed: Date;
   useCount: number;
+}
+
+interface SearchHistoryItem {
+  id: string;
+  query: string;
+  createdAt: Date;
+  resultCount: number;
 }
 
 const SearchCenter: React.FC = React.memo(() => {

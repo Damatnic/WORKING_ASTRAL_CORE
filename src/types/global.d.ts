@@ -104,25 +104,15 @@ declare module "next-auth/next" {
   export function getServerSession(...args: any[]): Promise<any>;
 }
 
-declare module "@/lib/auth" {
-  export const authOptions: any;
-}
+// Auth module declaration removed - using actual implementation
 
-declare module "@/lib/prisma" {
-  export const prisma: any;
-  export default prisma;
-}
+// Prisma module declaration removed - using actual implementation
 
 declare module "zod" {
   export const z: any;
 }
 
-// Crisis alert system
-declare module '@/lib/crisis-alert-system' {
-  export class CrisisAlertSystem {
-    static detectCrisis(content: string, userId: string): Promise<any>;
-  }
-}
+// Crisis alert system module declaration removed - using actual implementation
 
 // Audit logger
 declare module '@/lib/audit-logger' {

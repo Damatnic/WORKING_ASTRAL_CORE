@@ -40,14 +40,14 @@ export async function encryptRequestData<T extends Record<string, any>>(
 
   for (const [fieldName, fieldType] of Object.entries(fieldMappings)) {
     if (data[fieldName] !== undefined && data[fieldName] !== null) {
-      encrypted[fieldName] = fieldEncryption.encrypt(
+      (encrypted as any)[fieldName] = fieldEncryption.encrypt(
         data[fieldName],
         fieldType as PHIFieldType
       );
       
       // Create searchable hash for database queries
       if (typeof data[fieldName] === 'string' && data[fieldName].trim()) {
-        encrypted[`${fieldName}_hash`] = fieldEncryption.hash(
+        (encrypted as any)[`${fieldName}_hash`] = fieldEncryption.hash(
           data[fieldName],
           fieldType as PHIFieldType
         );
@@ -105,19 +105,19 @@ export async function decryptResponseData<T extends Record<string, any> | Array<
     const decrypted = { ...data };
     
     for (const fieldName of Object.keys(fieldMappings)) {
-      if (data[fieldName] && typeof data[fieldName] === 'object' && data[fieldName].data) {
+      if ((data as any)[fieldName] && typeof (data as any)[fieldName] === 'object' && (data as any)[fieldName].data) {
         try {
-          decrypted[fieldName] = fieldEncryption.decrypt(data[fieldName]);
+          (decrypted as any)[fieldName] = fieldEncryption.decrypt((data as any)[fieldName]);
         } catch (error) {
           console.error(`Failed to decrypt field ${fieldName}:`, error);
-          decrypted[fieldName] = null; // Don't expose encrypted data
+          (decrypted as any)[fieldName] = null; // Don't expose encrypted data
         }
       }
     }
     
     // Remove hash fields from response
     for (const fieldName of Object.keys(fieldMappings)) {
-      delete decrypted[`${fieldName}_hash`];
+      delete (decrypted as any)[`${fieldName}_hash`];
     }
     
     return decrypted as T;
@@ -160,16 +160,8 @@ export function withEncryption<T extends ModelName>(modelName: T) {
         // Encrypt request data if body exists
         if (body) {
           body = await encryptRequestData(request, body, modelName);
-          // Create new request with encrypted body
-          const encryptedRequest = new NextRequest(request.url, {
-            ...request,
-            body: JSON.stringify(body),
-            headers: {
-              ...Object.fromEntries(request.headers.entries()),
-              'content-type': 'application/json',
-            },
-          });
-          request = encryptedRequest;
+          // Update request headers for encrypted body
+          request.headers.set('content-type', 'application/json');
         }
 
         // Call original handler

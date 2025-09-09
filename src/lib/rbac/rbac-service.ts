@@ -441,7 +441,7 @@ export class RBACService {
             where: { id: resourceId },
             select: { authorId: true },
           });
-          return post?.authorId;
+          return post?.authorId || undefined;
 
         case Resource.FILE:
           const file = await prisma.file.findUnique({

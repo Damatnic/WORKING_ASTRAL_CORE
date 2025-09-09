@@ -62,15 +62,7 @@ export function createAuditMiddleware(config: AuditMiddlewareConfig = {}) {
       const requestId = crypto.randomUUID();
       
       // Add request ID to headers for tracing
-      const requestHeaders = new Headers(request.headers);
-      requestHeaders.set('x-request-id', requestId);
-      
-      // Create enhanced request with audit context
-      const enhancedRequest = new NextRequest(request.url, {
-        method: request.method,
-        headers: requestHeaders,
-        body: request.body,
-      });
+      request.headers.set('x-request-id', requestId);
 
       let response: NextResponse;
       let error: Error | null = null;
@@ -80,24 +72,24 @@ export function createAuditMiddleware(config: AuditMiddlewareConfig = {}) {
         // Skip auditing for excluded patterns
         const pathname = new URL(request.url).pathname;
         if (finalConfig.excludePatterns?.some(pattern => pattern.test(pathname))) {
-          return await handler(enhancedRequest, context);
+          return await handler(request, context);
         }
 
         // Try to get authenticated user
         try {
-          user = await getUserFromRequest(enhancedRequest);
+          user = await getUserFromRequest(request);
         } catch {
           // User not authenticated - this is fine for public endpoints
         }
 
         // Log request
-        await logRequest(enhancedRequest, user, finalConfig, requestId);
+        await logRequest(request, user, finalConfig, requestId);
 
         // Execute handler
-        response = await handler(enhancedRequest, context);
+        response = await handler(request, context);
 
         // Log successful response
-        await logResponse(enhancedRequest, response, user, finalConfig, requestId, startTime);
+        await logResponse(request, response, user, finalConfig, requestId, startTime);
 
         return response;
 
@@ -115,7 +107,7 @@ export function createAuditMiddleware(config: AuditMiddlewareConfig = {}) {
         );
 
         // Log error response
-        await logResponse(enhancedRequest, response, user, finalConfig, requestId, startTime, error);
+        await logResponse(request, response, user, finalConfig, requestId, startTime, error);
 
         throw error; // Re-throw for normal error handling
       }

@@ -327,13 +327,13 @@ class AIInsightsService {
   ): Promise<AIInsight[]> {
     try {
       // Check HIPAA permissions
-      const hasPermission = await hipaaService.requestPHIAccess({
+      const hasPermission = await hipaaService.checkPHIAccess({
         userId: providerId,
-        userRole: HIPAARole.HEALTHCARE_PROVIDER,
         patientId,
-        phiCategories: [PHICategory.MENTAL_HEALTH_RECORDS, PHICategory.CLINICAL_NOTES],
+        requestedData: [PHICategory.THERAPY_NOTES, PHICategory.MENTAL_HEALTH_STATUS],
         purpose: 'Generate AI clinical insights for treatment planning',
-        accessLevel: AccessLevel.STANDARD,
+        accessLevel: AccessLevel.VIEW_ONLY,
+        requestedBy: providerId,
         justification: 'AI-assisted clinical decision support'
       });
 
@@ -499,12 +499,14 @@ class AIInsightsService {
     recommendations: string[];
     personalization: PersonalizedRecommendation[];
   }> {
-    // Get engagement data from analytics
-    const engagementData = await analyticsService.recordDataPoint(
-      AnalyticsDataType.SESSION_ANALYTICS,
-      { patientId, timeframe },
-      { patient_id: patientId }
-    );
+    // Track engagement analytics
+    await analyticsService.trackEvent({
+      userId: patientId,
+      eventType: AnalyticsDataType.USER_ENGAGEMENT,
+      eventName: 'personalization_request',
+      properties: { patientId, timeframe },
+      timestamp: new Date()
+    });
 
     // Analyze patterns
     const patterns = await this.identifyEngagementPatterns(patientId);

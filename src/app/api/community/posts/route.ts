@@ -10,7 +10,7 @@ import {
   checkContentRateLimit,
   updateTrustScore 
 } from "@/lib/community/moderation";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -183,7 +183,7 @@ export async function GET(req: NextRequest) {
 
 // POST /api/community/posts - Create a new post
 export async function POST(req: NextRequest) {
-  return withAuth(async (req: AuthenticatedRequest) => {
+  return withAuth(req, async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
 
@@ -355,7 +355,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Invalid input", details: error.issues },
+        { error: "Invalid input", details: (error as ZodError).issues },
         { status: 400 }
       );
     }
@@ -370,7 +370,7 @@ export async function POST(req: NextRequest) {
 
 // PUT /api/community/posts - Update a post
 export async function PUT(req: NextRequest) {
-  return withAuth(async (req: AuthenticatedRequest) => {
+  return withAuth(req, async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
@@ -457,7 +457,7 @@ export async function PUT(req: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Invalid input", details: error.issues },
+        { error: "Invalid input", details: (error as ZodError).issues },
         { status: 400 }
       );
     }
@@ -472,7 +472,7 @@ export async function PUT(req: NextRequest) {
 
 // DELETE /api/community/posts - Delete a post
 export async function DELETE(req: NextRequest) {
-  return withAuth(async (req: AuthenticatedRequest) => {
+  return withAuth(req, async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;

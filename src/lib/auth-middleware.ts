@@ -202,7 +202,7 @@ export function withRateLimit(
         
         return response;
       } catch (error) {
-        logger.error("Rate limiting error:", error);
+        logger.error("Rate limiting error:", error as Record<string, any>);
         // If rate limiting fails, allow the request but log the error
         return handler(req);
       }
@@ -211,33 +211,33 @@ export function withRateLimit(
 }
 
 // Additional helper functions for compatibility
-export async function withPermission(
+export function withPermission(
   permission: string,
   handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
-): Promise<(request: NextRequest) => Promise<NextResponse>> {
+): (request: NextRequest) => Promise<NextResponse> {
   // Simple permission check - can be expanded later
-  return withAuth(handler);
+  return (request: NextRequest) => withAuth(request, handler);
 }
 
-export async function withEmailVerification(
+export function withEmailVerification(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
-): Promise<(request: NextRequest) => Promise<NextResponse>> {
+): (request: NextRequest) => Promise<NextResponse> {
   // Email verification check - simplified
-  return withAuth(handler);
+  return (request: NextRequest) => withAuth(request, handler);
 }
 
-export async function withOnboarding(
+export function withOnboarding(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
-): Promise<(request: NextRequest) => Promise<NextResponse>> {
+): (request: NextRequest) => Promise<NextResponse> {
   // Onboarding check - simplified
-  return withAuth(handler);
+  return (request: NextRequest) => withAuth(request, handler);
 }
 
-export async function withApiKey(
+export function withApiKey(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse> | NextResponse
-): Promise<(request: NextRequest) => Promise<NextResponse>> {
+): (request: NextRequest) => Promise<NextResponse> {
   // API key validation - simplified
-  return withAuth(handler);
+  return (request: NextRequest) => withAuth(request, handler);
 }
 
 export async function getUserFromRequest(

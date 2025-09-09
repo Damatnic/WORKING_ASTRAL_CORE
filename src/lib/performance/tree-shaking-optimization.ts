@@ -34,14 +34,14 @@ export {
   Coffee,
   Search,
   Filter,
-  Sort,
+  ArrowUpDown,
   Download,
   Upload,
   Share,
   Edit,
   Delete,
   Save,
-  Cancel,
+  XCircle,
   Check,
   X,
   ChevronDown,
@@ -51,9 +51,7 @@ export {
   Menu,
   MoreHorizontal,
   Info,
-  Warning,
-  Error,
-  Success
+  AlertCircle
 } from 'lucide-react';
 
 // Optimized Radix UI imports

@@ -312,8 +312,7 @@ export class CrisisOptimizationManager {
         return createLazyComponent(importFn, {
           priority: 'high',
           preload: false,
-          timeout: 5000,
-          retries: 2
+          timeout: 5000
         });
       
       case CrisisPriority.STANDARD:
@@ -321,8 +320,7 @@ export class CrisisOptimizationManager {
         return createLazyComponent(importFn, {
           priority: 'medium',
           preload: false,
-          timeout: 8000,
-          retries: 1
+          timeout: 8000
         });
     }
   }
@@ -393,7 +391,7 @@ export function useCrisisOptimization() {
  * Crisis component factory with optimization
  */
 export function createOptimizedCrisisComponent<T>(
-  componentName: keyof typeof CrisisOptimizationManager.crisisComponents,
+  componentName: string,
   fallbackComponent?: React.ComponentType<T>
 ) {
   const manager = CrisisOptimizationManager.getInstance();

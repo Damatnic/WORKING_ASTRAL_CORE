@@ -327,7 +327,7 @@ export class ConnectionPoolManager {
         ...this.config,
       });
       
-      this.pool.on('error', (err) => {
+      this.pool.on('error', (err: any) => {
         console.error('[DB Pool] Unexpected error:', err);
       });
       

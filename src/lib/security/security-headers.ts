@@ -212,8 +212,8 @@ export class SecurityHeaders {
 
     // Add report-uri if configured
     if (this.config.reportUri) {
-      directives['report-uri'] = [this.config.reportUri];
-      directives['report-to'] = ['csp-endpoint'];
+      (directives as any)['report-uri'] = [this.config.reportUri];
+      (directives as any)['report-to'] = ['csp-endpoint'];
     }
 
     // Build CSP string

@@ -6,6 +6,11 @@ import { LoadingSpinner } from './loading/LoadingSpinner';
 // Export LoadingPresets from the proper location
 export { LoadingPresets } from './loading/exports';
 
+// Export loading components
+export { LoadingSpinner, CrisisLoader, WellnessLoader } from './loading/LoadingSpinner';
+export { CrisisSkeleton } from './loading/CrisisSkeleton';
+export { MoodTrackerSkeleton } from './loading/SkeletonLoaders';
+
 /**
  * Error boundary for critical components
  */
@@ -16,6 +21,7 @@ interface CriticalBoundaryState {
 
 interface CriticalBoundaryProps {
   children: React.ReactNode;
+  componentName?: string;
   fallback?: React.ReactNode;
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }

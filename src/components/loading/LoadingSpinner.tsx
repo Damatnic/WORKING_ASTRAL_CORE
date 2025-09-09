@@ -1,10 +1,16 @@
+'use client';
+
 /**
  * Accessible Loading Spinner Component
  * Provides various spinner styles with accessibility features and HIPAA compliance
  */
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+
+// Local utility for class merging
+const cn = (...classes: (string | undefined | null | false)[]): string => {
+  return classes.filter(Boolean).join(' ');
+};
 
 /**
  * Loading spinner size options

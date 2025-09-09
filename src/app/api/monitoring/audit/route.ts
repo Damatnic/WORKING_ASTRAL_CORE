@@ -352,7 +352,7 @@ async function handleExport(request: NextRequest, searchParams: URLSearchParams)
 
   const contentType = format === 'csv' ? 'text/csv' : 'application/json';
 
-  return new NextResponse(exportResult.data, {
+  return new Response(exportResult.data, {
     headers: {
       'Content-Type': contentType,
       'Content-Disposition': `attachment; filename="${exportResult.filename}"`,

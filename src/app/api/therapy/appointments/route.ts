@@ -3,7 +3,7 @@ import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import { prisma } from '@/lib/prisma';
 import { UserRole } from '@prisma/client';
 import { z } from 'zod';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 import {
   requireRole,
   auditLog,
@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
       status: searchParams.get('status'),
       clientId: searchParams.get('clientId'),
       view: searchParams.get('view'),
-    });
+    }) as any;
     
     // Calculate date range based on view
     let dateRange = { start: new Date(), end: new Date() };
@@ -255,7 +255,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createAppointmentSchema, body);
+    const data = validateInput(createAppointmentSchema, body) as any;
     
     // Check for scheduling conflicts
     const conflictWindow = 15; // 15 minutes buffer
@@ -480,7 +480,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateAppointmentSchema, body);
+    const data = validateInput(updateAppointmentSchema, body) as any;
     
     // Get existing appointment
     const appointment = await prisma.appointment.findUnique({

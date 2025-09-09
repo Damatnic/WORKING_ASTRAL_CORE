@@ -114,7 +114,7 @@ export async function GET(req: NextRequest) {
       endDate: searchParams.get('endDate'),
       status: searchParams.get('status'),
       insuranceProvider: searchParams.get('insuranceProvider'),
-    });
+    }) as any;
     
     // Build query filters
     const where: any = {};
@@ -182,7 +182,7 @@ export async function GET(req: NextRequest) {
               diagnosisCodes: decryptedData.billing.diagnosisCodes,
               insurance: decryptedData.billing.insurance ? {
                 ...decryptedData.billing.insurance,
-                policyNumber: maskSensitiveData(decryptedData.billing.insurance.policyNumber, {}),
+                policyNumber: maskSensitiveData(decryptedData.billing.insurance.policyNumber, 4),
               } : null,
               selfPay: decryptedData.billing.selfPay,
               totalCharges: calculateTotalCharges(decryptedData.billing.cptCodes),
@@ -260,7 +260,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createBillingSchema, body);
+    const data = validateInput(createBillingSchema, body) as any;
     
     // Verify session exists and belongs to therapist
     const appointment = await prisma.appointment.findUnique({
@@ -332,8 +332,8 @@ export async function POST(req: NextRequest) {
         details: {
           clientId: data.clientId,
           totalCharges,
-          cptCodes: data.cptCodes.map(c => c.code),
-          diagnosisCodes: data.diagnosisCodes.map(d => d.code),
+          cptCodes: data.cptCodes.map((c: any) => c.code),
+          diagnosisCodes: data.diagnosisCodes.map((d: any) => d.code),
           billingType: data.insurance ? 'insurance' : 'self_pay',
         },
         outcome: 'success',
@@ -392,7 +392,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateBillingSchema, body);
+    const data = validateInput(updateBillingSchema, body) as any;
     
     // Extract session ID from billing ID
     const sessionId = data.billingId.replace('billing_', '');

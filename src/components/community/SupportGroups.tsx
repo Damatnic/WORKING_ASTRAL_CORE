@@ -42,6 +42,8 @@ const SupportGroups: React.FC<SupportGroupsProps> = ({
   const [loading, setLoading] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<SupportGroup | null>(null);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
+  const [privacyFilter, setPrivacyFilter] = useState<'all' | 'public' | 'private'>('all');
+  const [topicFilter, setTopicFilter] = useState<GroupTopic | 'all'>('all');
 
   // Topic definitions with colors and descriptions
   const topicInfo: Record<GroupTopic, { color: string; description: string; icon: React.ReactNode }> = {

@@ -25,7 +25,10 @@ const defaultConfig = {
   FIELD_ENCRYPTION_PEPPER: 'development-pepper-do-not-use-in-production',
 };
 
-let encryptionConfig: z.infer<typeof encryptionConfigSchema>;
+let encryptionConfig: {
+  FIELD_ENCRYPTION_KEY: string;
+  FIELD_ENCRYPTION_PEPPER: string;
+};
 
 // Only validate in production or when keys are provided
 if (process.env.NODE_ENV === 'production' || process.env.FIELD_ENCRYPTION_KEY) {
@@ -50,7 +53,7 @@ function deriveFieldKey(fieldType: string, userId?: string): Buffer {
   const masterKey = Buffer.from(encryptionConfig.FIELD_ENCRYPTION_KEY, 'hex');
   
   // Use HKDF to derive field-specific key
-  return crypto.hkdfSync('sha256', masterKey, Buffer.alloc(0), Buffer.from(context), KEY_LENGTH);
+  return Buffer.from(crypto.hkdfSync('sha256', masterKey, Buffer.alloc(0), Buffer.from(context), KEY_LENGTH));
 }
 
 // Encrypted field structure

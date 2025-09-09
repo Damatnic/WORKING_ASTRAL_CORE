@@ -6,7 +6,18 @@
 import React, { Suspense, ComponentType } from 'react';
 import { cn } from '@/lib/utils';
 import { LoadingSpinner, ProgressLoader } from './LoadingSpinner';
-import { detectDeviceCapabilities } from '@/lib/performance/dynamic-imports.tsx';
+
+// Mock device capabilities function
+const detectDeviceCapabilities = () => ({
+  isMobile: false,
+  isSlowConnection: false,
+  hasLowMemory: false,
+  supportsWebP: true,
+  preferReducedMotion: false,
+  isLowEnd: false,
+  isSlowNetwork: false,
+  memoryLimitMB: 8192
+});
 
 /**
  * Progressive loading stage

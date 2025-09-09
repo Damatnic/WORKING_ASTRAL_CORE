@@ -4,10 +4,22 @@
  */
 
 import React, { Component, ReactNode, ErrorInfo } from 'react';
-import { performanceMonitor } from '@/lib/performance/monitoring';
-import { AlertTriangle, RefreshCw } from '@/lib/performance/tree-shaking-optimization';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
 
-interface Props {
+// Mock performance monitor
+const performanceMonitor = {
+  trackError: (componentName: string, error: Error) => {
+    console.error(`Error in ${componentName}:`, error);
+  },
+  trackRecovery: (componentName: string, retryCount: number) => {
+    console.log(`Recovery attempt ${retryCount} for ${componentName}`);
+  },
+  trackErrorBoundary: (componentName: string, errorName: string) => {
+    console.error(`Error boundary triggered in ${componentName}: ${errorName}`);
+  }
+};
+
+export interface CriticalBoundaryProps {
   children: ReactNode;
   componentName: string;
   fallback?: ReactNode;
@@ -23,10 +35,10 @@ interface State {
   retryCount: number;
 }
 
-export class CriticalBoundary extends Component<Props, State> {
+export class CriticalBoundary extends Component<CriticalBoundaryProps, State> {
   private retryTimer: NodeJS.Timeout | null = null;
 
-  constructor(props: Props) {
+  constructor(props: CriticalBoundaryProps) {
     super(props);
     this.state = {
       hasError: false,

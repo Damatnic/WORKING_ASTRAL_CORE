@@ -192,17 +192,9 @@ export class OptimizedQueryBuilder {
         select: {
           id: true,
           email: true,
-          
-          avatar: true,
           role: true,
-          profile: {
-            select: {
-              displayName: true,
-              preferences: true,
-              emergencyContacts: true
-            }
-          },
-          anonymousIdentity: {
+          profile: true,
+          AnonymousIdentity: {
             select: {
               id: true,
               displayName: true,
@@ -236,7 +228,7 @@ export class OptimizedQueryBuilder {
           wellnessData
         ] = await Promise.all([
           prisma.therapistSession.count({
-            where: { userId }
+            where: { clientId: userId }
           }),
           prisma.moodEntry.count({
             where: { userId }
@@ -375,15 +367,13 @@ export class OptimizedQueryBuilder {
               content: true,
               category: true,
               
-              likesCount: true,
-              commentsCount: true,
-              isFeatured: true,
+              likeCount: true,
               createdAt: true,
               updatedAt: true,
-              author: {
+              User: {
                 select: {
                   id: true,
-                  anonymousIdentity: {
+                  AnonymousIdentity: {
                     select: {
                       displayName: true,
                       avatar: true,
@@ -394,16 +384,16 @@ export class OptimizedQueryBuilder {
                 }
               },
               // Only load first few comments for preview
-              comments: {
+              Comments: {
                 take: 3,
                 orderBy: { createdAt: 'desc' },
                 select: {
                   id: true,
                   content: true,
                   createdAt: true,
-                  author: {
+                  User: {
                     select: {
-                      anonymousIdentity: {
+                      AnonymousIdentity: {
                         select: {
                           displayName: true,
                           avatar: true
@@ -451,17 +441,13 @@ export class OptimizedQueryBuilder {
     return this.execute(
       `getTherapyHistory:${userId}:${limit}`,
       () => prisma.therapistSession.findMany({
-        where: { userId },
+        where: { clientId: userId },
         select: {
           id: true,
           type: true,
           status: true,
-          startedAt: true,
-          endedAt: true,
-          summary: true,
-          satisfaction: true,
-          // Don't include full transcript for performance
-          metadata: true
+          scheduledTime: true,
+          duration: true
         },
         orderBy: { createdAt: 'desc' },
         take: limit

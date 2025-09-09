@@ -143,12 +143,12 @@ export async function auditLog(
 }
 
 // Input validation helper
-export function validateInput<T>(schema: z.ZodSchema<T>, data: unknown): T {
+export function validateInput<T>(schema: any, data: unknown): T {
   try {
     return schema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new ValidationError('Invalid input', (error as z.ZodError).issues);
+      throw new ValidationError('Invalid input', (error as any).issues);
     }
     throw error;
   }
@@ -158,7 +158,7 @@ export function validateInput<T>(schema: z.ZodSchema<T>, data: unknown): T {
 export class ValidationError extends Error {
   constructor(
     message: string,
-    public errors: z.ZodIssue[]
+    public errors: any[]
   ) {
     super(message);
     this.name = 'ValidationError';

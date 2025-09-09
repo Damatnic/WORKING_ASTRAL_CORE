@@ -10,9 +10,9 @@ import {
   XMarkIcon,
   AdjustmentsHorizontalIcon,
   EyeIcon,
-  TouchIcon,
+  CursorArrowRaysIcon,
   WifiIcon,
-  BatteryIcon,
+  Battery0Icon,
   SignalIcon,
   ArrowsPointingOutIcon,
   ArrowsPointingInIcon,
@@ -354,7 +354,7 @@ const MobileOptimization: React.FC = () => {
 
             {capabilities.batteryLevel !== undefined && (
               <div className="flex items-center space-x-2">
-                <BatteryIcon className={`w-5 h-5 ${getBatteryColor()}`} />
+                <Battery0Icon className={`w-5 h-5 ${getBatteryColor()}`} />
                 <div>
                   <p className="text-xs font-medium text-gray-700">Battery</p>
                   <p className="text-sm text-gray-900">{capabilities.batteryLevel}%</p>
@@ -363,7 +363,7 @@ const MobileOptimization: React.FC = () => {
             )}
 
             <div className="flex items-center space-x-2">
-              <TouchIcon className="w-5 h-5 text-gray-600" />
+              <CursorArrowRaysIcon className="w-5 h-5 text-gray-600" />
               <div>
                 <p className="text-xs font-medium text-gray-700">Input</p>
                 <p className="text-sm text-gray-900">

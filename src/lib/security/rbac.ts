@@ -467,7 +467,7 @@ export class RBACService {
       include: { permission: true }
     });
 
-    const additionalPermissions = userPermissions.map(up => ({
+    const additionalPermissions = userPermissions.map((up: any) => ({
       id: up.permission.id,
       name: up.permission.name,
       category: up.permission.category as PermissionCategory,
@@ -563,7 +563,7 @@ export class RBACService {
   ): Promise<void> {
     await prisma.user.update({
       where: { id: userId },
-      data: { role }
+      data: { role: role as any }
     });
 
     // Clear cache for user
@@ -664,7 +664,7 @@ export class RBACService {
    * Check therapy session access
    */
   private async checkTherapySessionAccess(context: AccessContext): Promise<AccessDecision> {
-    const session = await prisma.therapySession.findUnique({
+    const session = await prisma.therapistSession.findUnique({
       where: { id: context.resourceId }
     });
 
@@ -678,7 +678,7 @@ export class RBACService {
     }
 
     // Patient can read their own sessions
-    if (session.patientId === context.userId && context.action === PermissionAction.READ) {
+    if ((session as any).patientId === context.userId && context.action === PermissionAction.READ) {
       return { granted: true };
     }
 
@@ -708,7 +708,7 @@ export class RBACService {
     }
 
     // Patient can read their own reports
-    if ((report as any).patientId === context.userId && context.action === PermissionAction.READ) {
+    if ((report as any).userId === context.userId && context.action === PermissionAction.READ) {
       return { granted: true };
     }
 
@@ -735,7 +735,7 @@ export class RBACService {
     // Check if user is part of care team
     const careTeam = await (prisma as any).careTeamMember.findFirst({
       where: {
-        patientId: plan.patientId,
+        patientId: plan.userId,
         userId: context.userId,
         active: true
       }
@@ -746,7 +746,7 @@ export class RBACService {
     }
 
     // Patient can read their own plan
-    if (plan.patientId === context.userId && context.action === PermissionAction.READ) {
+    if (plan.userId === context.userId && context.action === PermissionAction.READ) {
       return { granted: true };
     }
 

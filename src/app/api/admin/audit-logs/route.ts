@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import { getServerSession } from 'next-auth/next';
 import { Session } from 'next-auth';
 import { authOptions } from "@/lib/auth";
@@ -22,7 +21,7 @@ async function checkAdminAccess() {
     return { error: 'Forbidden - Admin access required', status: 403 };
   }
 
-  return { authorized: true, adminId: session.user.id };
+  return { authorized: true, adminId: (session.user as any).id };
 }
 
 // GET audit logs
@@ -268,7 +267,7 @@ export async function PUT(req: NextRequest) {
         ...csvRows.map((row: any[]) => row.map((cell: any) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
       ].join('\n');
 
-      return new NextResponse(csvContent, {
+      return new Response(csvContent, {
         status: 200,
         headers: {
           'Content-Type': 'text/csv',

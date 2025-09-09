@@ -9,7 +9,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,16 +17,16 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "incremental": false,
+    "incremental": true,
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": false,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "isolatedModules": true,
     "plugins": [
       {
@@ -35,22 +35,28 @@
     ]
   },
   "include": [
-    "src/lib/auth.ts",
-    "src/lib/types.ts",
-    "src/lib/monitoring/index.ts",
-    "src/lib/validation/schemas.ts",
-    "src/lib/cache/cache-utils.ts",
-    "src/lib/test-utils/database-helper.ts",
-    "src/lib/test-utils/test-helpers.ts",
-    "src/components/loading/exports.ts",
-    "src/app/api/user/profile/route.ts",
-    "src/app/api/user/wellness-goals/route.ts",
-    ".next/types/**/*.ts"
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     ".next",
-    "out"
+    "out",
+    "src/generated/**/*",
+    "tests/**/*",
+    "__tests__/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "AstralCoreV5/**/*",
+    "playwright.config.ts",
+    "e2e/**/*",
+    "src/lib/test-utils/**/*",
+    "middleware.ts"
   ]
 }

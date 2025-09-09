@@ -124,9 +124,9 @@ class AuditTrailService extends EventEmitter {
   private config: MonitoringConfig;
   private events: Map<string, AuditEvent> = new Map();
   private encryptionKey: Buffer;
-  private retentionTimers: Map<string, NodeJS.Timer> = new Map();
+  private retentionTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
   private batchQueue: AuditEvent[] = [];
-  private batchTimer: NodeJS.Timer | null = null;
+  private batchTimer: ReturnType<typeof setTimeout> | null = null;
   private maxBatchSize = 100;
   private batchTimeout = 5000; // 5 seconds
 
@@ -309,7 +309,7 @@ class AuditTrailService extends EventEmitter {
       limit: 10000, // Large limit for reports
     });
 
-    const summary = await this.getStats(period);
+    const summary = await this.getStats({ start: period.startTime, end: period.endTime });
     
     // Critical events (errors and security events)
     const criticalEvents = events.filter(e => 
@@ -539,7 +539,7 @@ class AuditTrailService extends EventEmitter {
     
     const key = Buffer.from(this.encryptionKey.slice(0, 32)); // Ensure 32 bytes for AES-256
     const iv = crypto.randomBytes(12); // 12 bytes IV for GCM
-    const cipher = crypto.createCipherGCM('aes-256-gcm', key, iv);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
     let encrypted = cipher.update(data, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     const authTag = cipher.getAuthTag();

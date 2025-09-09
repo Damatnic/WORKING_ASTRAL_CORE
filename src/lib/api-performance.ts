@@ -110,7 +110,7 @@ export class ApiPerformanceManager {
     // Check ETag
     const clientETag = req.headers.get('if-none-match');
     if (clientETag === cached.etag) {
-      return new NextResponse(null, { status: 304 });
+      return NextResponse.json({}, { status: 304 });
     }
 
     const response = NextResponse.json(cached.data);
@@ -330,13 +330,13 @@ export class ResponseOptimizer {
 
       const compressed = zlib.gzipSync(text);
       
-      const compressedResponse = new NextResponse(compressed, {
+      const compressedResponse = new Response(new Uint8Array(compressed), {
         status: response.status,
         headers: response.headers
       });
       
       compressedResponse.headers.set('Content-Encoding', 'gzip');
-      compressedResponse.headers.set('Content-Length', compressed.length.toString());
+      compressedResponse.headers.set('Content-Length', String(compressed.length));
       
       return compressedResponse;
     } catch (error) {

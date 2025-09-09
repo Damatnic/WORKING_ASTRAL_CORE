@@ -366,12 +366,12 @@ export function validateFileSize(size: number): boolean {
 }
 
 export function getFileCategory(mimeType: string): string {
-  const typeInfo = ALLOWED_MIME_TYPES[mimeType];
+  const typeInfo = ALLOWED_MIME_TYPES[mimeType as keyof typeof ALLOWED_MIME_TYPES];
   return typeInfo ? typeInfo.category : 'other';
 }
 
 export function getFileExtension(mimeType: string): string {
-  const typeInfo = ALLOWED_MIME_TYPES[mimeType];
+  const typeInfo = ALLOWED_MIME_TYPES[mimeType as keyof typeof ALLOWED_MIME_TYPES];
   return typeInfo ? typeInfo.ext : '';
 }
 

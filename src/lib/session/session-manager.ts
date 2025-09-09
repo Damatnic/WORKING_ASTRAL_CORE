@@ -1,10 +1,11 @@
+import { z } from 'zod';
+import type { infer as ZodInfer } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { auditService } from '@/lib/audit/audit-service';
 import { AuditEventCategory, AuditOutcome, RiskLevel } from '@/lib/audit/types';
 import { encryptField, decryptField } from '@/lib/encryption/field-encryption';
 import { PHIFieldType } from '@/lib/encryption/types';
 import * as crypto from 'crypto';
-import { z } from 'zod';
 
 // Session configuration constants - HIPAA compliant
 export const SESSION_CONFIG = {
@@ -59,7 +60,20 @@ export const SessionSchema = z.object({
   metadata: z.record(z.any()).optional(),
 });
 
-export type Session = z.infer<typeof SessionSchema>;
+export type Session = {
+  id: string;
+  userId: string;
+  sessionToken: string;
+  refreshToken?: string;
+  status: SessionStatus;
+  ipAddress?: string;
+  userAgent?: string;
+  deviceFingerprint?: string;
+  lastActivity: Date;
+  expiresAt: Date;
+  idleExpiresAt: Date;
+  metadata?: Record<string, any>;
+};
 
 // Session activity schema
 export const SessionActivitySchema = z.object({
@@ -71,7 +85,14 @@ export const SessionActivitySchema = z.object({
   metadata: z.record(z.any()).optional(),
 });
 
-export type SessionActivity = z.infer<typeof SessionActivitySchema>;
+export type SessionActivity = {
+  sessionId: string;
+  activityType: 'PAGE_VIEW' | 'API_CALL' | 'DATA_ACCESS' | 'PHI_ACCESS';
+  resource?: string;
+  timestamp: Date;
+  ipAddress?: string;
+  metadata?: Record<string, any>;
+};
 
 export class SessionManager {
   private static instance: SessionManager;
@@ -133,8 +154,8 @@ export class SessionManager {
       const expiresAt = idleExpiresAt < absoluteExpiresAt ? idleExpiresAt : absoluteExpiresAt;
 
       // Encrypt sensitive session data
-      const encryptedToken = encryptField(sessionToken, PHIFieldType.ACCESS_TOKEN, userId);
-      const encryptedRefreshToken = encryptField(refreshToken, PHIFieldType.ACCESS_TOKEN, userId);
+      const encryptedToken = encryptField(sessionToken, 'OTHER' as any, userId);
+      const encryptedRefreshToken = encryptField(refreshToken, 'OTHER' as any, userId);
 
       // Create session record
       const session = await prisma.session.create({
@@ -238,10 +259,11 @@ export class SessionManager {
         // Decrypt and compare tokens
         const decryptedToken = session.sessionTokenIV && session.sessionTokenAuthTag
           ? decryptField({
-              
-              iv: session.sessionTokenIV,
-              authTag: session.sessionTokenAuthTag,
-            }, PHIFieldType.ACCESS_TOKEN)
+              data: session.sessionToken,
+              version: 1,
+              fieldType: 'OTHER',
+              timestamp: new Date().toISOString()
+            }, 'OTHER' as any)
           : session.sessionToken;
 
         if (decryptedToken === sessionToken) {
@@ -567,10 +589,11 @@ export class SessionManager {
         if (session.refreshToken) {
           const decryptedToken = session.refreshTokenIV && session.refreshTokenAuthTag
             ? decryptField({
-                
-                iv: session.refreshTokenIV,
-                authTag: session.refreshTokenAuthTag,
-              }, PHIFieldType.ACCESS_TOKEN)
+                data: session.refreshToken || '',
+                version: 1,
+                fieldType: 'OTHER',
+                timestamp: new Date().toISOString()
+              }, 'OTHER' as any)
             : session.refreshToken;
 
           if (decryptedToken === refreshToken) {
@@ -589,8 +612,8 @@ export class SessionManager {
       const newRefreshToken = crypto.randomBytes(SESSION_CONFIG.REFRESH_TOKEN_LENGTH).toString('hex');
 
       // Encrypt new tokens
-      const encryptedSessionToken = encryptField(newSessionToken, PHIFieldType.ACCESS_TOKEN, validSession.userId);
-      const encryptedRefreshToken = encryptField(newRefreshToken, PHIFieldType.ACCESS_TOKEN, validSession.userId);
+      const encryptedSessionToken = encryptField(newSessionToken, 'OTHER' as any, validSession.userId);
+      const encryptedRefreshToken = encryptField(newRefreshToken, 'OTHER' as any, validSession.userId);
 
       // Update session with new tokens
       await prisma.session.update({

@@ -1,6 +1,6 @@
+import { z as zod } from 'zod';
 import { prisma } from './prisma';
 import { UserRole } from '@prisma/client';
-import { z } from 'zod';
 
 // Helper function to generate just the base fields (id, timestamps)
 export function generatePrismaCreateFields(data: Record<string, any> = {}, userId?: string): Record<string, any> {
@@ -43,9 +43,9 @@ export async function getUserWithRoleValidation(
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
-      userProfile: true,
-      helperProfile: true,
-      adminProfile: true,
+      UserProfile: true,
+      HelperProfile: true,
+      AdminProfile: true,
     },
   });
 
@@ -82,7 +82,7 @@ export async function createAuditLog(data: {
         resourceId: data.resourceId || null,
         details: data.details || {},
         outcome: data.outcome,
-        createdAt: new Date(),
+
       },
     });
   } catch (error) {
@@ -198,15 +198,15 @@ export async function checkResourcePermission(
   // Resource-specific permission checks
   switch (resourceType) {
     case 'crisis_report':
-      return [UserRole.CRISIS_COUNSELOR, UserRole.ADMIN].includes(user.role);
+      return [UserRole.CRISIS_COUNSELOR, UserRole.ADMIN].includes(user.role as any);
     case 'user_profile':
       // Users can access their own profile, admins can access any
       if (action === 'read' || action === 'update') {
-        return userId === resourceId || [UserRole.ADMIN].includes(user.role);
+        return userId === resourceId || [UserRole.ADMIN].includes(user.role as any);
       }
-      return [UserRole.ADMIN].includes(user.role);
+      return [UserRole.ADMIN].includes(user.role as any);
     case 'therapy_session':
-      return [UserRole.THERAPIST, UserRole.ADMIN].includes(user.role);
+      return [UserRole.THERAPIST, UserRole.ADMIN].includes(user.role as any);
     default:
       return false;
   }
@@ -260,9 +260,9 @@ export function sanitizeForDatabase(data: Record<string, any>) {
 
 // Helper function to create database transaction wrapper
 export async function withTransaction<T>(
-  operation: (tx: typeof prisma) => Promise<T>
+  operation: (tx: Omit<typeof prisma, "$connect" | "$disconnect" | "$on" | "$transaction" | "$extends">) => Promise<T>
 ): Promise<T> {
-  return await prisma.$transaction(operation);
+  return await prisma.$transaction(operation) as T;
 }
 
 // Helper function to handle common database errors
@@ -288,7 +288,7 @@ export function handlePrismaError(error: any) {
 }
 
 // Helper function to convert Zod validation errors to validation errors
-export function convertZodIssuesToValidationErrors(issues: z.ZodIssue[]) {
+export function convertZodIssuesToValidationErrors(issues: any[]) {
   return issues.map(issue => ({
     field: issue.path.join('.'),
     message: issue.message,

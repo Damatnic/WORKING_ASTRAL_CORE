@@ -21,6 +21,14 @@ export interface SystemHealth {
   checks: HealthCheckResult[];
   uptime: number;
   timestamp: string;
+  version?: string;
+  environment?: string;
+  services?: Record<string, any>;
+  resources?: {
+    memory: { used: number; total: number; percentage: number };
+    cpu: { usage: number };
+    disk: { used: number; total: number; percentage: number };
+  };
 }
 
 export interface HealthCheckConfig {

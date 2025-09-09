@@ -1,101 +1,101 @@
-import { z } from 'zod';
+import { z as zod } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { createErrorResponse } from '@/types/api';
 
 // Base validation schemas
-export const emailSchema = z.string().email('Invalid email format');
-export const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
-export const phoneSchema = z.string().regex(/^\+?[\d\s\-\(\)]+$/, 'Invalid phone number format');
-export const uuidSchema = z.string().uuid('Invalid ID format');
+export const emailSchema = zod.string().email('Invalid email format');
+export const passwordSchema = zod.string().min(8, 'Password must be at least 8 characters');
+export const phoneSchema = zod.string().regex(/^\+?[\d\s\-\(\)]+$/, 'Invalid phone number format');
+export const uuidSchema = zod.string().uuid('Invalid ID format');
 
 // User validation schemas
-export const userRegistrationSchema = z.object({
+export const userRegistrationSchema = zod.object({
   email: emailSchema,
   password: passwordSchema,
-  firstName: z.string().min(1, 'First name is required').max(50, 'First name too long'),
-  lastName: z.string().min(1, 'Last name is required').max(50, 'Last name too long'),
+  firstName: zod.string().min(1, 'First name is required').max(50, 'First name too long'),
+  lastName: zod.string().min(1, 'Last name is required').max(50, 'Last name too long'),
   phoneNumber: phoneSchema.optional(),
-  dateOfBirth: z.coerce.date().optional(),
-  acceptTerms: z.boolean().refine(val => val === true, 'You must accept the terms'),
+  dateOfBirth: zod.coerce.date().optional(),
+  acceptTerms: zod.boolean().refine((val: boolean) => val === true, 'You must accept the terms'),
 });
 
-export const userUpdateSchema = z.object({
-  firstName: z.string().min(1).max(50).optional(),
-  lastName: z.string().min(1).max(50).optional(),
-  displayName: z.string().max(100).optional(),
+export const userUpdateSchema = zod.object({
+  firstName: zod.string().min(1).max(50).optional(),
+  lastName: zod.string().min(1).max(50).optional(),
+  displayName: zod.string().max(100).optional(),
   phoneNumber: phoneSchema.optional(),
-  dateOfBirth: z.coerce.date().optional(),
-  timezone: z.string().optional(),
-  preferredLanguage: z.string().optional(),
+  dateOfBirth: zod.coerce.date().optional(),
+  timezone: zod.string().optional(),
+  preferredLanguage: zod.string().optional(),
 });
 
 // Crisis report validation schemas
-export const crisisReportSchema = z.object({
-  severityLevel: z.number().min(1).max(5),
-  triggerType: z.enum(['self_harm', 'suicidal_ideation', 'substance_abuse', 'domestic_violence', 'panic_attack', 'psychotic_episode', 'other']),
-  interventionType: z.enum(['immediate_response', 'safety_planning', 'emergency_contact', 'professional_referral', 'follow_up', 'escalation']),
-  details: z.string().min(10, 'Details must be at least 10 characters'),
-  isAnonymous: z.boolean().default(false),
-  emergencyContacts: z.array(z.string()).optional(),
+export const crisisReportSchema = zod.object({
+  severityLevel: zod.number().min(1).max(5),
+  triggerType: zod.enum(['self_harm', 'suicidal_ideation', 'substance_abuse', 'domestic_violence', 'panic_attack', 'psychotic_episode', 'other']),
+  interventionType: zod.enum(['immediate_response', 'safety_planning', 'emergency_contact', 'professional_referral', 'follow_up', 'escalation']),
+  details: zod.string().min(10, 'Details must be at least 10 characters'),
+  isAnonymous: zod.boolean().default(false),
+  emergencyContacts: zod.array(zod.string()).optional(),
 });
 
 // Wellness goal validation schemas
-export const wellnessGoalSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(100, 'Title too long'),
-  description: z.string().min(10, 'Description must be at least 10 characters').max(500, 'Description too long'),
-  category: z.string().min(1, 'Category is required'),
-  targetDate: z.coerce.date().min(new Date(), 'Target date must be in the future'),
-  milestones: z.array(z.string().min(1)).min(1, 'At least one milestone is required'),
+export const wellnessGoalSchema = zod.object({
+  title: zod.string().min(1, 'Title is required').max(100, 'Title too long'),
+  description: zod.string().min(10, 'Description must be at least 10 characters').max(500, 'Description too long'),
+  category: zod.string().min(1, 'Category is required'),
+  targetDate: zod.coerce.date().min(new Date(), 'Target date must be in the future'),
+  milestones: zod.array(zod.string().min(1)).min(1, 'At least one milestone is required'),
 });
 
 // Notification validation schemas
-export const notificationPreferencesSchema = z.object({
-  email: z.boolean(),
-  push: z.boolean(),
-  crisis: z.boolean(),
-  marketing: z.boolean(),
-  digestFrequency: z.enum(['DAILY', 'WEEKLY', 'MONTHLY', 'NEVER']),
-  crisisOverride: z.boolean(),
+export const notificationPreferencesSchema = zod.object({
+  email: zod.boolean(),
+  push: zod.boolean(),
+  crisis: zod.boolean(),
+  marketing: zod.boolean(),
+  digestFrequency: zod.enum(['DAILY', 'WEEKLY', 'MONTHLY', 'NEVER']),
+  crisisOverride: zod.boolean(),
 });
 
 // Session validation schemas
-export const sessionSchema = z.object({
+export const sessionSchema = zod.object({
   clientId: uuidSchema,
   therapistId: uuidSchema,
-  scheduledTime: z.coerce.date().min(new Date(), 'Scheduled time must be in the future'),
-  duration: z.number().min(15).max(180, 'Session duration must be between 15-180 minutes'),
-  type: z.enum(['VIDEO', 'IN_PERSON', 'PHONE']),
-  notes: z.string().max(1000).optional(),
+  scheduledTime: zod.coerce.date().min(new Date(), 'Scheduled time must be in the future'),
+  duration: zod.number().min(15).max(180, 'Session duration must be between 15-180 minutes'),
+  type: zod.enum(['VIDEO', 'IN_PERSON', 'PHONE']),
+  notes: zod.string().max(1000).optional(),
 });
 
 // Search validation schemas
-export const searchFiltersSchema = z.object({
-  query: z.string().min(1, 'Search query is required'),
-  type: z.array(z.string()).optional(),
-  category: z.array(z.string()).optional(),
-  dateFrom: z.coerce.date().optional(),
-  dateTo: z.coerce.date().optional(),
-  author: z.string().optional(),
-  tags: z.array(z.string()).optional(),
+export const searchFiltersSchema = zod.object({
+  query: zod.string().min(1, 'Search query is required'),
+  type: zod.array(zod.string()).optional(),
+  category: zod.array(zod.string()).optional(),
+  dateFrom: zod.coerce.date().optional(),
+  dateTo: zod.coerce.date().optional(),
+  author: zod.string().optional(),
+  tags: zod.array(zod.string()).optional(),
 });
 
 // Pagination validation schema
-export const paginationSchema = z.object({
-  page: z.coerce.number().min(1, 'Page must be at least 1').default(1),
-  limit: z.coerce.number().min(1).max(100, 'Limit must be between 1-100').default(10),
-  sortBy: z.string().optional(),
-  sortOrder: z.enum(['asc', 'desc']).default('desc'),
+export const paginationSchema = zod.object({
+  page: zod.coerce.number().min(1, 'Page must be at least 1').default(1),
+  limit: zod.coerce.number().min(1).max(100, 'Limit must be between 1-100').default(10),
+  sortBy: zod.string().optional(),
+  sortOrder: zod.enum(['asc', 'desc']).default('desc'),
 });
 
 // File upload validation schema
-export const fileUploadSchema = z.object({
-  category: z.string().min(1, 'Category is required'),
-  isPublic: z.boolean().default(false),
-  metadata: z.record(z.any()).optional(),
+export const fileUploadSchema = zod.object({
+  category: zod.string().min(1, 'Category is required'),
+  isPublic: zod.boolean().default(false),
+  metadata: zod.record(zod.any()).optional(),
 });
 
 // Validation middleware
-export function validateRequest<T>(schema: z.ZodSchema<T>) {
+export function validateRequest<T>(schema: any) {
   return async (request: NextRequest): Promise<{ data: T } | NextResponse> => {
     try {
       let body: any;
@@ -122,15 +122,15 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
       const validatedData = schema.parse(body);
       return { data: validatedData };
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessages = error.errors.map(err => ({
+      if (error instanceof zod.ZodError) {
+        const errorMessages = (error as any).errors.map((err: any) => ({
           field: err.path.join('.'),
           message: err.message,
           code: err.code,
         }));
         
         return NextResponse.json(
-          createErrorResponse('Validation failed', errorMessages.map(e => `${e.field}: ${e.message}`).join(', ')),
+          createErrorResponse('Validation failed', errorMessages.map((e: any) => `${e.field}: ${e.message}`).join(', ')),
           { status: 400 }
         );
       }
@@ -144,7 +144,7 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
 }
 
 // Query parameter validation helper
-export function validateQueryParams<T>(schema: z.ZodSchema<T>, request: NextRequest): T {
+export function validateQueryParams<T>(schema: any, request: NextRequest): T {
   const url = new URL(request.url);
   const params = Object.fromEntries(url.searchParams.entries());
   return schema.parse(params);
@@ -208,7 +208,7 @@ export function createCustomValidation<T>(
   validator: (value: T) => boolean | Promise<boolean>,
   message: string
 ) {
-  return z.custom<T>(validator, { message });
+  return zod.custom(validator, { message }) as any;
 }
 
 // Database-specific validations

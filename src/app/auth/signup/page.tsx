@@ -27,7 +27,21 @@ import { EnhancedUserSchemas } from "@/lib/validation/schemas";
 // Use enhanced validation schema with security validation
 const signupSchema = EnhancedUserSchemas.registration;
 
-type SignupFormData = z.infer<typeof signupSchema>;
+type SignupFormData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  firstName?: string;
+  lastName?: string;
+  displayName?: string;
+  phoneNumber?: string;
+  role: string;
+  acceptedTerms: boolean;
+  acceptedPrivacy: boolean;
+  marketingConsent?: boolean;
+  agreeToTerms: boolean;
+  agreeToPrivacy: boolean;
+};
 
 interface RoleOption {
   value: UserRole;

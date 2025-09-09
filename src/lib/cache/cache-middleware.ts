@@ -198,7 +198,7 @@ export class CacheMiddleware {
       if (cached) {
         // Check ETag for conditional requests
         if (config.etag && ifNoneMatch && cached.etag === ifNoneMatch) {
-          return new NextResponse(null, {
+          return NextResponse.json(null, {
             status: 304,
             headers: {
               'etag': cached.etag,

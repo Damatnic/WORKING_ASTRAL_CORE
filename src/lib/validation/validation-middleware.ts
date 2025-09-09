@@ -14,8 +14,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { z, ZodError, ZodSchema } from 'zod';
-import ValidationService from './validation-service';
+import { z, type ZodSchema } from 'zod';
+import { ValidationService } from './validation-service';
 import type { ValidationError, ValidationResult, SecurityContext } from '@/types';
 
 // Security threat levels
@@ -23,7 +23,7 @@ type ThreatLevel = 'clean' | 'suspicious' | 'malicious';
 
 // Validation middleware configuration
 interface ValidationConfig {
-  schema?: ZodSchema;
+  schema?: ZodSchema<any>;
   sanitizeInputs?: boolean;
   logSecurityEvents?: boolean;
   blockMaliciousRequests?: boolean;
@@ -111,51 +111,39 @@ export class ValidationMiddleware {
             threatCount: 1,
             blocked: true,
             threats: ['Rate limit exceeded']
-          } as SecurityAuditEvent);
+          } as any);
           
-          return new NextResponse(
-            JSON.stringify({
+          return NextResponse.json({
               success: false,
               error: 'Rate limit exceeded',
               code: 'RATE_LIMIT_EXCEEDED'
-            }),
-            {
-              status: 429,
-              headers: { 'Content-Type': 'application/json' }
-            }
-          );
+            }, {
+              status: 429
+            });
         }
 
         // Method validation
         if (config.allowedMethods && !config.allowedMethods.includes(request.method)) {
-          return new NextResponse(
-            JSON.stringify({
+          return NextResponse.json({
               success: false,
               error: 'Method not allowed',
               code: 'METHOD_NOT_ALLOWED'
-            }),
-            {
-              status: 405,
-              headers: { 'Content-Type': 'application/json' }
-            }
-          );
+            }, {
+              status: 405
+            });
         }
 
         // Request size validation
         if (config.maxRequestSize) {
           const contentLength = parseInt(request.headers.get('content-length') || '0');
           if (contentLength > config.maxRequestSize) {
-            return new NextResponse(
-              JSON.stringify({
+            return NextResponse.json({
                 success: false,
                 error: 'Request too large',
                 code: 'REQUEST_TOO_LARGE'
-              }),
-              {
-                status: 413,
-                headers: { 'Content-Type': 'application/json' }
-              }
-            );
+              }, {
+                status: 413
+              });
           }
         }
 
@@ -171,19 +159,15 @@ export class ValidationMiddleware {
               threatCount: validationResult.securityContext.securityThreats.length,
               blocked: true,
               threats: validationResult.securityContext.securityThreats
-            } as SecurityAuditEvent);
+            } as any);
 
-            return new NextResponse(
-              JSON.stringify({
+            return NextResponse.json({
                 success: false,
                 error: 'Request blocked due to security policy',
                 code: 'SECURITY_VIOLATION'
-              }),
-              {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' }
-              }
-            );
+              }, {
+                status: 400
+              });
           }
 
           // Log security events
@@ -194,23 +178,19 @@ export class ValidationMiddleware {
               threatCount: validationResult.securityContext.securityThreats.length,
               blocked: false,
               threats: validationResult.securityContext.securityThreats
-            } as SecurityAuditEvent);
+            } as any);
           }
 
           // Return validation errors
           if (!validationResult.isValid) {
-            return new NextResponse(
-              JSON.stringify({
+            return NextResponse.json({
                 success: false,
                 error: 'Validation failed',
                 code: 'VALIDATION_ERROR',
                 details: validationResult.errors
-              }),
-              {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' }
-              }
-            );
+              }, {
+                status: 400
+              });
           }
 
           // Attach sanitized data to request for use in API handler
@@ -222,17 +202,13 @@ export class ValidationMiddleware {
         return undefined;
       } catch (error) {
         console.error('Validation middleware error:', error);
-        return new NextResponse(
-          JSON.stringify({
+        return NextResponse.json({
             success: false,
             error: 'Internal server error',
             code: 'INTERNAL_ERROR'
-          }),
-          {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
+          }, {
+            status: 500
+          });
       }
     };
   }
@@ -291,8 +267,8 @@ export class ValidationMiddleware {
     }
 
     // Determine if request should be blocked
-    const shouldBlock = config.blockMaliciousRequests && 
-      (securityContext.threatLevel === 'malicious' || validationErrors.length > 10);
+    const shouldBlock = Boolean(config.blockMaliciousRequests && 
+      (securityContext.threatLevel === 'malicious' || validationErrors.length > 10));
 
     securityContext.isBlocked = shouldBlock;
 
@@ -368,15 +344,15 @@ export class ValidationMiddleware {
    */
   private validateWithSchema<T>(schema: ZodSchema<T>, data: any): ValidationResult & { data?: T } {
     try {
-      const validatedData = schema.parse(data);
+      const result = schema.parse(data);
       return {
         isValid: true,
-        errors: [],
-        data: validatedData
+        data: result,
+        errors: []
       };
     } catch (error) {
-      if (error instanceof ZodError) {
-        const validationErrors: ValidationError[] = (error as z.ZodError).issues.map(err => ({
+      if (error instanceof z.ZodError) {
+        const validationErrors: ValidationError[] = (error as any).issues.map((err: any) => ({
           field: err.path.join('.'),
           message: err.message,
           code: err.code,

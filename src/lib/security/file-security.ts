@@ -44,13 +44,13 @@ export async function validateFile(
   }
 
   // Check MIME type
-  if (!ALLOWED_FILE_TYPES[mimeType]) {
+  const allowedExtensions = ALLOWED_FILE_TYPES[mimeType as keyof typeof ALLOWED_FILE_TYPES];
+  if (!allowedExtensions) {
     return { valid: false, error: 'File type not allowed' };
   }
 
   // Check file extension
   const ext = path.extname(filename).toLowerCase();
-  const allowedExtensions = ALLOWED_FILE_TYPES[mimeType];
   if (!allowedExtensions.includes(ext)) {
     return { valid: false, error: 'File extension does not match MIME type' };
   }

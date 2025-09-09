@@ -27,7 +27,11 @@ const signinSchema = z.object({
   rememberMe: z.boolean().optional(),
 });
 
-type SigninFormData = z.infer<typeof signinSchema>;
+type SigninFormData = {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+};
 
 // Demo Login Button Component
 interface DemoLoginButtonProps {

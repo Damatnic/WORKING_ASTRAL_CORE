@@ -1,10 +1,10 @@
 /**
- * WebSocket Server Implementation
+ * Webany Server Implementation
  * Core server logic for real-time communication
  */
 
 import { Server as HTTPServer } from "http";
-import { Server as SocketIOServer, Socket, Namespace } from "socket.io";
+import { Server as any } from 'socket.io';
 import { instrument } from "@socket.io/admin-ui";
 import jwt from "jsonwebtoken";
 import { prisma } from "@/lib/prisma";
@@ -48,7 +48,7 @@ import { CrisisManager } from "./crisis-manager";
 import { NotificationManager } from "./notification-manager";
 import crypto from "crypto";
 
-// Socket Server Configuration
+// any Server Configuration
 export interface SocketServerConfig {
   cors: {
     origin: string | string[];
@@ -61,8 +61,8 @@ export interface SocketServerConfig {
   allowEIO3: boolean;
 }
 
-// Extended Socket Interface
-interface AuthenticatedSocket extends Socket {
+// Extended any Interface
+interface Authenticatedany extends any {
   userId?: string;
   sessionId?: string;
   isAnonymous?: boolean;
@@ -76,7 +76,7 @@ interface AuthenticatedSocket extends Socket {
 }
 
 export class WebSocketServer {
-  private io: SocketIOServer;
+  private io: any;
   private connectedUsers: Map<string, Set<string>> = new Map(); // userId -> Set of socketIds
   private socketUserMap: Map<string, string> = new Map(); // socketId -> userId
   private anonymousSessions: Map<string, string> = new Map(); // anonymousId -> temporaryUserId
@@ -99,13 +99,14 @@ export class WebSocketServer {
       allowEIO3: true,
     };
 
-    this.io = new SocketIOServer(httpServer, { ...defaultConfig, ...config });
+    this.io = new (any as any)(httpServer, { ...defaultConfig, ...config });
 
     // Initialize managers
     this.messageQueue = new MessageQueue();
     this.presenceManager = new PresenceManager();
     this.crisisManager = new CrisisManager(this);
-    this.notificationManager = new NotificationManager(this);
+    this.notificationManager = NotificationManager.getInstance();
+    this.notificationManager.initialize(this.io);
 
     // Setup admin UI in development
     if (process.env.NODE_ENV === "development") {
@@ -126,8 +127,8 @@ export class WebSocketServer {
   // Middleware Setup
   private setupMiddleware(): void {
     // Authentication middleware
-    (this.io as any).use(async (socket: Socket, next: any) => {
-      const authSocket = socket as AuthenticatedSocket;
+    (this.io as any).use(async (socket: any, next: any) => {
+      const authany = socket as Authenticatedany;
       
       try {
         const token = socket.handshake.auth.token;
@@ -136,13 +137,13 @@ export class WebSocketServer {
         if (isAnonymous) {
           // Handle anonymous users
           const anonymousId = this.generateAnonymousId();
-          authSocket.isAnonymous = true;
-          authSocket.anonymousId = anonymousId;
-          authSocket.userId = `anon_${anonymousId}`;
-          authSocket.role = UserRole.USER;
-          authSocket.permissions = PERMISSION_MATRIX[UserRole.USER];
+          authany.isAnonymous = true;
+          authany.anonymousId = anonymousId;
+          authany.userId = `anon_${anonymousId}`;
+          authany.role = UserRole.USER;
+          authany.permissions = PERMISSION_MATRIX[UserRole.USER];
           
-          this.anonymousSessions.set(anonymousId, authSocket.userId);
+          this.anonymousSessions.set(anonymousId, authany.userId);
           
           console.log(`Anonymous user connected: ${anonymousId}`);
           next();
@@ -173,11 +174,11 @@ export class WebSocketServer {
               throw new Error("Account is locked");
             }
 
-            authSocket.userId = user.id;
-            authSocket.sessionId = decoded.sessionToken;
-            authSocket.role = user.role;
-            authSocket.permissions = PERMISSION_MATRIX[user.role];
-            authSocket.isAnonymous = false;
+            authany.userId = user.id;
+            authany.sessionId = decoded.sessionToken;
+            authany.role = user.role;
+            authany.permissions = PERMISSION_MATRIX[user.role];
+            authany.isAnonymous = false;
 
             // Update last active
             await prisma.user.update({
@@ -194,117 +195,118 @@ export class WebSocketServer {
           throw new Error("No authentication provided");
         }
       } catch (error) {
-        console.error("Socket authentication error:", error);
+        console.error("any authentication error:", error);
         next(new Error("Authentication failed"));
       }
     });
 
     // Rate limiting middleware
-    (this.io as any).use((socket: Socket, next: any) => {
-      const authSocket = socket as AuthenticatedSocket;
-      const identifier = authSocket.userId || authSocket.id;
+    (this.io as any).use((socket: any, next: any) => {
+      const authany = socket as Authenticatedany;
+      const identifier = authany.userId || authany.id;
       
       if (!this.rateLimiters.has(identifier)) {
         this.rateLimiters.set(identifier, new RateLimiter(identifier));
       }
       
-      authSocket.rateLimiter = this.rateLimiters.get(identifier);
+      authany.rateLimiter = this.rateLimiters.get(identifier);
       next();
     });
   }
 
   // Main Event Handlers
   private setupEventHandlers(): void {
-    (this.io as any).on("connection", (socket: Socket) => {
-      const authSocket = socket as AuthenticatedSocket;
+    (this.io as any).on("connection", (socket: any) => {
+      const authany = socket as Authenticatedany;
       
       // Track connection
-      this.handleConnection(authSocket);
+      this.handleConnection(authany);
 
       // System Events
-      (authSocket as any).on(SystemEvent.HEARTBEAT, () => this.handleHeartbeat(authSocket));
-      (authSocket as any).on(SystemEvent.DISCONNECT, () => this.handleDisconnection(authSocket));
+      (authany as any).on(SystemEvent.HEARTBEAT, () => this.handleHeartbeat(authany));
+      (authany as any).on(SystemEvent.DISCONNECT, () => this.handleDisconnection(authany));
 
       // Message Events
-      (authSocket as any).on(MessageEvent.SEND, (data: MessagePayload, callback: (response: SocketResponse<Message>) => void) =>
-        this.handleMessageSend(authSocket, data, callback)
+      (authany as any).on(MessageEvent.SEND, (data: MessagePayload, callback: (response: SocketResponse<Message>) => void) =>
+        this.handleMessageSend(authany, data, callback)
       );
-      (authSocket as any).on(MessageEvent.EDIT, (data: { messageId: string; content: string }, callback: (response: SocketResponse) => void) =>
-        this.handleMessageEdit(authSocket, data, callback)
+      (authany as any).on(MessageEvent.EDIT, (data: { messageId: string; content: string }, callback: (response: SocketResponse) => void) =>
+        this.handleMessageEdit(authany, data, callback)
       );
-      (authSocket as any).on(MessageEvent.DELETE, (data: { messageId: string }, callback: (response: SocketResponse) => void) =>
-        this.handleMessageDelete(authSocket, data, callback)
+      (authany as any).on(MessageEvent.DELETE, (data: { messageId: string }, callback: (response: SocketResponse) => void) =>
+        this.handleMessageDelete(authany, data, callback)
       );
-      (authSocket as any).on(MessageEvent.REACT, (data: any, callback) =>
-        this.handleMessageReact(authSocket, data, callback)
+      (authany as any).on(MessageEvent.REACT, (data: any, callback: (response: any) => void) =>
+        this.handleMessageReact(authany, data, callback)
       );
-      (authSocket as any).on(MessageEvent.DELIVERED, (data: any) =>
-        this.handleMessageDelivered(authSocket, data)
+      (authany as any).on(MessageEvent.DELIVERED, (data: any) =>
+        this.handleMessageDelivered(authany, data)
       );
-      (authSocket as any).on(MessageEvent.READ, (data: any) =>
-        this.handleMessageRead(authSocket, data)
+      (authany as any).on(MessageEvent.READ, (data: any) =>
+        this.handleMessageRead(authany, data)
       );
 
       // Crisis Events
-      (authSocket as any).on(CrisisEvent.ALERT, (data: CrisisAlertPayload, callback) =>
-        this.handleCrisisAlert(authSocket, data, callback)
+      (authany as any).on(CrisisEvent.ALERT, (data: CrisisAlertPayload, callback: (response: any) => void) =>
+        this.handleCrisisAlert(authany, data, callback)
       );
-      (authSocket as any).on(CrisisEvent.REQUEST_HELP, (data: any, callback) =>
-        this.handleCrisisHelpRequest(authSocket, data, callback)
+      (authany as any).on(CrisisEvent.REQUEST_HELP, (data: any, callback: (response: any) => void) =>
+        this.handleCrisisHelpRequest(authany, data, callback)
       );
-      (authSocket as any).on(CrisisEvent.COUNSELOR_AVAILABLE, (data: any) =>
-        this.handleCounselorAvailability(authSocket, true, data)
+      (authany as any).on(CrisisEvent.COUNSELOR_AVAILABLE, (data: any) =>
+        this.handleCounselorAvailability(authany, true, data)
       );
-      (authSocket as any).on(CrisisEvent.COUNSELOR_BUSY, (data: any) =>
-        this.handleCounselorAvailability(authSocket, false, data)
+      (authany as any).on(CrisisEvent.COUNSELOR_BUSY, (data: any) =>
+        this.handleCounselorAvailability(authany, false, data)
       );
 
       // Room Events
-      (authSocket as any).on(RoomEvent.JOIN, (data: RoomJoinPayload, callback) =>
-        this.handleRoomJoin(authSocket, data, callback)
+            // Room Events
+      (authany as any).on(RoomEvent.JOIN, (data: RoomJoinPayload, callback: (response: any) => void) =>
+        this.handleRoomJoin(authany, data, callback)
       );
-      (authSocket as any).on(RoomEvent.LEAVE, (data: any, callback) =>
-        this.handleRoomLeave(authSocket, data, callback)
+      (authany as any).on(RoomEvent.LEAVE, (data: any, callback: (response: any) => void) =>
+        this.handleRoomLeave(authany, data, callback)
       );
-      (authSocket as any).on(RoomEvent.CREATE, (data: any, callback) =>
-        this.handleRoomCreate(authSocket, data, callback)
+      (authany as any).on(RoomEvent.CREATE, (data: any, callback: (response: any) => void) =>
+        this.handleRoomCreate(authany, data, callback)
       );
-      (authSocket as any).on(RoomEvent.PARTICIPANTS, (data: any, callback) =>
-        this.handleGetParticipants(authSocket, data, callback)
+      (authany as any).on(RoomEvent.PARTICIPANTS, (data: any, callback: (response: any) => void) =>
+        this.addRoomParticipant(data.roomId, authany.userId!)
       );
 
       // Presence Events
-      (authSocket as any).on(PresenceEvent.UPDATE, (data: any) =>
-        this.handlePresenceUpdate(authSocket, data)
+      (authany as any).on(PresenceEvent.UPDATE, (data: any) =>
+        this.handlePresenceUpdate(authany, data)
       );
 
       // Typing Events
-      (authSocket as any).on(TypingEvent.START, (data: TypingPayload) =>
-        this.handleTypingStart(authSocket, data)
+      (authany as any).on(TypingEvent.START, (data: TypingPayload) =>
+        this.handleTypingStart(authany, data)
       );
-      (authSocket as any).on(TypingEvent.STOP, (data: TypingPayload) =>
-        this.handleTypingStop(authSocket, data)
+      (authany as any).on(TypingEvent.STOP, (data: TypingPayload) =>
+        this.handleTypingStop(authany, data)
       );
 
       // Notification Events
-      (authSocket as any).on(NotificationEvent.ACKNOWLEDGE, (data: any) =>
-        this.handleNotificationAcknowledge(authSocket, data)
+      (authany as any).on(NotificationEvent.ACKNOWLEDGE, (data: any) =>
+        this.handleNotificationAcknowledge(authany, data)
       );
 
       // Moderation Events (Admin only)
-      if (authSocket.role && [UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(authSocket.role)) {
-        (authSocket as any).on(ModerationEvent.USER_KICK, (data: any, callback) =>
-          this.handleUserKick(authSocket, data, callback)
+      if (authany.role && (authany.role === UserRole.ADMIN || authany.role === UserRole.SUPER_ADMIN)) {
+        (authany as any).on(ModerationEvent.USER_KICK, (data: any, callback: (response: any) => void) =>
+          this.handleUserKick(authany, data, callback)
         );
-        (authSocket as any).on(ModerationEvent.USER_BAN, (data: any, callback) =>
-          this.handleUserBan(authSocket, data, callback)
+        (authany as any).on(ModerationEvent.USER_BAN, (data: any, callback: (response: any) => void) =>
+          this.handleUserBan(authany, data, callback)
         );
       }
     });
   }
 
   // Connection Management
-  private handleConnection(socket: AuthenticatedSocket): void {
+  private handleConnection(socket: Authenticatedany): void {
     const userId = socket.userId!;
     
     // Track socket connection
@@ -335,7 +337,7 @@ export class WebSocketServer {
     console.log(`User ${userId} connected with socket ${socket.id}`);
   }
 
-  private handleDisconnection(socket: AuthenticatedSocket): void {
+  private handleDisconnection(socket: Authenticatedany): void {
     const userId = socket.userId!;
     
     // Remove socket tracking
@@ -367,14 +369,14 @@ export class WebSocketServer {
     console.log(`User ${userId} disconnected from socket ${socket.id}`);
   }
 
-  private handleHeartbeat(socket: AuthenticatedSocket): void {
+  private handleHeartbeat(socket: Authenticatedany): void {
     (socket as any).emit(SystemEvent.HEARTBEAT, { timestamp: new Date() });
     this.presenceManager.updateLastSeen(socket.userId!);
   }
 
   // Message Handlers
   private async handleMessageSend(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: MessagePayload,
     callback: (response: SocketResponse<Message>) => void
   ): Promise<void> {
@@ -492,7 +494,7 @@ export class WebSocketServer {
   }
 
   private async handleMessageEdit(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { messageId: string; content: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -548,7 +550,7 @@ export class WebSocketServer {
   }
 
   private async handleMessageDelete(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { messageId: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -608,7 +610,7 @@ export class WebSocketServer {
   }
 
   private async handleMessageReact(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { messageId: string; emoji: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -674,7 +676,7 @@ export class WebSocketServer {
   }
 
   private handleMessageDelivered(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { messageId: string }
   ): void {
     // Update delivery status
@@ -682,7 +684,7 @@ export class WebSocketServer {
   }
 
   private handleMessageRead(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { messageIds: string[] }
   ): void {
     // Update read status for multiple messages
@@ -693,7 +695,7 @@ export class WebSocketServer {
 
   // Crisis Handlers
   private async handleCrisisAlert(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: CrisisAlertPayload,
     callback: (response: SocketResponse<CrisisAlert>) => void
   ): Promise<void> {
@@ -732,7 +734,7 @@ export class WebSocketServer {
   }
 
   private async handleCrisisHelpRequest(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: any,
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -757,7 +759,7 @@ export class WebSocketServer {
   }
 
   private handleCounselorAvailability(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     available: boolean,
     data: any
   ): void {
@@ -773,7 +775,7 @@ export class WebSocketServer {
 
   // Room Handlers
   private async handleRoomJoin(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: RoomJoinPayload,
     callback: (response: SocketResponse<Room>) => void
   ): Promise<void> {
@@ -848,7 +850,7 @@ export class WebSocketServer {
   }
 
   private async handleRoomLeave(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { roomId: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -885,7 +887,7 @@ export class WebSocketServer {
   }
 
   private async handleRoomCreate(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: Partial<Room>,
     callback: (response: SocketResponse<Room>) => void
   ): Promise<void> {
@@ -932,7 +934,7 @@ export class WebSocketServer {
   }
 
   private async handleGetParticipants(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { roomId: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -958,7 +960,7 @@ export class WebSocketServer {
 
   // Presence Handlers
   private handlePresenceUpdate(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: Partial<UserPresence>
   ): void {
     this.presenceManager.updatePresence(socket.userId!, data);
@@ -967,7 +969,7 @@ export class WebSocketServer {
 
   // Typing Handlers
   private handleTypingStart(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: TypingPayload
   ): void {
     (socket as any).to(data.roomId).emit(TypingEvent.START, {
@@ -977,7 +979,7 @@ export class WebSocketServer {
   }
 
   private handleTypingStop(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: TypingPayload
   ): void {
     (socket as any).to(data.roomId).emit(TypingEvent.STOP, {
@@ -988,10 +990,10 @@ export class WebSocketServer {
 
   // Notification Handlers
   private handleNotificationAcknowledge(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { notificationId: string }
   ): void {
-    this.notificationManager.acknowledgeNotification(
+    this.notificationManager.markAsRead(
       socket.userId!,
       data.notificationId
     );
@@ -999,7 +1001,7 @@ export class WebSocketServer {
 
   // Moderation Handlers
   private async handleUserKick(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { userId: string; roomId: string; reason?: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -1020,10 +1022,10 @@ export class WebSocketServer {
       const targetSockets = this.connectedUsers.get(data.userId);
       if (targetSockets) {
         targetSockets.forEach(socketId => {
-          const targetSocket = (this.io as any).sockets.sockets.get(socketId);
-          if (targetSocket) {
-            targetSocket.leave(data.roomId);
-            targetSocket.emit(RoomEvent.KICK, {
+          const targetany = (this.io as any).sockets.sockets.get(socketId);
+          if (targetany) {
+            targetany.leave(data.roomId);
+            targetany.emit(RoomEvent.KICK, {
               roomId: data.roomId,
               reason: data.reason,
             });
@@ -1053,7 +1055,7 @@ export class WebSocketServer {
   }
 
   private async handleUserBan(
-    socket: AuthenticatedSocket,
+    socket: Authenticatedany,
     data: { userId: string; roomId: string; reason?: string },
     callback: (response: SocketResponse) => void
   ): Promise<void> {
@@ -1103,7 +1105,7 @@ export class WebSocketServer {
     return `msg_${Date.now()}_${crypto.randomBytes(8).toString("hex")}`;
   }
 
-  private async deliverQueuedMessages(socket: AuthenticatedSocket): Promise<void> {
+  private async deliverQueuedMessages(socket: Authenticatedany): Promise<void> {
     const messages = await this.messageQueue.getQueuedMessages(socket.userId!);
     messages.forEach(message => {
       (socket as any).emit(MessageEvent.RECEIVE, message);
@@ -1129,7 +1131,7 @@ export class WebSocketServer {
         content: message.content,
         type: message.type,
         metadata: message.metadata,
-        reactions: message.reactions || [],
+        reactions: JSON.parse(JSON.stringify(message.reactions || [])),
       },
     });
   }
@@ -1164,7 +1166,7 @@ export class WebSocketServer {
         content: message.content,
         edited: message.edited,
         editedAt: message.editedAt,
-        reactions: message.reactions || [],
+        reactions: JSON.parse(JSON.stringify(message.reactions || [])),
       },
     });
   }
@@ -1218,8 +1220,9 @@ export class WebSocketServer {
         description: data.description || "",
         maxParticipants: data.maxParticipants || 20,
         isActive: true,
-        settings: data.settings || {},
+        settings: JSON.parse(JSON.stringify(data.settings || {})),
         rules: [],
+        updatedAt: new Date(),
       },
     });
     
@@ -1325,7 +1328,13 @@ export class WebSocketServer {
       });
     } else {
       // Queue notification for offline user
-      this.notificationManager.queueNotification(userId, notification);
+      this.notificationManager.notifyUser(userId, {
+        type: 'info',
+        title: notification.title,
+        message: notification.message,
+        priority: 'normal',
+        metadata: notification.data || {}
+      });
     }
   }
 
@@ -1337,7 +1346,7 @@ export class WebSocketServer {
     this.io.to("admins").emit(CrisisEvent.ALERT, alert);
   }
 
-  public getIO(): SocketIOServer {
+  public getIO(): any {
     return this.io;
   }
 

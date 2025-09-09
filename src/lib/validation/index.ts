@@ -77,8 +77,8 @@ export const UserValidationSchemas = {
     displayName: z.string().min(1).max(100).optional(),
     phoneNumber: BaseValidationSchemas.phoneNumber.optional(),
     role: z.enum(['REGULAR_USER', 'HELPER', 'THERAPIST', 'CRISIS_COUNSELOR']).default('REGULAR_USER'),
-    acceptedTerms: z.boolean().refine(val => val === true, 'Must accept terms and conditions'),
-    acceptedPrivacy: z.boolean().refine(val => val === true, 'Must accept privacy policy'),
+    acceptedTerms: z.boolean().refine((val: boolean) => val === true, 'Must accept terms and conditions'),
+    acceptedPrivacy: z.boolean().refine((val: boolean) => val === true, 'Must accept privacy policy'),
     marketingConsent: z.boolean().optional().default(false)
   }),
   
@@ -110,10 +110,10 @@ export const AuthValidationSchemas = {
     firstName: z.string().min(1).max(50).optional(),
     lastName: z.string().min(1).max(50).optional(),
     displayName: z.string().min(1).max(100).optional(),
-    acceptedTerms: z.boolean().refine(val => val === true, 'Must accept terms and conditions'),
-    acceptedPrivacy: z.boolean().refine(val => val === true, 'Must accept privacy policy'),
+    acceptedTerms: z.boolean().refine((val: boolean) => val === true, 'Must accept terms and conditions'),
+    acceptedPrivacy: z.boolean().refine((val: boolean) => val === true, 'Must accept privacy policy'),
     invitationCode: z.string().optional()
-  }).refine(data => data.password === data.confirmPassword, {
+  }).refine((data: any) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"]
   }),
@@ -122,7 +122,7 @@ export const AuthValidationSchemas = {
     currentPassword: z.string().min(1, 'Current password is required'),
     newPassword: BaseValidationSchemas.password,
     confirmPassword: z.string()
-  }).refine(data => data.newPassword === data.confirmPassword, {
+  }).refine((data: any) => data.newPassword === data.confirmPassword, {
     message: "New passwords don't match",
     path: ["confirmPassword"]
   }),
@@ -136,7 +136,7 @@ export const AuthValidationSchemas = {
     token: z.string().min(1, 'Reset token is required'),
     newPassword: BaseValidationSchemas.password,
     confirmPassword: z.string()
-  }).refine(data => data.newPassword === data.confirmPassword, {
+  }).refine((data: any) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"]
   })
@@ -278,11 +278,11 @@ export const TherapyValidationSchemas = {
 // File upload validation schemas
 export const FileValidationSchemas = {
   upload: z.object({
-    file: z.any().refine(file => file instanceof File, 'Must be a valid file'),
+    file: z.any().refine((file: any) => file instanceof File, 'Must be a valid file'),
     path: z.string().optional().default('/'),
     encrypted: z.boolean().optional().default(false),
     tags: z.array(z.string().min(1).max(50)).optional().default([])
-  }).refine(data => {
+  }).refine((data: any) => {
     if (!(data.file instanceof File)) return false;
     
     const maxSize = 100 * 1024 * 1024; // 100MB
@@ -465,23 +465,23 @@ export class ValidationService {
       .min(minLength, `Password must be at least ${minLength} characters`)
       .max(maxLength, `Password must not exceed ${maxLength} characters`)
       .refine(
-        (password) => !requireUppercase || /[A-Z]/.test(password),
+        (password: string) => !requireUppercase || /[A-Z]/.test(password),
         'Password must contain at least one uppercase letter'
       )
       .refine(
-        (password) => !requireLowercase || /[a-z]/.test(password),
+        (password: string) => !requireLowercase || /[a-z]/.test(password),
         'Password must contain at least one lowercase letter'
       )
       .refine(
-        (password) => !requireNumbers || /[0-9]/.test(password),
+        (password: string) => !requireNumbers || /[0-9]/.test(password),
         'Password must contain at least one number'
       )
       .refine(
-        (password) => !requireSpecialChars || /[^A-Za-z0-9]/.test(password),
+        (password: string) => !requireSpecialChars || /[^A-Za-z0-9]/.test(password),
         'Password must contain at least one special character'
       )
       .refine(
-        (password) => !bannedPasswords.includes(password.toLowerCase()),
+        (password: string) => !bannedPasswords.includes(password.toLowerCase()),
         'Password is too common and not allowed'
       );
   }

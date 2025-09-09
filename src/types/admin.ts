@@ -326,3 +326,8 @@ export type AdminUserStatus = 'active' | 'suspended' | 'banned' | 'pending_verif
 export type AdminUserRole = 'user' | 'helper' | 'therapist' | 'crisis_counselor' | 'moderator' | 'admin';
 export type Severity = 'low' | 'medium' | 'high' | 'critical';
 export type ReportStatus = 'pending' | 'under_review' | 'resolved' | 'dismissed';
+
+// Type aliases for backward compatibility
+export type SystemMetrics = AdminSystemMetrics;
+export type UserAnalytics = AdminUserAnalytics;
+export type User = AdminUser;

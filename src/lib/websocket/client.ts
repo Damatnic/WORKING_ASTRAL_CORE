@@ -160,7 +160,7 @@ export class WebSocketClient {
     this.socket.on("disconnect", this.handleDisconnect.bind(this));
     this.socket.on("connect_error", this.handleConnectError.bind(this));
     this.socket.on(SystemEvent.AUTH_SUCCESS, this.handleAuthSuccess.bind(this));
-    this.socket.on(SystemEvent.AUTH_FAILURE, this.handleAuthFailure.bind(this));
+    this.socket.on(SystemEvent.AUTH_FAILED, this.handleAuthFailure.bind(this));
     this.socket.on(SystemEvent.HEARTBEAT, this.handleHeartbeat.bind(this));
     this.socket.on(SystemEvent.ERROR, this.handleSystemError.bind(this));
 
@@ -173,7 +173,7 @@ export class WebSocketClient {
     // Crisis Events
     this.socket.on(CrisisEvent.ALERT, this.handleCrisisAlert.bind(this));
     this.socket.on((CrisisEvent as any).COUNSELOR_ASSIGNED, this.handleCounselorAssigned.bind(this));
-    this.socket.on(CrisisEvent.ESCALATED, this.handleCrisisEscalated.bind(this));
+    this.socket.on(CrisisEvent.ESCALATE, this.handleCrisisEscalated.bind(this));
     this.socket.on((CrisisEvent as any).RESOLVED, this.handleCrisisResolved.bind(this));
 
     // Notification Events

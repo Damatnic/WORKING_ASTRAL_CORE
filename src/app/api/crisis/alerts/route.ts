@@ -6,7 +6,7 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { CrisisAlertSystem } from '@/lib/crisis-alert-system';
 import { auditLog } from '@/lib/audit-logger';
-import { z } from 'zod';
+import { z, ZodIssue } from 'zod';
 
 // Force dynamic rendering for API routes
 export const dynamic = 'force-dynamic';
@@ -264,7 +264,7 @@ export async function POST(req: NextRequest) {
       // Validate request
       const validation = createAlertSchema.safeParse(body);
       if (!validation.success) {
-        const errors: ValidationError[] = validation.error.issues.map(err => ({
+        const errors: ValidationError[] = validation.error.issues.map((err: ZodIssue) => ({
           field: err.path.join('.'),
           message: err.message,
         }));
@@ -407,7 +407,7 @@ export async function PUT(req: NextRequest) {
       // Validate request
       const validation = updateAlertSchema.safeParse(body);
       if (!validation.success) {
-        const errors: ValidationError[] = validation.error.issues.map(err => ({
+        const errors: ValidationError[] = validation.error.issues.map((err: ZodIssue) => ({
           field: err.path.join('.'),
           message: err.message,
         }));

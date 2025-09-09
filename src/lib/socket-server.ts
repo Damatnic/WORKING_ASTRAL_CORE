@@ -1,6 +1,6 @@
-// Socket.io Server Configuration for Real-time Community Features
+// any.io Server Configuration for Real-time Community Features
 import { Server as HTTPServer } from 'http';
-import { Server as SocketIOServer, Socket } from 'socket.io';
+import { Server as any } from 'socket.io';
 import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
@@ -53,15 +53,15 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
     });
     
     redisEnabled = true;
-    console.log('[Socket Server] Redis initialized successfully');
+    console.log('[any Server] Redis initialized successfully');
   } catch (error) {
-    console.warn('[Socket Server] Failed to initialize Redis:', error);
+    console.warn('[any Server] Failed to initialize Redis:', error);
     redis = null;
     ratelimit = null;
     redisEnabled = false;
   }
 } else {
-  console.warn('[Socket Server] Redis credentials not configured - using in-memory fallback');
+  console.warn('[any Server] Redis credentials not configured - using in-memory fallback');
 }
 
 // Message validation schema
@@ -91,8 +91,8 @@ const CRISIS_KEYWORDS = [
   'final goodbye', 'last message', 'can\'t go on'
 ];
 
-// Socket authentication middleware
-async function authenticateSocket(socket: Socket, next: (err?: Error) => void) {
+// any authentication middleware
+async function authenticateany(socket: any, next: (err?: Error) => void) {
   try {
     const cookies = socket.handshake.headers.cookie;
     if (!cookies) {
@@ -115,7 +115,7 @@ async function authenticateSocket(socket: Socket, next: (err?: Error) => void) {
     // Get or create anonymous identity
     const identity = await prisma.anonymousIdentity.findUnique({
       where: { userId: decoded.userId },
-      include: { user: true }
+      include: { User: true }
     });
 
     if (!identity) {
@@ -128,6 +128,7 @@ async function authenticateSocket(socket: Socket, next: (err?: Error) => void) {
           colorTheme: generateColorTheme(),
           languages: ['en'],
           badges: [],
+          updatedAt: new Date(),
         },
       });
       socket.data.identity = newIdentity;
@@ -236,14 +237,14 @@ async function moderateContent(content: string): Promise<{
   };
 }
 
-let ioRef: SocketIOServer | null = null;
-export function getSocketIO(): SocketIOServer | null {
+let ioRef: any | null = null;
+export function getSocketIO(): any | null {
   return ioRef;
 }
 
-// Initialize Socket.io server
+// Initialize any.io server
 export function initSocketServer(httpServer: HTTPServer) {
-  const io = new SocketIOServer(httpServer);
+  const io = new (any as any)(httpServer);
   ioRef = io;
   
   // Configure CORS after initialization
@@ -255,9 +256,9 @@ export function initSocketServer(httpServer: HTTPServer) {
   });
 
   // Apply authentication middleware
-  io.use(authenticateSocket);
+  io.use(authenticateany);
 
-  io.on('connection', async (socket: Socket) => {
+  io.on('connection', async (socket: any) => {
     console.log(`User connected: ${socket.data.identity.displayName}`);
 
     // Join user to their personal room
@@ -286,13 +287,13 @@ export function initSocketServer(httpServer: HTTPServer) {
           where: { roomId, isActive: true }
         });
 
-        if (participantCount >= room.maxParticipants && room.participants.length === 0) {
+        if (participantCount >= room.maxParticipants && room.ChatParticipant.length === 0) {
           socket.emit('error', { message: 'Room is full' });
           return;
         }
 
         // Add participant if not already in room
-        if (room.participants.length === 0) {
+        if (room.ChatParticipant.length === 0) {
           await prisma.chatParticipant.create({
             data: {
               roomId,
@@ -323,13 +324,13 @@ export function initSocketServer(httpServer: HTTPServer) {
         socket.emit('room-joined', {
           roomId,
           messages: decryptedMessages.reverse(),
-          participantCount: participantCount + (room.participants.length === 0 ? 1 : 0),
+          participantCount: participantCount + (room.ChatParticipant.length === 0 ? 1 : 0),
         });
 
         // Notify others
         socket.to(`room:${roomId}`).emit('user-joined', {
           user: socket.data.identity.displayName,
-          participantCount: participantCount + (room.participants.length === 0 ? 1 : 0),
+          participantCount: participantCount + (room.ChatParticipant.length === 0 ? 1 : 0),
         });
       } catch (error) {
         console.error('Join room error:', error);
@@ -354,7 +355,7 @@ export function initSocketServer(httpServer: HTTPServer) {
               return;
             }
           } catch (error) {
-            console.warn('[Socket Server] Rate limiting error:', error);
+            console.warn('[any Server] Rate limiting error:', error);
             // Continue without rate limiting if Redis fails
           }
         }

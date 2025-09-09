@@ -56,22 +56,22 @@ const CommunityFeed: React.FC<CommunityFeedProps> = ({
   const virtualPosts: Post[] = useMemo(() => {
     return posts.map(post => ({
       id: post.id,
-      title: post.title,
+      title: post.title || '',
       content: post.content,
       author: {
-        id: post.author.id || 'anonymous',
-        name: post.author.displayName || 'Anonymous User',
-        avatar: post.author.avatar,
+        id: post.author?.id || 'anonymous',
+        name: post.author?.displayName || 'Anonymous User',
+        avatar: post.author?.avatar || '',
         verified: false,
         role: 'user'
       },
-      timestamp: new Date(post.createdAt),
+      timestamp: post.createdAt,
       type: post.type === 'story' ? 'text' : post.type === 'milestone' ? 'milestone' : 'question',
       category: post.category,
       tags: post.tags || [],
       engagement: {
-        likes: post.likes,
-        comments: post.comments?.length || 0,
+        likes: post.likes || 0,
+        comments: post.replies?.length || 0,
         shares: 0,
         views: 0,
         bookmarks: 0
@@ -119,7 +119,7 @@ const CommunityFeed: React.FC<CommunityFeedProps> = ({
         post.id === postId 
           ? { 
               ...post, 
-              likes: post.userInteraction?.liked ? post.likes - 1 : post.likes + 1,
+              likes: post.userInteraction?.liked ? (post.likes || 0) - 1 : (post.likes || 0) + 1,
               userInteraction: { 
                 ...post.userInteraction, 
                 liked: !post.userInteraction?.liked 
@@ -139,24 +139,36 @@ const CommunityFeed: React.FC<CommunityFeedProps> = ({
   const generateMockPosts = useCallback((count: number, startIndex: number): CommunityPost[] => {
     return Array.from({ length: count }, (_, i) => ({
       id: `post-${startIndex + i + 1}`,
-      title: `Community Post ${startIndex + i + 1}`,
+      authorSessionId: `session-${Math.floor(Math.random() * 1000)}`,
+      authorNickname: `User${Math.floor(Math.random() * 100)}`,
       content: `This is the content of community post ${startIndex + i + 1}. It contains some meaningful discussion about mental health topics and community support.`,
-      type: ['story', 'milestone', 'question'][Math.floor(Math.random() * 3)] as CommunityPost['type'],
-      category: ['general', 'anxiety', 'depression', 'therapy'][Math.floor(Math.random() * 4)],
+      type: ['story', 'milestone', 'question', 'encouragement'][Math.floor(Math.random() * 4)] as CommunityPost['type'],
+      tags: [`tag${Math.floor(Math.random() * 10)}`, `topic${Math.floor(Math.random() * 5)}`],
+      reactions: [],
+      replies: [],
+      isAnonymous: Math.random() > 0.5,
+      createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+      updatedAt: new Date(),
+      sentiment: ['positive', 'neutral', 'struggling'][Math.floor(Math.random() * 3)] as 'positive' | 'neutral' | 'struggling',
+      helpfulVotes: Math.floor(Math.random() * 50),
+      reportCount: 0,
+      moderationStatus: 'approved' as const,
+      // Optional UI properties
+      title: `Community Post ${startIndex + i + 1}`,
       author: {
         id: `user-${Math.floor(Math.random() * 100)}`,
         displayName: `User ${Math.floor(Math.random() * 100)}`,
-        avatar: undefined
+        avatar: `avatar-${Math.floor(Math.random() * 20)}`
       },
-      createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
-      updatedAt: new Date().toISOString(),
+      category: ['general', 'anxiety', 'depression', 'therapy'][Math.floor(Math.random() * 4)],
       likes: Math.floor(Math.random() * 50),
-      isAnonymous: Math.random() > 0.7,
-      supportLevel: ['seeking-support', 'offering-support', 'celebrating'][Math.floor(Math.random() * 3)] as CommunityPost['supportLevel'],
-      tags: [`tag${Math.floor(Math.random() * 10)}`, `tag${Math.floor(Math.random() * 10)}`],
+      comments: [],
       userInteraction: {
-        liked: Math.random() > 0.8
-      }
+        liked: Math.random() > 0.8,
+        bookmarked: Math.random() > 0.9,
+        reported: false
+      },
+      supportLevel: ['seeking-support', 'offering-support', 'celebrating'][Math.floor(Math.random() * 3)] as CommunityPost['supportLevel']
     }));
   }, []);
 

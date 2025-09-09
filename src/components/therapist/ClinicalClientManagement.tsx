@@ -83,7 +83,7 @@ interface ClinicalClient {
     date: Date;
     type: 'intake' | 'progress' | 'treatment_plan' | 'crisis' | 'discharge';
     content: string;
-    riskAssessment?: 'low' | 'moderate' | 'high' | 'imminent';
+    riskAssessment?: 'low' | 'moderate' | 'high' | 'crisis';
   }[];
   assessments: {
     id: string;

@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
  * GET /api/audit/events
  * Query audit events with filters (HIPAA compliance)
  */
-async function getAuditEvents(request: NextRequest) {
+async function getAuditEvents(request: NextRequest): Promise<Response> {
   try {
     // User should be authenticated by withAudit middleware
     // For now, we'll skip the auth check since withAudit should handle it
@@ -34,7 +34,7 @@ async function getAuditEvents(request: NextRequest) {
         userAgent: request.headers.get('user-agent'),
       });
       
-      return NextResponse.json(createErrorResponse('Insufficient permissions'), { status: 403 });
+      return Response.json(createErrorResponse('Insufficient permissions'), { status: 403 });
     }
 
     // Parse query parameters
@@ -55,7 +55,7 @@ async function getAuditEvents(request: NextRequest) {
     // Validate query parameters
     const validationResult = AuditQueryFiltersSchema.safeParse(queryParams);
     if (!validationResult.success) {
-      return NextResponse.json(
+      return Response.json(
         createErrorResponse('Invalid query parameters', 'VALIDATION_ERROR'),
         { status: 400 }
       );
@@ -83,7 +83,7 @@ async function getAuditEvents(request: NextRequest) {
     // Query audit events
     const result = await auditService.queryEvents(filters);
 
-    return NextResponse.json(createSuccessResponse(result, 'Audit events retrieved successfully'), { status: 200 });
+    return Response.json(createSuccessResponse(result, 'Audit events retrieved successfully'), { status: 200 });
 
   } catch (error) {
     console.error('Audit events query error:', error);
@@ -101,7 +101,7 @@ async function getAuditEvents(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(
+    return Response.json(
       createErrorResponse('Failed to retrieve audit events'), 
       { status: 500 }
     );
@@ -112,14 +112,14 @@ async function getAuditEvents(request: NextRequest) {
  * POST /api/audit/events
  * Manually create an audit event (for testing or special cases)
  */
-async function createAuditEvent(request: NextRequest) {
+async function createAuditEvent(request: NextRequest): Promise<Response> {
   try {
     // User should be authenticated by withAudit middleware
     const user = { id: 'admin', email: 'admin@example.com', role: 'ADMIN' }; // Placeholder
 
     // Only admins can manually create audit events
     if (!['ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
-      return NextResponse.json(createErrorResponse('Insufficient permissions'), { status: 403 });
+      return Response.json(createErrorResponse('Insufficient permissions'), { status: 403 });
     }
 
     // Parse request body
@@ -138,7 +138,7 @@ async function createAuditEvent(request: NextRequest) {
 
     const validationResult = eventSchema.safeParse(body);
     if (!validationResult.success) {
-      return NextResponse.json(
+      return Response.json(
         createErrorResponse('Invalid event data', 'VALIDATION_ERROR'),
         { status: 400 }
       );
@@ -180,14 +180,14 @@ async function createAuditEvent(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(
+    return Response.json(
       createSuccessResponse(null, 'Audit event created successfully'), { status: 200 }
     );
 
   } catch (error) {
     console.error('Manual audit event creation error:', error);
 
-    return NextResponse.json(
+    return Response.json(
       createErrorResponse('Failed to create audit event'), 
       { status: 500 }
     );

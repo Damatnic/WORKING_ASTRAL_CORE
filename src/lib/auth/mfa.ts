@@ -159,8 +159,7 @@ export async function verifyAndActivateTOTP(
     // Verify token
     const isValid = authenticator.verify({
       token,
-      secret,
-      window: MFA_CONFIG.totpWindow
+      secret
     });
 
     if (!isValid) {
@@ -402,8 +401,7 @@ async function verifyTOTP(userId: string, token: string): Promise<boolean> {
   const secret = decryptSecret(user.twoFactorSecret);
   return authenticator.verify({
     token,
-    secret,
-    window: MFA_CONFIG.totpWindow
+    secret
   });
 }
 
@@ -466,7 +464,7 @@ async function verifyBackupCode(userId: string, code: string): Promise<boolean> 
       type: 'security_alert',
       title: 'Backup Code Used',
       message: 'A backup code was used to access your account. If this wasn\'t you, please secure your account immediately.',
-      priority: 'high'
+      isPriority: true
     }
   });
 
@@ -624,7 +622,7 @@ export async function getMFAStatus(userId: string): Promise<MFAStatus> {
     primaryMethod: methods[0] || null,
     backupCodesRemaining: backupCodes,
     lastVerified: null, // Would need to track this separately
-    trustedDevices: trustedDevices.map(d => ({
+    trustedDevices: trustedDevices.map((d: any) => ({
       id: d.id,
       name: d.name,
       fingerprint: d.fingerprint,

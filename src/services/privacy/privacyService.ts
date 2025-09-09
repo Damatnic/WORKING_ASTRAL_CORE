@@ -719,7 +719,7 @@ class PrivacyService {
     }
     
     if (anonymized.firstName) {
-      anonymized.firstName = `User_${await cryptoService.hash(anonymized.firstName).then(h => h.slice(0, 8))}`;
+      anonymized.firstName = `User_${(await cryptoService.hash(anonymized.firstName)).slice(0, 8)}`;
     }
     
     if (anonymized.lastName) {

@@ -76,8 +76,8 @@ interface PartitionConfig {
  * Main Database Maintenance Service
  */
 export class DatabaseMaintenanceService {
-  private pool: Pool;
-  private prisma: PrismaClient;
+  private pool!: Pool;
+  private prisma!: PrismaClient;
   private maintenanceJobs: Map<string, MaintenanceJobConfig> = new Map();
   private jobHistory: MaintenanceJobResult[] = [];
   private isMaintenanceWindowActive: boolean = false;

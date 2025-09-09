@@ -90,8 +90,8 @@ interface OptimizationRecommendation {
  * Main Query Optimizer Class
  */
 export class QueryOptimizer {
-  private prisma: PrismaClient;
-  private pool: Pool;
+  private prisma!: PrismaClient;
+  private pool!: Pool;
   private queryMetrics: Map<string, QueryMetrics[]> = new Map();
   private cacheConfigs: Map<string, CacheConfig> = new Map();
   private slowQueryThreshold: number = 1000; // milliseconds

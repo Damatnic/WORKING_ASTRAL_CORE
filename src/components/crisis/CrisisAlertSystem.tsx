@@ -580,7 +580,7 @@ export default function CrisisAlertSystem({ className = "" }: CrisisAlertSystemP
             <AnimatePresence>
               {filteredAlerts.map(alert => {
                 const config = alertTypeConfig[alert.type];
-                const severityConfig = severityConfig[alert.severity as keyof typeof severityConfig];
+                const alertSeverityConfig = severityConfig[alert.severity as keyof typeof severityConfig];
                 const Icon = config.icon;
                 const isExpanded = expandedAlerts.has(alert.id);
                 const isSnoozed = alert.snoozedUntil && isAfter(alert.snoozedUntil, new Date());
@@ -591,7 +591,7 @@ export default function CrisisAlertSystem({ className = "" }: CrisisAlertSystemP
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className={`border-2 rounded-lg ${severityConfig.color} ${severityConfig.animation} ${
+                    className={`border-2 rounded-lg ${alertSeverityConfig.color} ${alertSeverityConfig.animation} ${
                       alert.resolved ? 'opacity-60' : ''
                     } ${isSnoozed ? 'opacity-40' : ''}`}
                   >
@@ -608,7 +608,7 @@ export default function CrisisAlertSystem({ className = "" }: CrisisAlertSystemP
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2">
                               <h3 className="font-semibold text-gray-900 truncate">{alert.title}</h3>
-                              <span className={`px-2 py-1 text-xs rounded-full font-medium ${severityConfig.color}`}>
+                              <span className={`px-2 py-1 text-xs rounded-full font-medium ${alertSeverityConfig.color}`}>
                                 {alert.severity.toUpperCase()}
                               </span>
                               {alert.escalationLevel > 0 && (

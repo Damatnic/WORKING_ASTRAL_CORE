@@ -144,7 +144,7 @@ export default function HelperDashboard({ className = "" }: HelperDashboardProps
       id: 'status',
       label: 'Status',
       accessor: (row) => (
-        <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[row.status].bg} ${statusColors[row.status].text}`}>
+        <span className={`px-2 py-1 text-xs font-medium rounded-full ${(statusColors as any)[row.status]?.bg || 'bg-gray-100'} ${(statusColors as any)[row.status]?.text || 'text-gray-800'}`}>
           {row.status}
         </span>
       )
@@ -386,7 +386,7 @@ export default function HelperDashboard({ className = "" }: HelperDashboardProps
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Status</p>
-                  <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${statusColors[selectedClient.status].bg} ${statusColors[selectedClient.status].text}`}>
+                  <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${(statusColors as any)[selectedClient.status]?.bg || 'bg-gray-100'} ${(statusColors as any)[selectedClient.status]?.text || 'text-gray-800'}`}>
                     {selectedClient.status}
                   </span>
                 </div>

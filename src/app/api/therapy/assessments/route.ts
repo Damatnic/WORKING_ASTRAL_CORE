@@ -139,7 +139,7 @@ export async function GET(req: NextRequest) {
       assessmentType: searchParams.get('assessmentType'),
       startDate: searchParams.get('startDate'),
       endDate: searchParams.get('endDate'),
-    });
+    }) as any;
     
     // Build query filters
     const where: any = {};
@@ -278,7 +278,7 @@ export async function POST(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(createAssessmentSchema, body);
+    const data = validateInput(createAssessmentSchema, body) as any;
     
     // Verify consent for client
     const hasConsent = await verifyClientConsent((session as any).user.id, data.clientId);
@@ -287,7 +287,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Check for clinical significance
-    const config = data.assessmentType !== 'custom' ? ASSESSMENT_CONFIGS[data.assessmentType] : null;
+    const config = data.assessmentType !== 'custom' ? (ASSESSMENT_CONFIGS as any)[data.assessmentType] : null;
     const isClinical = config ? data.scores.total >= config.clinicalCutoff : false;
     
     // Create alerts for high-risk scores
@@ -429,7 +429,7 @@ export async function PUT(req: NextRequest) {
     
     // Parse and validate request body
     const body = await (req as any).json();
-    const data = validateInput(updateAssessmentSchema, body);
+    const data = validateInput(updateAssessmentSchema, body) as any;
     
     // Get existing assessment
     const existingAssessment = await prisma.moodEntry.findUnique({

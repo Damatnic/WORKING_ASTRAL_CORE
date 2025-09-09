@@ -89,15 +89,7 @@ export async function GET(request: NextRequest) {
 //             }
 //          },
           categories: ['crisis', 'therapy', 'community', 'system', 'wellness', 'appointment', 'safety'],
-          digestFrequency: 'daily',
-          crisisOverride: true,
-          escalationChain: {
-            escalationChain: [
-              { method: 'phone_call', delay: 0 },
-              { method: 'sms', delay: 2 },
-              { method: 'email', delay: 5 }
-            ]
-          }
+          frequency: 'daily'
         }
       });
     }
@@ -197,11 +189,7 @@ export async function PUT(request: NextRequest) {
         categories: Object.values(validatedData.channels)
           .flatMap((channel: any) => channel.categories)
           .filter((v, i, a) => a.indexOf(v) === i), // unique categories
-        // digestFrequency removed,
-        crisisOverride: validatedData.crisis.alwaysNotify,
-        escalationChain: {
-          escalationChain: validatedData.crisis.escalationChain
-        },
+
         updatedAt: new Date()
       },
       create: {
@@ -210,11 +198,7 @@ export async function PUT(request: NextRequest) {
         categories: Object.values(validatedData.channels)
           .flatMap((channel: any) => channel.categories)
           .filter((v, i, a) => a.indexOf(v) === i),
-        // digestFrequency removed,
-        crisisOverride: validatedData.crisis.alwaysNotify,
-        escalationChain: {
-          escalationChain: validatedData.crisis.escalationChain
-        }
+
       }
     });
 

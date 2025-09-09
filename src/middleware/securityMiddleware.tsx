@@ -92,7 +92,7 @@ export async function securityMiddleware(request: NextRequest) {
     // 5. HTTPS enforcement (production only)
     if (securityConfig.api.requireHTTPS && !request.url.startsWith('https://')) {
       const httpsUrl = request.url.replace('http://', 'https://');
-      return NextResponse.redirect(httpsUrl, 301);
+      return NextResponse.json(httpsUrl, 301);
     }
 
     // 6. API endpoint protection
@@ -107,7 +107,7 @@ export async function securityMiddleware(request: NextRequest) {
     }
 
     // Continue to next middleware/route
-    const response = NextResponse.next();
+    const response = NextResponse.json({ success: true });
 
     // Add security headers to response
     addSecurityHeaders(response);
@@ -334,7 +334,7 @@ async function validateAPIRequest(request: NextRequest): Promise<{
 /**
  * Add security headers to response
  */
-function addSecurityHeaders(response: Response | NextResponse): void {
+function addSecurityHeaders(response: NextResponse | NextResponse): void {
   Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
@@ -349,7 +349,7 @@ function addSecurityHeaders(response: Response | NextResponse): void {
 /**
  * Create error response with security headers
  */
-function createSecurityErrorResponse(message: string, status: number, additionalHeaders: Record<string, string> = {}): Response {
+function createSecurityErrorResponse(message: string, status: number, additionalHeaders: Record<string, string> = {}): NextResponse {
   const response = NextResponse.json(
     { error: message, timestamp: new Date().toISOString() },
     { status }

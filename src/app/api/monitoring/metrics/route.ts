@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       
       const response = prometheusMetrics + '\n' + additionalMetrics;
       
-      return new NextResponse(response, {
+      return new Response(response, {
         headers: {
           'Content-Type': 'text/plain; version=0.0.4; charset=utf-8',
           'Cache-Control': 'no-cache',
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
         { status: 500 }
       );
     } else {
-      return new NextResponse('# Error retrieving metrics\n', {
+      return new Response('# Error retrieving metrics\n', {
         status: 500,
         headers: { 'Content-Type': 'text/plain' },
       });
@@ -101,7 +101,7 @@ async function getJsonMetrics() {
     },
     health: {
       overall: systemHealth.overall,
-      services: systemHealth.services.reduce((acc, service) => {
+      services: systemHealth.services?.reduce((acc: any, service: any) => {
         acc[service.name] = {
           status: service.status,
           responseTime: service.responseTime,
@@ -153,13 +153,13 @@ async function getAdditionalPrometheusMetrics(): Promise<string> {
   output += `${prefix}health_status ${healthValue}\n\n`;
 
   // Service health metrics
-  systemHealth.services.forEach(service => {
+  systemHealth.services?.forEach((service: any) => {
     const serviceStatus = {
       unknown: 0,
       healthy: 1,
       degraded: 2,
       unhealthy: 3,
-    }[service.status] || 0;
+    }[service.status as string] || 0;
     
     output += `# HELP ${prefix}service_status Service health status\n`;
     output += `# TYPE ${prefix}service_status gauge\n`;
