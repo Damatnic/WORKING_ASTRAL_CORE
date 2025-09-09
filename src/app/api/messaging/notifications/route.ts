@@ -195,9 +195,9 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
 
     // Log admin action
     await prisma.auditLog.create({
-        data: {
-          id: generatePrismaCreateFields().id,
-          userId: senderId,
+      data: {
+        id: generatePrismaCreateFields().id,
+        userId: senderId,
         action: "create_notification",
         resource: "notification",
         details: {
@@ -370,5 +370,4 @@ export const DELETE = withAuth(async (req: AuthenticatedRequest) => {
     return NextResponse.json(
       { error: "Failed to delete notifications" }, { status: 500 });
   }
-  });
-}
+});
