@@ -3,7 +3,7 @@
  * Social loading state for community features
  */
 
-import { LoadingPresets } from '@/components/loading';
+import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 
 export default function CommunityLoading() {
   return (
@@ -19,7 +19,9 @@ export default function CommunityLoading() {
             </p>
           </div>
           
-          <LoadingPresets.Minimal message="Loading community features..." />
+          <div className="flex items-center justify-center p-6">
+            <LoadingSpinner size="md" variant="primary" showLabel label="Loading community features..." />
+          </div>
           
           <div className="text-center mt-8">
             <p className="text-green-600 text-sm">

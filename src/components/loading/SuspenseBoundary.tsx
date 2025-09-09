@@ -6,7 +6,8 @@
 import React, { Suspense, ComponentType, ErrorInfo } from 'react';
 import { cn } from '@/lib/utils';
 import { LoadingSpinner, CrisisLoader, WellnessLoader } from './LoadingSpinner';
-import { ProgressiveLoader, LoadingPresets } from './ProgressiveLoader';
+import { ProgressiveLoader } from './ProgressiveLoader';
+import { LoadingPresets } from './exports';
 import { performanceMonitor } from '@/lib/performance/monitoring';
 
 /**
@@ -293,7 +294,7 @@ function getLoadingComponent(
     case 'wellness':
       return <WellnessLoader message={message} />;
     case 'progressive':
-      return <LoadingPresets.Dashboard className={className} />;
+      return <LoadingPresets.dashboard />;
     case 'minimal':
       return <LoadingPresets.Minimal message={message} />;
     default:
