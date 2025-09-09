@@ -2,7 +2,6 @@
  * Database Test Helper - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 import { PrismaClient } from '@prisma/client'
 
 export class MockPrismaClient {

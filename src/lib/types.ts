@@ -2,7 +2,6 @@
  * Types - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 export type UUID = string;
 export type Email = string;
 export type PhoneNumber = string;

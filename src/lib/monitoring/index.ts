@@ -2,7 +2,6 @@
  * Monitoring System - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 export const getMonitoringConfig = (): any => ({});
 export const validateMonitoringConfig = (config: any): boolean => true;
 export const defaultMonitoringConfig: any = {};

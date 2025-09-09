@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {  createAuditLogData , generatePrismaCreateFields } from "@/lib/prisma-helpers";

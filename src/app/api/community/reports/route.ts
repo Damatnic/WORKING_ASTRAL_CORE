@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // Content reporting API for community safety
 import { NextRequest, NextResponse } from "next/server";
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";

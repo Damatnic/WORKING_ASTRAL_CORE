@@ -114,7 +114,7 @@ export class CriticalBoundary extends Component<Props, State> {
             Component Error
           </h3>
           <p className="text-red-700 text-center mb-4 max-w-md">
-            The {this.props.componentName} component encountered an error and couldn't load properly.
+            The {this.props.componentName} component encountered an error and couldn&apos;t load properly.
           </p>
           
           {process.env.NODE_ENV === 'development' && this.state.error && (

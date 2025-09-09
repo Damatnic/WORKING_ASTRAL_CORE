@@ -2,15 +2,12 @@
  * Test Helpers - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 import { waitFor } from '@testing-library/react'
-// @ts-ignore
 import { faker } from '@faker-js/faker'
 
 export const sleep = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
 
 export const advanceTimers = (ms: number): void => {
-  // @ts-ignore
   if (typeof jest !== 'undefined') jest.advanceTimersByTime(ms)
 }
 

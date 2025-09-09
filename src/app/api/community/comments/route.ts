@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // Community comments API with CRUD operations and moderation
 import { NextRequest, NextResponse } from "next/server";
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";

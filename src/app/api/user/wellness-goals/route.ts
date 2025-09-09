@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// @ts-ignore
 export async function GET(request: NextRequest) {
   try {
     return NextResponse.json({ 
@@ -14,7 +13,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// @ts-ignore
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -27,7 +25,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// @ts-ignore
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
@@ -40,7 +37,6 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// @ts-ignore
 export async function DELETE(request: NextRequest) {
   try {
     return NextResponse.json({ 

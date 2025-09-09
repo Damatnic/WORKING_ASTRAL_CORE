@@ -5,8 +5,8 @@ import { UserRole } from '@prisma/client';
 let cryptoService: any;
 (async () => {
   try {
-    const module = await import('../security/cryptoService');
-    cryptoService = module.cryptoService;
+    const cryptoModule = await import('../security/cryptoService');
+    cryptoService = cryptoModule.cryptoService;
   } catch (error) {
     console.warn('CryptoService not available, using fallback encryption');
     // Fallback implementation

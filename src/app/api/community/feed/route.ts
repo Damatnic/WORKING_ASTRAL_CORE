@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // Personalized community feed API with recommendations and filtering
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";

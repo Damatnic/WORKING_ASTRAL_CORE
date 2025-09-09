@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // Health Check API Route
 // Provides system health information and triggers auto-initialization
 

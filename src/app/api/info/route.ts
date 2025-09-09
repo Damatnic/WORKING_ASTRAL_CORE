@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // System Information API Route
 // Provides demo credentials and system information
 

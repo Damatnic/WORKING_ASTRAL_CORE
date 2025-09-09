@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // AI Chat API Endpoint
 // Provides AI therapy assistance using OpenAI and Gemini
 

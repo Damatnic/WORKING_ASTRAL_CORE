@@ -77,7 +77,12 @@
       "Bash(timeout 30s npx tsc --noEmit)",
       "Bash(npx madge:*)",
       "Bash(timeout 10s npm run dev)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(for:*)",
+      "Bash(do if [ -f \"$file\" ])",
+      "Bash(then sed -i '1s/^\\/\\/ @ts-nocheck$//' \"$file\")",
+      "Bash(do sed -i 's/\\/\\/ @ts-ignore/\\/\\/ @ts-expect-error/g' \"$file\")",
+      "Bash(do sed -i '/^\\/\\/ @ts-expect-error.*$/d' \"$file\")"
     ],
     "deny": [],
     "ask": []

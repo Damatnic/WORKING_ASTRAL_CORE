@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { NextRequest, NextResponse } from "next/server";
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";
 import bcrypt from "bcryptjs";

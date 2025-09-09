@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 /**
  * Health Check System - Ultra Simplified for TypeScript Compliance
  */

@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // API Routes for Support Groups
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePrismaCreateFields } from "@/lib/prisma-helpers";

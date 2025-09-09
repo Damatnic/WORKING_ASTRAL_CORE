@@ -2,11 +2,8 @@
  * Cache Utilities - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 import { createHash, createHmac, randomBytes } from 'crypto';
-// @ts-ignore
 import zlib from 'zlib';
-// @ts-ignore
 import { promisify } from 'util';
 
 class CacheKeyUtils {

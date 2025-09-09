@@ -16,18 +16,32 @@ const nextConfig = {
 
   // TypeScript configuration
   typescript: {
-    ignoreBuildErrors: true, // Temporarily ignore TS errors for build test
+    ignoreBuildErrors: true, // Temporarily ignore to focus on webpack issue
   },
 
   // ESLint configuration  
   eslint: {
-    ignoreDuringBuilds: true, // Temporarily ignore linting for build test
+    ignoreDuringBuilds: true, // Temporarily ignore to focus on webpack issue
   },
 
-  // Minimal webpack configuration
-  webpack: (config) => {
-    // Disable symlinks completely
+  // Webpack configuration for Windows compatibility
+  webpack: (config, { isServer }) => {
+    // Disable symlinks completely (Windows compatibility)
     config.resolve.symlinks = false;
+    
+    // Add fallback for Node.js modules (Windows compatibility)
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        crypto: false,
+      };
+    }
+    
+    // Disable webpack cache that causes issues on Windows
+    config.cache = false;
+    
     return config;
   },
 };

@@ -58,35 +58,35 @@ declare global {
   type PhoneNumber = any;
   
   // Error suppression
-  var console: {
+  let console: {
     [key: string]: any;
   };
   
-  var process: {
+  let process: {
     [key: string]: any;
   };
   
-  var global: {
+  let global: {
     [key: string]: any;
   };
   
-  var window: {
+  let window: {
     [key: string]: any;
   };
   
-  var document: {
+  let document: {
     [key: string]: any;
   };
   
   // Jest globals
-  var jest: any;
-  var describe: any;
-  var it: any;
-  var expect: any;
-  var beforeEach: any;
-  var afterEach: any;
-  var beforeAll: any;
-  var afterAll: any;
+  let jest: any;
+  let describe: any;
+  let it: any;
+  let expect: any;
+  let beforeEach: any;
+  let afterEach: any;
+  let beforeAll: any;
+  let afterAll: any;
 }
 
 // Module augmentations

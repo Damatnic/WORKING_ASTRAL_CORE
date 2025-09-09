@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { NextRequest, NextResponse } from 'next/server';
 import { createSuccessResponse, createApiErrorHandler } from '@/lib/api-error-handler';
 

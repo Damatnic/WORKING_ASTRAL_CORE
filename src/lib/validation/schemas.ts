@@ -2,7 +2,6 @@
  * Validation Schemas - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 import { z } from 'zod';
 
 // Basic string schema

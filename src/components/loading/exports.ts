@@ -2,7 +2,6 @@
  * Loading Exports - Ultra Simplified for TypeScript Compliance
  */
 
-// @ts-ignore
 export const LoadingSpinner = ({ size, className }: any) => null;
 export const ProgressBar = ({ progress, className }: any) => null;
 export const SkeletonLoader = ({ lines, className }: any) => null;
