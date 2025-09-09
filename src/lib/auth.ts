@@ -127,4 +127,7 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'development',
 };
 
+// Re-export auth utilities
+export { hasRole, hasPermission } from './auth/index';
+
 export default authOptions;

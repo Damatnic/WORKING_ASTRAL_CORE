@@ -82,7 +82,8 @@
       "Bash(do if [ -f \"$file\" ])",
       "Bash(then sed -i '1s/^\\/\\/ @ts-nocheck$//' \"$file\")",
       "Bash(do sed -i 's/\\/\\/ @ts-ignore/\\/\\/ @ts-expect-error/g' \"$file\")",
-      "Bash(do sed -i '/^\\/\\/ @ts-expect-error.*$/d' \"$file\")"
+      "Bash(do sed -i '/^\\/\\/ @ts-expect-error.*$/d' \"$file\")",
+      "Bash(tail:*)"
     ],
     "deny": [],
     "ask": []
