@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { WebSocketServer } from '@/lib/websocket/server';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 let wss: WebSocketServer | null = null;
 
 export async function GET(request: NextRequest) {

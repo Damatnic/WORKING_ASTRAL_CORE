@@ -7,6 +7,9 @@ import { withAuth, AuthenticatedRequest, withRoles } from "@/lib/auth-middleware
 import { UserRole } from "@/types/prisma";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schemas
 const createRoomSchema = z.object({
   name: z.string().min(1).max(100),
@@ -175,8 +178,7 @@ export async function POST(req: NextRequest) {
       const userId = req.user!.id;
       
       // Parse and validate input
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const validatedData = createRoomSchema.parse(body);
 
       // Check if a similar room already exists
@@ -280,7 +282,8 @@ export async function POST(req: NextRequest) {
       );
     }
   }
-);
+  );
+}
 
 // PUT /api/community/chat-rooms - Update a chat room (Moderator only)
 export async function PUT(req: NextRequest) {
@@ -288,8 +291,7 @@ export async function PUT(req: NextRequest) {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const roomId = searchParams.get("id");
 
@@ -422,7 +424,8 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // DELETE /api/community/chat-rooms - Delete/deactivate a chat room (Admin only)
 export async function DELETE(req: NextRequest) {
@@ -431,8 +434,7 @@ export async function DELETE(req: NextRequest) {
   async (req: AuthenticatedRequest) => {
     try {
       const userId = req.user!.id;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const roomId = searchParams.get("id");
       const permanent = searchParams.get("permanent") === "true";
@@ -569,4 +571,5 @@ export async function DELETE(req: NextRequest) {
       );
     }
   }
-);
+  );
+}

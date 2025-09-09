@@ -84,7 +84,10 @@
       "Bash(do sed -i 's/\\/\\/ @ts-ignore/\\/\\/ @ts-expect-error/g' \"$file\")",
       "Bash(do sed -i '/^\\/\\/ @ts-expect-error.*$/d' \"$file\")",
       "Bash(tail:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(timeout 180 npm run build)",
+      "Bash(mv:*)",
+      "Bash(cp:*)"
     ],
     "deny": [],
     "ask": []

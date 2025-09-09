@@ -5,6 +5,9 @@ import { withCrisisCounselor, withRateLimit, AuthenticatedRequest, withHelper } 
 import { notifyCounselors, CrisisEvents, emitEmergencyBroadcast } from '@/lib/websocket-exports';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Escalation schema
 const createEscalationSchema = z.object({
   alertId: z.string().uuid().optional(),

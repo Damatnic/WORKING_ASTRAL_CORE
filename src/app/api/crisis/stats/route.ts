@@ -5,6 +5,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { startOfWeek, endOfWeek, subWeeks } from 'date-fns';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/crisis/stats - Get crisis statistics
 export async function GET(request: NextRequest) {
   try {

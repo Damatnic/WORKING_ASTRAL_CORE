@@ -7,6 +7,9 @@ import { createSuccessResponse, createErrorResponse } from '@/types/api';
 import { withAudit } from '@/lib/audit/middleware';
 import { convertZodIssuesToValidationErrors } from '@/lib/prisma-helpers';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/audit/reports
  * Get list of compliance reports
@@ -174,26 +177,26 @@ async function generateComplianceReport(request: AuthenticatedRequest) {
 // Wrap handlers with authentication and audit middleware
 export async function GET(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
-  return withAudit(getComplianceReports, {
-    riskMapping: {
-      '/api/audit/reports': RiskLevel.HIGH,
-    },
-    categoryMapping: {
-      '/api/audit/reports': AuditEventCategory.AUDIT_LOG_ACCESS,
-    },
-  })(req)(req);
+    return withAudit(getComplianceReports, {
+      riskMapping: {
+        '/api/audit/reports': RiskLevel.HIGH,
+      },
+      categoryMapping: {
+        '/api/audit/reports': AuditEventCategory.AUDIT_LOG_ACCESS,
+      },
+    })(req);
+  });
 }
-});
 
 export async function POST(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
-  return withAudit(generateComplianceReport, {
-    riskMapping: {
-      '/api/audit/reports': RiskLevel.HIGH,
-    },
-    categoryMapping: {
-      '/api/audit/reports': AuditEventCategory.COMPLIANCE_REPORT_GENERATED,
-    },
-  })(req)(req);
+    return withAudit(generateComplianceReport, {
+      riskMapping: {
+        '/api/audit/reports': RiskLevel.HIGH,
+      },
+      categoryMapping: {
+        '/api/audit/reports': AuditEventCategory.COMPLIANCE_REPORT_GENERATED,
+      },
+    })(req);
+  });
 }
-});

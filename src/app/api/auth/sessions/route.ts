@@ -7,6 +7,9 @@ import { AuditEventCategory, AuditOutcome, RiskLevel } from '@/lib/audit/types';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/auth/sessions
  * Get all active sessions for the current user

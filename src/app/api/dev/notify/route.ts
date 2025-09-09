@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createApiErrorHandler } from '@/lib/api-error-handler';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     // Optional guard: require dev mode

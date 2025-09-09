@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { withAuth, AuthenticatedRequest } from "@/lib/auth-middleware";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schemas
 const createConversationSchema = z.object({
   type: z.enum(["direct", "group", "support"]).optional().default("direct"),
@@ -38,8 +41,7 @@ export async function GET(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const params = querySchema.parse({
       page: searchParams.get("page"),
@@ -209,7 +211,8 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // POST /api/messaging/conversations - Create a new conversation
 export async function POST(req: NextRequest) {
@@ -218,8 +221,7 @@ export async function POST(req: NextRequest) {
     const userId = req.user!.id;
     
     // Parse and validate input
-    const body = await (req as any).json()(req);
-}
+    const body = await (req as any).json();
     const validatedData = createConversationSchema.parse(body);
 
     // Ensure user is included in participants
@@ -396,15 +398,15 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // PUT /api/messaging/conversations - Update conversation settings
 export async function PUT(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const conversationId = searchParams.get("id");
     const action = searchParams.get("action"); // mute, unmute, leave, etc.
@@ -539,15 +541,15 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // DELETE /api/messaging/conversations - Delete conversation (for user)
 export async function DELETE(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const conversationId = searchParams.get("id");
 
@@ -617,4 +619,5 @@ export async function DELETE(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}

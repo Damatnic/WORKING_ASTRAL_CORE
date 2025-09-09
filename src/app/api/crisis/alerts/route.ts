@@ -8,6 +8,9 @@ import { CrisisAlertSystem } from '@/lib/crisis-alert-system';
 import { auditLog } from '@/lib/audit-logger';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Import missing types and functions
 interface AuthenticatedRequest extends NextRequest {
   user?: {
@@ -126,8 +129,7 @@ export async function GET(req: NextRequest) {
   return withRateLimit(60, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const page = parseInt(searchParams.get('page') || '1');
       const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
@@ -249,15 +251,15 @@ export async function GET(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // POST /api/crisis/alerts - Create new alert
 export async function POST(req: NextRequest) {
   return withRateLimit(10, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       
       // Validate request
       const validation = createAlertSchema.safeParse(body);
@@ -382,15 +384,15 @@ export async function POST(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // PUT /api/crisis/alerts/[id] - Update alert
 export async function PUT(req: NextRequest) {
   return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const alertId = searchParams.get('id');
@@ -524,7 +526,8 @@ export async function PUT(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // DELETE /api/crisis/alerts/[id] - Delete alert (admin only)
 export async function DELETE(req: NextRequest) {
@@ -536,8 +539,7 @@ export async function DELETE(req: NextRequest) {
         return NextResponse.json(
           { error: 'Admin access required' },
           { status: 403 }
-        )(req);
-}
+        );
       }
 
       const url = (req as any).url || req.nextUrl?.toString();
@@ -614,4 +616,5 @@ export async function DELETE(req: NextRequest) {
       );
     }
   })
-);
+  );
+}

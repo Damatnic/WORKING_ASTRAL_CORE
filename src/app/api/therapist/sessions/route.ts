@@ -8,6 +8,9 @@ import { prisma } from '@/lib/prisma';
 import { encryptJSON as encryptApiField, decryptJSON as decryptApiField } from '@/lib/encryption';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Validation schema for sessions
 const SessionSchema = z.object({
   clientId: z.string(),

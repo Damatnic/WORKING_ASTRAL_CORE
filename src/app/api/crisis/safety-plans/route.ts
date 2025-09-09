@@ -14,6 +14,9 @@ import {
 import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Mock encryption functions since the imports are missing
 function encryptJSON(data: any, key: string): string {
   return JSON.stringify(data);
@@ -80,8 +83,7 @@ export async function GET(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       
       // Check permissions
@@ -206,7 +208,7 @@ export async function GET(req: NextRequest) {
               console.error('Failed to decrypt safety plan:', error);
             }
           }
-
+          
           return response;
         })
       );
@@ -257,7 +259,8 @@ export async function GET(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // POST /api/crisis/safety-plans - Create new safety plan
 export async function POST(req: NextRequest) {
@@ -265,8 +268,7 @@ export async function POST(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       
       // Validate request
       const validation = createSafetyPlanSchema.safeParse(body);
@@ -400,7 +402,8 @@ export async function POST(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // PUT /api/crisis/safety-plans/[id] - Update safety plan
 export async function PUT(req: NextRequest) {
@@ -408,8 +411,7 @@ export async function PUT(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const planId = searchParams.get('id');
@@ -582,7 +584,8 @@ export async function PUT(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // DELETE /api/crisis/safety-plans/[id] - Delete safety plan
 export async function DELETE(req: NextRequest) {
@@ -590,8 +593,7 @@ export async function DELETE(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const planId = searchParams.get('id');
 
@@ -673,4 +675,5 @@ export async function DELETE(req: NextRequest) {
       );
     }
   })
-);
+  );
+}

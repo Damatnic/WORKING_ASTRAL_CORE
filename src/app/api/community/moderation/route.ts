@@ -12,6 +12,9 @@ import {
 } from "@/lib/community/moderation";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schemas
 const moderationActionSchema = z.object({
   type: z.enum(["warn", "mute", "ban", "suspend", "restrict", "approve", "reject"]),
@@ -48,8 +51,7 @@ export async function GET(req: NextRequest) {
     try {
       const moderatorId = req.user!.id;
       const moderatorRole = req.user!.role;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const params = querySchema.parse({
         page: searchParams.get("page"),
@@ -244,7 +246,8 @@ export async function GET(req: NextRequest) {
       );
     }
   }
-);
+  );
+}
 
 // POST /api/community/moderation - Create moderation action
 export async function POST(req: NextRequest) {
@@ -256,8 +259,7 @@ export async function POST(req: NextRequest) {
       const moderatorRole = req.user!.role;
 
       // Parse and validate input
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const validatedData = moderationActionSchema.parse(body);
 
       // Check if target user exists
@@ -449,7 +451,8 @@ export async function POST(req: NextRequest) {
       );
     }
   }
-);
+  );
+}
 
 // PUT /api/community/moderation - Review and update moderated content
 export async function PUT(req: NextRequest) {
@@ -460,8 +463,7 @@ export async function PUT(req: NextRequest) {
       const moderatorId = req.user!.id;
       
       // Parse and validate input
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const validatedData = reviewContentSchema.parse(body);
 
       let result: any = {};
@@ -593,4 +595,5 @@ export async function PUT(req: NextRequest) {
       );
     }
   }
-);
+  );
+}

@@ -20,6 +20,9 @@ import {
 import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Validation schemas
 const createReportSchema = z.object({
   severityLevel: z.number().min(1).max(5),
@@ -62,8 +65,7 @@ export async function GET(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       
       // Check permissions
@@ -191,7 +193,7 @@ export async function GET(req: NextRequest) {
               console.error('Failed to decrypt report details:', error);
             }
           }
-
+          
           return response;
         })
       );
@@ -243,7 +245,8 @@ export async function GET(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // POST /api/crisis/reports - Create new report
 export async function POST(req: NextRequest) {
@@ -251,8 +254,7 @@ export async function POST(req: NextRequest) {
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       
       // Validate request
       const validation = createReportSchema.safeParse(body);
@@ -382,15 +384,15 @@ export async function POST(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // PUT /api/crisis/reports/[id] - Update report
 export async function PUT(req: NextRequest) {
   return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const reportId = searchParams.get('id');
@@ -542,4 +544,5 @@ export async function PUT(req: NextRequest) {
       );
     }
   })
-);
+  );
+}

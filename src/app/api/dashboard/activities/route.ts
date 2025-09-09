@@ -5,6 +5,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { RecentActivity } from '@/types/wellness';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions) as Session | null;

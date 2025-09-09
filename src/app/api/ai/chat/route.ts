@@ -8,6 +8,9 @@ import { createCachedResponse, CacheDurations } from '@/lib/cache';
 import { createApiErrorHandler } from '@/lib/api-error-handler';
 import { NeonDatabaseService } from '@/lib/neon-database';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 interface ChatRequest {
   message: string;
   conversationHistory?: AIMessage[];

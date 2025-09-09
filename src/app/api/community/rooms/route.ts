@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSuccessResponse, createApiErrorHandler } from '@/lib/api-error-handler';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const url = (req as any).url || req.nextUrl?.toString();

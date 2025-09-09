@@ -6,6 +6,9 @@ import { authOptions } from "@/lib/auth";
 import * as crypto from 'crypto';
 import { prisma } from '@/lib/prisma';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // RBAC middleware
 async function checkAdminAccess() {
   const session = await getServerSession(authOptions) as Session | null;

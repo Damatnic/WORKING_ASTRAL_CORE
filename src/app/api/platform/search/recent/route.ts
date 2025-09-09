@@ -4,6 +4,9 @@ import { Session } from 'next-auth';
 import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/platform/search/recent - Get recent searches
 export async function GET(request: NextRequest) {
   try {

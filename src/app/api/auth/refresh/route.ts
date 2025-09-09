@@ -11,6 +11,9 @@ import { createSuccessResponse, createErrorResponse } from '@/types/api';
 import { auditService } from '@/lib/audit/audit-service';
 import { AuditEventCategory, AuditOutcome, RiskLevel } from '@/lib/audit/types';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * POST /api/auth/refresh
  * Refresh session using refresh token

@@ -10,6 +10,9 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // File upload configuration
 const UPLOAD_DIR = process.env.UPLOAD_DIR || './uploads';
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE || '104857600'); // 100MB default

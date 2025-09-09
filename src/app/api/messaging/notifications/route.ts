@@ -6,6 +6,9 @@ import { withAuth, AuthenticatedRequest } from "@/lib/auth-middleware";
 import { z } from "zod";
 import * as crypto from "crypto";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schemas
 const createNotificationSchema = z.object({
   userId: z.string().optional(), // Admin can send to specific user
@@ -35,8 +38,7 @@ export async function GET(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const params = querySchema.parse({
       page: searchParams.get("page"),
@@ -135,6 +137,7 @@ export async function GET(req: NextRequest) {
       { error: "Failed to fetch notifications" }, { status: 500 });
   }
 });
+}
 
 // POST /api/messaging/notifications - Create a notification (System/Admin only)
 export async function POST(req: NextRequest) {
@@ -146,8 +149,7 @@ export async function POST(req: NextRequest) {
     // Only admins and system can create notifications
     if (!["ADMIN", "SUPER_ADMIN", "HELPER", "THERAPIST", "CRISIS_COUNSELOR"].includes(senderRole)) {
       return NextResponse.json(
-        { error: "Insufficient permissions to create notifications" }, { status: 403 })(req);
-}
+        { error: "Insufficient permissions to create notifications" }, { status: 403 });
     }
 
     // Parse and validate input
@@ -230,14 +232,14 @@ export async function POST(req: NextRequest) {
       { error: "Failed to create notification" }, { status: 500 });
   }
 });
+}
 
 // PUT /api/messaging/notifications - Update notification status
 export async function PUT(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const notificationId = searchParams.get("id");
     
@@ -311,14 +313,14 @@ export async function PUT(req: NextRequest) {
       { error: "Failed to update notification" }, { status: 500 });
   }
 });
+}
 
 // DELETE /api/messaging/notifications - Delete notifications
 export async function DELETE(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const notificationId = searchParams.get("id");
     const deleteAll = searchParams.get("all") === "true";
@@ -379,3 +381,4 @@ export async function DELETE(req: NextRequest) {
       { error: "Failed to delete notifications" }, { status: 500 });
   }
 });
+}

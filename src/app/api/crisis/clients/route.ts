@@ -6,6 +6,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Schema for crisis client data
 const CrisisClientSchema = z.object({
   name: z.string().min(1),

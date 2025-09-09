@@ -8,6 +8,9 @@ import { auditService } from '@/lib/audit/audit-service';
 import { AuditEventCategory, AuditOutcome, RiskLevel } from '@/lib/audit/types';
 import { convertZodIssuesToValidationErrors } from '@/lib/prisma-helpers';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * POST /api/auth/mfa/setup
  * Initiate MFA setup for a user

@@ -7,6 +7,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { healthCheckService } from '@/lib/monitoring/health-check';
 import { auditTrailService } from '@/lib/monitoring/audit-trail';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
   

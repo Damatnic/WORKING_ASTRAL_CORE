@@ -5,6 +5,9 @@ import { withCrisisCounselor, withRateLimit, AuthenticatedRequest } from '@/lib/
 import { notifyCounselors, notifyUser, CrisisEvents } from '@/lib/websocket';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Mock encryption function since the import is missing
 function encryptJSON(data: any, key: string): string {
   return JSON.stringify(data);
@@ -23,9 +26,8 @@ export async function GET(req: NextRequest) {
   return withRateLimit(60, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
-    const { searchParams } = new URL(url);
+      const url = (req as any).url || req.nextUrl?.toString();
+      const { searchParams } = new URL(url);
       const status = searchParams.get('status') || 'active';
       const userId = searchParams.get('userId');
 
@@ -84,15 +86,15 @@ export async function GET(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // POST /api/crisis/interventions - Create intervention
 export async function POST(req: NextRequest) {
   return withRateLimit(10, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const validation = createInterventionSchema.safeParse(body);
       
       if (!validation.success) {
@@ -133,8 +135,8 @@ export async function POST(req: NextRequest) {
       // Create high-priority alert if needed
       if (data.priority >= 4) {
         await (prisma.safetyAlert as any).create({
-        data: {
-          id: crypto.randomUUID(),
+          data: {
+            id: crypto.randomUUID(),
             type: 'intervention_initiated',
             severity: data.priority.toString(),
             userId: data.userId,
@@ -219,17 +221,17 @@ export async function POST(req: NextRequest) {
       );
     }
   })
-);
+  );
+}
 
 // PUT /api/crisis/interventions/[id] - Update intervention
 export async function PUT(req: NextRequest) {
   return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json()(req);
-}
+      const body = await (req as any).json();
       const url = (req as any).url || req.nextUrl?.toString();
-    const { searchParams } = new URL(url);
+      const { searchParams } = new URL(url);
       const interventionId = searchParams.get('id');
 
       if (!interventionId) {
@@ -285,8 +287,8 @@ export async function PUT(req: NextRequest) {
 
         if (existing.userId) {
           await (prisma.notification as any).create({
-        data: {
-          id: crypto.randomUUID(),
+            data: {
+              id: crypto.randomUUID(),
               userId: existing.userId,
               type: 'intervention_completed',
               title: 'Support Session Completed',
@@ -324,4 +326,5 @@ export async function PUT(req: NextRequest) {
       );
     }
   })
-);
+  );
+}

@@ -10,6 +10,9 @@ import { z } from 'zod';
 import { groupCreationSchema } from '@/types/community';
 import * as crypto from 'crypto';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 // GET: Fetch all support groups

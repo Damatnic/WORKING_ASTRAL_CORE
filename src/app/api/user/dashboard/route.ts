@@ -7,6 +7,9 @@ import {
   decryptField,
 } from '@/lib/api-utils';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/user/dashboard - Get comprehensive dashboard data for user
 export async function GET(req: NextRequest) {
   return withAuth(req, async (req) => {

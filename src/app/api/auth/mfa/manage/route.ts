@@ -8,6 +8,9 @@ import { auditService } from '@/lib/audit/audit-service';
 import { AuditEventCategory, AuditOutcome, RiskLevel } from '@/lib/audit/types';
 import { prisma } from '@/lib/prisma';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * DELETE /api/auth/mfa/manage
  * Disable MFA for a user (requires admin approval for clinical roles)

@@ -16,6 +16,9 @@ import {
   moodEntrySchema,
 } from '@/lib/api-utils';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/user/mood-entries - Get user's mood entries
 export async function GET(req: NextRequest) {
   return withAuth(req, async (req) => {

@@ -7,6 +7,9 @@ import { withAuth, AuthenticatedRequest, withRoles } from "@/lib/auth-middleware
 import { UserRole } from "@/types/prisma";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Add Report model to track reports
 const reportSchema = z.object({
   contentType: z.enum(["post", "comment", "message", "user", "chatroom"]),
@@ -61,8 +64,7 @@ export async function GET(req: NextRequest) {
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST],
   async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const params = querySchema.parse({
         page: searchParams.get("page"),
@@ -210,7 +212,8 @@ export async function GET(req: NextRequest) {
       );
     }
   }
-);
+  );
+}
 
 // POST /api/community/reports - Create a new report
 export async function POST(req: NextRequest) {
@@ -219,8 +222,7 @@ export async function POST(req: NextRequest) {
     const reporterId = req.user!.id;
 
     // Parse and validate input
-    const body = await (req as any).json()(req);
-}
+    const body = await (req as any).json();
     const validatedData = reportSchema.parse(body);
 
     // Check if content exists
@@ -458,7 +460,8 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // PUT /api/community/reports - Update report status (moderators only)
 export async function PUT(req: NextRequest) {
@@ -467,8 +470,7 @@ export async function PUT(req: NextRequest) {
   async (req: AuthenticatedRequest) => {
     try {
       const moderatorId = req.user!.id;
-      const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+      const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const reportId = searchParams.get("id");
 
@@ -539,4 +541,5 @@ export async function PUT(req: NextRequest) {
       );
     }
   }
-);
+  );
+}

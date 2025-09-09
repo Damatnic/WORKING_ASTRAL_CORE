@@ -6,6 +6,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auditTrailService } from '@/lib/monitoring/audit-trail';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);

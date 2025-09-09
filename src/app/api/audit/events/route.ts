@@ -6,6 +6,9 @@ import { withAuth } from '@/lib/auth-middleware';
 import { createSuccessResponse, createErrorResponse } from '@/types/api';
 import { withAudit } from '@/lib/audit/middleware';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/audit/events
  * Query audit events with filters (HIPAA compliance)
@@ -194,22 +197,22 @@ async function createAuditEvent(request: NextRequest) {
 // Wrap handlers with audit middleware
 export async function GET(req: NextRequest) {
   return withAudit(getAuditEvents, {
-  riskMapping: {
-    '/api/audit/events': RiskLevel.HIGH,
-  },
-  categoryMapping: {
-    '/api/audit/events': AuditEventCategory.AUDIT_LOG_ACCESS,
-  },
-})(req);
+    riskMapping: {
+      '/api/audit/events': RiskLevel.HIGH,
+    },
+    categoryMapping: {
+      '/api/audit/events': AuditEventCategory.AUDIT_LOG_ACCESS,
+    },
+  })(req);
 }
 
 export async function POST(req: NextRequest) {
   return withAudit(createAuditEvent, {
-  riskMapping: {
-    '/api/audit/events': RiskLevel.HIGH,
-  },
-  categoryMapping: {
-    '/api/audit/events': AuditEventCategory.SYSTEM_CONFIGURATION_CHANGE,
-  },
-})(req);
+    riskMapping: {
+      '/api/audit/events': RiskLevel.HIGH,
+    },
+    categoryMapping: {
+      '/api/audit/events': AuditEventCategory.SYSTEM_CONFIGURATION_CHANGE,
+    },
+  })(req);
 }

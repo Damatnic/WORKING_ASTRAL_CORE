@@ -8,6 +8,9 @@ import { UserRole } from "@/types/enums";
 import { EnhancedUserSchemas } from "@/lib/validation/schemas";
 import * as crypto from "crypto";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Use the enhanced registration schema with security validation
 const registerSchema = EnhancedUserSchemas.registration;
 

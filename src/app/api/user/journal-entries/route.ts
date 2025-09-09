@@ -16,6 +16,9 @@ import {
   journalEntrySchema,
 } from '@/lib/api-utils';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/user/journal-entries - Get user's journal entries
 export async function GET(req: NextRequest) {
   return withAuth(req, async (req) => {

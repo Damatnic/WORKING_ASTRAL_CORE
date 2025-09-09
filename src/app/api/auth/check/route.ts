@@ -4,6 +4,9 @@ import { getServerSession } from 'next-auth/next';
 import { Session } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/auth/check
  * Check current authentication status

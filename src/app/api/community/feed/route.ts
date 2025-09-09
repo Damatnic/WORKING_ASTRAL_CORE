@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { withAuth, AuthenticatedRequest } from "@/lib/auth-middleware";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schema
 const feedQuerySchema = z.object({
   page: z.coerce.number().int().positive().optional().default(1),
@@ -53,8 +56,7 @@ export async function GET(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const params = feedQuerySchema.parse({
       page: searchParams.get("page"),
@@ -496,6 +498,7 @@ async function getContentSuggestions(userId: string, userProfile: any) {
       topic: true,
     },
   });
+}
 
   suggestions.groups = groups;
 

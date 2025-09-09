@@ -7,6 +7,9 @@ import { prisma } from '@/lib/prisma';
 import { CreateMoodEntryRequest, MoodEntry } from '@/types/wellness';
 import crypto from 'crypto';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Encryption helper functions
 function encrypt(text: string): string {
   const algorithm = 'aes-256-gcm';

@@ -9,6 +9,9 @@ import {
 } from '@/lib/api-utils';
 import os from 'os';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/system-health - Get comprehensive system health metrics
 export async function GET(req: NextRequest) {
   return withAdmin(req, async (req) => {

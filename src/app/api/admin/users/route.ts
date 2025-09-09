@@ -21,6 +21,9 @@ import {
   decryptApiField,
 } from '@/lib/api-utils';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/users - Get all users with pagination, search, and filters
 export async function GET(req: NextRequest) {
   return withAdmin(req, async (req) => {

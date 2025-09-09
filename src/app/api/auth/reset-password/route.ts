@@ -6,6 +6,9 @@ import crypto from "crypto";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 const requestResetSchema = z.object({
   email: z.string().email("Invalid email address"),
 });

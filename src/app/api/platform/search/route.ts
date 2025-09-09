@@ -6,6 +6,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Search validation schema
 const SearchSchema = z.object({
   query: z.string().min(1).max(500),

@@ -7,6 +7,9 @@ import * as crypto from 'crypto';
 import { prisma } from '@/lib/prisma';
 import { subDays, subWeeks, subMonths, startOfDay, endOfDay } from 'date-fns';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // RBAC middleware - only admins can access this route
 async function checkAdminAccess() {
   const session = await getServerSession(authOptions) as Session | null;

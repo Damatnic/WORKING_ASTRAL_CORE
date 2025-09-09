@@ -13,6 +13,9 @@ import {
   EscalationResponse
 } from '@/types';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/crisis/counselor-dashboard - Get counselor dashboard data
 export async function GET(request: NextRequest) {
   return withCrisisCounselor(request, async (req: AuthenticatedRequest) => {

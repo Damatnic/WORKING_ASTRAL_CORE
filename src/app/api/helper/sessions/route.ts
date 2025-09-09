@@ -6,6 +6,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // GET /api/helper/sessions - Get all sessions for a helper
 export async function GET(request: NextRequest) {
   try {

@@ -15,6 +15,9 @@ import {
 import { encrypt, encryptJSON, decryptJSON, maskSensitiveData } from '@/lib/encryption-exports';
 import { therapyRateLimiter, getClientIdentifier } from '@/lib/rate-limit';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Validation schemas
 const getNotesSchema = z.object({
   page: z.coerce.number().min(1).default(1),

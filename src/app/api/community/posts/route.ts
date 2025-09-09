@@ -12,6 +12,9 @@ import {
 } from "@/lib/community/moderation";
 import { z } from "zod";
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Input validation schemas
 const createPostSchema = z.object({
   title: z.string().min(1).max(200),
@@ -189,8 +192,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Rate limit exceeded. Please wait before posting again." },
         { status: 429 }
-      )(req);
-}
+      );
     }
 
     // Parse and validate input
@@ -363,15 +365,15 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // PUT /api/community/posts - Update a post
 export async function PUT(req: NextRequest) {
   return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const postId = searchParams.get("id");
 
@@ -465,7 +467,8 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}
 
 // DELETE /api/community/posts - Delete a post
 export async function DELETE(req: NextRequest) {
@@ -473,8 +476,7 @@ export async function DELETE(req: NextRequest) {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;
-    const url = (req as any).url || req.nextUrl?.toString()(req);
-}
+    const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
     const postId = searchParams.get("id");
 
@@ -542,4 +544,5 @@ export async function DELETE(req: NextRequest) {
       { status: 500 }
     );
   }
-});
+  });
+}

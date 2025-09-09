@@ -125,8 +125,6 @@ const CRISIS_KEYWORDS = {
   ],
 };
 
-// Supportive response templates
-const SUPPORTIVE_RESPONSES = {
 // Lazy load bad-words filter to avoid build issues
 let BadWordsFilter: any = null;
 let filter: any = null;
@@ -148,6 +146,8 @@ async function getBadWordsFilter() {
   return filter;
 }
 
+// Supportive response templates
+const SUPPORTIVE_RESPONSES = {
   high: [
     "I'm really concerned about what you're going through. Your life has value and you deserve support.",
     "Please know that you're not alone. Help is available and things can get better.",
