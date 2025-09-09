@@ -6,7 +6,16 @@
 
 import React from 'react';
 import { onCLS, onFCP, onFID, onINP, onLCP, onTTFB, Metric } from 'web-vitals';
-import { cacheManager } from '@/lib/cache/redis';
+
+// Dynamic import for server-only modules
+let cacheManager: any = null;
+if (typeof window === 'undefined') {
+  // Server-side: use actual Redis
+  cacheManager = require('@/lib/cache/redis').cacheManager;
+} else {
+  // Client-side: use stub
+  cacheManager = require('@/lib/cache/redis.client').cacheManager;
+}
 
 /**
  * Performance Metrics Interface

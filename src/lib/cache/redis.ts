@@ -4,8 +4,14 @@
  * with automatic cache invalidation and warming strategies
  */
 
-import Redis, { RedisOptions } from 'ioredis';
-import { createHash } from 'crypto';
+// Server-only imports - Redis is not available in browser
+let Redis: any;
+let createHash: any;
+
+if (typeof window === 'undefined') {
+  Redis = require('ioredis').default;
+  createHash = require('crypto').createHash;
+}
 
 // Cache configuration with TTL values for different data types
 const CACHE_CONFIG = {
@@ -37,7 +43,7 @@ type CacheType = keyof typeof CACHE_CONFIG;
  * Redis Client Configuration
  * Optimized for performance with connection pooling and retry logic
  */
-const redisConfig: RedisOptions = {
+const redisConfig: any = typeof window === 'undefined' ? {
   host: process.env.REDIS_HOST || 'localhost',
   port: parseInt(process.env.REDIS_PORT || '6379'),
   password: process.env.REDIS_PASSWORD,
@@ -47,7 +53,7 @@ const redisConfig: RedisOptions = {
     const delay = Math.min(times * 50, 2000);
     return delay;
   },
-  reconnectOnError: (err) => {
+  reconnectOnError: (err: any) => {
     const targetError = 'READONLY';
     if (err.message.includes(targetError)) {
       return true;
@@ -64,21 +70,26 @@ const redisConfig: RedisOptions = {
   // Performance optimizations
   enableAutoPipelining: true,
   autoPipeliningIgnoredCommands: ['info', 'ping'],
-};
+} : {};
 
 // Singleton Redis client instance
-let redisClient: Redis | null = null;
-let redisSubscriber: Redis | null = null;
+let redisClient: any = null;
+let redisSubscriber: any = null;
 
 /**
  * Get or create Redis client instance
  */
-export async function getRedisClient(): Promise<Redis> {
-  if (!redisClient) {
+export async function getRedisClient(): Promise<any> {
+  // Return null for client-side
+  if (typeof window !== 'undefined') {
+    return null;
+  }
+  
+  if (!redisClient && Redis) {
     redisClient = new Redis(redisConfig);
     
     // Set up error handling
-    redisClient.on('error', (err) => {
+    redisClient.on('error', (err: any) => {
       console.error('[Redis] Client error:', err);
     });
     
@@ -102,11 +113,16 @@ export async function getRedisClient(): Promise<Redis> {
 /**
  * Get or create Redis subscriber instance for pub/sub
  */
-export async function getRedisSubscriber(): Promise<Redis> {
-  if (!redisSubscriber) {
+export async function getRedisSubscriber(): Promise<any> {
+  // Return null for client-side
+  if (typeof window !== 'undefined') {
+    return null;
+  }
+  
+  if (!redisSubscriber && Redis) {
     redisSubscriber = new Redis(redisConfig);
     
-    redisSubscriber.on('error', (err) => {
+    redisSubscriber.on('error', (err: any) => {
       console.error('[Redis Subscriber] Error:', err);
     });
     
@@ -123,6 +139,10 @@ export async function getRedisSubscriber(): Promise<Redis> {
  */
 function generateCacheKey(type: CacheType, identifier: string): string {
   const config = CACHE_CONFIG[type];
+  // Use simple string concatenation on client side
+  if (typeof window !== 'undefined' || !createHash) {
+    return `${config.prefix}${identifier}`;
+  }
   const hash = createHash('sha256').update(identifier).digest('hex').substring(0, 8);
   return `${config.prefix}${hash}`;
 }
@@ -132,12 +152,23 @@ function generateCacheKey(type: CacheType, identifier: string): string {
  * Provides high-level caching operations with automatic serialization
  */
 export class CacheManager {
-  private client: Redis | null = null;
+  private client: any = null;
+  
+  /**
+   * Check if running on server
+   */
+  private isServer(): boolean {
+    return typeof window === 'undefined';
+  }
   
   /**
    * Initialize cache manager
    */
   async initialize(): Promise<void> {
+    // Skip initialization on client side
+    if (!this.isServer()) {
+      return;
+    }
     this.client = await getRedisClient();
   }
   
@@ -146,19 +177,25 @@ export class CacheManager {
    */
   async get<T>(type: CacheType, key: string): Promise<T | null> {
     try {
+      // Return null on client side
+      if (typeof window !== 'undefined') {
+        return null;
+      }
+      
       if (!this.client) await this.initialize();
+      if (!this.client) return null;
       
       const cacheKey = generateCacheKey(type, key);
-      const cached = await this.client!.get(cacheKey);
+      const cached = await this.client.get(cacheKey);
       
       if (cached) {
         // Update access metrics
-        await this.client!.hincrby('cache:metrics', `${type}:hits`, 1);
+        await this.client.hincrby('cache:metrics', `${type}:hits`, 1);
         return JSON.parse(cached) as T;
       }
       
       // Update miss metrics
-      await this.client!.hincrby('cache:metrics', `${type}:misses`, 1);
+      await this.client.hincrby('cache:metrics', `${type}:misses`, 1);
       return null;
     } catch (error) {
       console.error('[Cache] Get error:', error);
@@ -171,16 +208,22 @@ export class CacheManager {
    */
   async set<T>(type: CacheType, key: string, value: T, customTtl?: number): Promise<boolean> {
     try {
+      // Skip on client side
+      if (typeof window !== 'undefined') {
+        return false;
+      }
+      
       if (!this.client) await this.initialize();
+      if (!this.client) return false;
       
       const cacheKey = generateCacheKey(type, key);
       const ttl = customTtl || CACHE_CONFIG[type].ttl;
       const serialized = JSON.stringify(value);
       
-      const result = await this.client!.setex(cacheKey, ttl, serialized);
+      const result = await this.client.setex(cacheKey, ttl, serialized);
       
       // Update set metrics
-      await this.client!.hincrby('cache:metrics', `${type}:sets`, 1);
+      await this.client.hincrby('cache:metrics', `${type}:sets`, 1);
       
       return result === 'OK';
     } catch (error) {
@@ -194,13 +237,19 @@ export class CacheManager {
    */
   async delete(type: CacheType, key: string): Promise<boolean> {
     try {
+      // Skip on client side
+      if (typeof window !== 'undefined') {
+        return false;
+      }
+      
       if (!this.client) await this.initialize();
+      if (!this.client) return false;
       
       const cacheKey = generateCacheKey(type, key);
-      const result = await this.client!.del(cacheKey);
+      const result = await this.client.del(cacheKey);
       
       // Update delete metrics
-      await this.client!.hincrby('cache:metrics', `${type}:deletes`, 1);
+      await this.client.hincrby('cache:metrics', `${type}:deletes`, 1);
       
       return result === 1;
     } catch (error) {
