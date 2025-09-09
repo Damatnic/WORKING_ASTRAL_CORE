@@ -51,10 +51,12 @@ const reactionSchema = z.object({
 });
 
 // GET /api/messaging/messages - Get messages for a conversation
-export const GET = withAuth(async (req: AuthenticatedRequest) => {
+export async function GET(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const params = querySchema.parse({
       conversationId: searchParams.get("conversationId"),
@@ -183,7 +185,8 @@ export const GET = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // POST /api/messaging/messages - Send a new message
-export const POST = withAuth(async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
 
@@ -192,7 +195,8 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
       return NextResponse.json(
         { error: "Rate limit exceeded. Please slow down." },
         { status: 429 }
-      );
+      )(req);
+}
     }
 
     // Parse and validate input
@@ -413,10 +417,12 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // PUT /api/messaging/messages - Edit or react to a message
-export const PUT = withAuth(async (req: AuthenticatedRequest) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const messageId = searchParams.get("id");
     const action = searchParams.get("action"); // edit, react
@@ -585,10 +591,12 @@ export const PUT = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // DELETE /api/messaging/messages - Delete a message
-export const DELETE = withAuth(async (req: AuthenticatedRequest) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const messageId = searchParams.get("id");
 

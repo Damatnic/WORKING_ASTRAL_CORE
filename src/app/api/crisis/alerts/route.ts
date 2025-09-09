@@ -122,10 +122,12 @@ const updateAlertSchema = z.object({
 });
 
 // GET /api/crisis/alerts - Get alerts with filters
-export const GET = withRateLimit(60, 60000)(
+export async function GET(req: NextRequest) {
+  return withRateLimit(60, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const page = parseInt(searchParams.get('page') || '1');
       const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
@@ -250,10 +252,12 @@ export const GET = withRateLimit(60, 60000)(
 );
 
 // POST /api/crisis/alerts - Create new alert
-export const POST = withRateLimit(10, 60000)(
+export async function POST(req: NextRequest) {
+  return withRateLimit(10, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       
       // Validate request
       const validation = createAlertSchema.safeParse(body);
@@ -381,10 +385,12 @@ export const POST = withRateLimit(10, 60000)(
 );
 
 // PUT /api/crisis/alerts/[id] - Update alert
-export const PUT = withRateLimit(30, 60000)(
+export async function PUT(req: NextRequest) {
+  return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const alertId = searchParams.get('id');
@@ -521,7 +527,8 @@ export const PUT = withRateLimit(30, 60000)(
 );
 
 // DELETE /api/crisis/alerts/[id] - Delete alert (admin only)
-export const DELETE = withRateLimit(10, 60000)(
+export async function DELETE(req: NextRequest) {
+  return withRateLimit(10, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
       // Additional check for admin role
@@ -529,7 +536,8 @@ export const DELETE = withRateLimit(10, 60000)(
         return NextResponse.json(
           { error: 'Admin access required' },
           { status: 403 }
-        );
+        )(req);
+}
       }
 
       const url = (req as any).url || req.nextUrl?.toString();

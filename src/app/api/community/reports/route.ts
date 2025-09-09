@@ -56,11 +56,13 @@ interface Report {
 const reports: Map<string, Report> = new Map();
 
 // GET /api/community/reports - Get reports (moderators only)
-export const GET = withRoles(
+export async function GET(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST],
   async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const params = querySchema.parse({
         page: searchParams.get("page"),
@@ -211,12 +213,14 @@ export const GET = withRoles(
 );
 
 // POST /api/community/reports - Create a new report
-export const POST = withRoles([UserRole.USER, UserRole.HELPER, UserRole.THERAPIST, UserRole.CRISIS_COUNSELOR, UserRole.ADMIN, UserRole.SUPER_ADMIN], async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withRoles([UserRole.USER, UserRole.HELPER, UserRole.THERAPIST, UserRole.CRISIS_COUNSELOR, UserRole.ADMIN, UserRole.SUPER_ADMIN], async (req: AuthenticatedRequest) => {
   try {
     const reporterId = req.user!.id;
 
     // Parse and validate input
-    const body = await (req as any).json();
+    const body = await (req as any).json()(req);
+}
     const validatedData = reportSchema.parse(body);
 
     // Check if content exists
@@ -457,12 +461,14 @@ export const POST = withRoles([UserRole.USER, UserRole.HELPER, UserRole.THERAPIS
 });
 
 // PUT /api/community/reports - Update report status (moderators only)
-export const PUT = withRoles(
+export async function PUT(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST, UserRole.CRISIS_COUNSELOR],
   async (req: AuthenticatedRequest) => {
     try {
       const moderatorId = req.user!.id;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const reportId = searchParams.get("id");
 

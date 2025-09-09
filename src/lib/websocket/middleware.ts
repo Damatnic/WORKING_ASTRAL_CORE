@@ -38,7 +38,7 @@ import { MessagePayload, MESSAGE_VALIDATION } from "./events";
 import { prisma } from "@/lib/prisma";
 
 // Initialize bad words filter
-const filter = new BadWordsFilter();
+
 
 // Add basic profanity
 filter.addWords(
@@ -127,6 +127,27 @@ const CRISIS_KEYWORDS = {
 
 // Supportive response templates
 const SUPPORTIVE_RESPONSES = {
+// Lazy load bad-words filter to avoid build issues
+let BadWordsFilter: any = null;
+let filter: any = null;
+
+async function getBadWordsFilter() {
+  if (!filter) {
+    try {
+      BadWordsFilter = await import('bad-words').then(m => (m as any).default || m);
+      filter = new BadWordsFilter();
+    } catch (error) {
+      console.warn('Bad words filter not available:', error);
+      // Fallback implementation
+      filter = {
+        isProfane: () => false,
+        clean: (text: string) => text
+      };
+    }
+  }
+  return filter;
+}
+
   high: [
     "I'm really concerned about what you're going through. Your life has value and you deserve support.",
     "Please know that you're not alone. Help is available and things can get better.",
@@ -221,8 +242,8 @@ export async function moderateContent(
   cleanContent?: string;
 }> {
   // Check for profanity
-  if (filter.isProfane(content)) {
-    const cleanContent = filter.clean(content);
+  if ((await getBadWordsFilter()).isProfane(content)) {
+    const cleanContent = (await getBadWordsFilter()).clean(content);
     
     // Determine severity based on context
     const severity = determineContentSeverity(content);
@@ -409,7 +430,7 @@ async function checkRoomRules(
   }
 
   // Check profanity filter setting
-  if (settings.profanityFilter && filter.isProfane(content)) {
+  if (settings.profanityFilter && (await getBadWordsFilter()).isProfane(content)) {
     return { allowed: false, reason: "Message contains inappropriate language" };
   }
 

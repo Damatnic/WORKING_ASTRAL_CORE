@@ -192,20 +192,24 @@ async function createAuditEvent(request: NextRequest) {
 }
 
 // Wrap handlers with audit middleware
-export const GET = withAudit(getAuditEvents, {
+export async function GET(req: NextRequest) {
+  return withAudit(getAuditEvents, {
   riskMapping: {
     '/api/audit/events': RiskLevel.HIGH,
   },
   categoryMapping: {
     '/api/audit/events': AuditEventCategory.AUDIT_LOG_ACCESS,
   },
-});
+})(req);
+}
 
-export const POST = withAudit(createAuditEvent, {
+export async function POST(req: NextRequest) {
+  return withAudit(createAuditEvent, {
   riskMapping: {
     '/api/audit/events': RiskLevel.HIGH,
   },
   categoryMapping: {
     '/api/audit/events': AuditEventCategory.SYSTEM_CONFIGURATION_CHANGE,
   },
-});
+})(req);
+}

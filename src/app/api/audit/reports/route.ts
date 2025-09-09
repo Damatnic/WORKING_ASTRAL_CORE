@@ -172,7 +172,8 @@ async function generateComplianceReport(request: AuthenticatedRequest) {
 }
 
 // Wrap handlers with authentication and audit middleware
-export const GET = withAuth(async (req: AuthenticatedRequest) => {
+export async function GET(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   return withAudit(getComplianceReports, {
     riskMapping: {
       '/api/audit/reports': RiskLevel.HIGH,
@@ -180,10 +181,12 @@ export const GET = withAuth(async (req: AuthenticatedRequest) => {
     categoryMapping: {
       '/api/audit/reports': AuditEventCategory.AUDIT_LOG_ACCESS,
     },
-  })(req);
+  })(req)(req);
+}
 });
 
-export const POST = withAuth(async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   return withAudit(generateComplianceReport, {
     riskMapping: {
       '/api/audit/reports': RiskLevel.HIGH,
@@ -191,5 +194,6 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
     categoryMapping: {
       '/api/audit/reports': AuditEventCategory.COMPLIANCE_REPORT_GENERATED,
     },
-  })(req);
+  })(req)(req);
+}
 });

@@ -170,7 +170,8 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/community/comments - Create a new comment
-export const POST = withAuth(async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
 
@@ -179,7 +180,8 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
       return NextResponse.json(
         { error: "Rate limit exceeded. Please wait before commenting again." },
         { status: 429 }
-      );
+      )(req);
+}
     }
 
     // Parse and validate input
@@ -373,10 +375,12 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // PUT /api/community/comments - Update a comment
-export const PUT = withAuth(async (req: AuthenticatedRequest) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const commentId = searchParams.get("id");
 
@@ -462,11 +466,13 @@ export const PUT = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // DELETE /api/community/comments - Delete a comment (soft delete)
-export const DELETE = withAuth(async (req: AuthenticatedRequest) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const commentId = searchParams.get("id");
 

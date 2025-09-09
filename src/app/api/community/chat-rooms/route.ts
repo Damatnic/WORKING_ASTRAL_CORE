@@ -167,14 +167,16 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/community/chat-rooms - Create a new chat room (Helper/Admin only)
-export const POST = withRoles(
+export async function POST(req: NextRequest) {
+  return withRoles(
   [UserRole.HELPER, UserRole.THERAPIST, UserRole.CRISIS_COUNSELOR, UserRole.ADMIN, UserRole.SUPER_ADMIN],
   async (req: AuthenticatedRequest) => {
     try {
       const userId = req.user!.id;
       
       // Parse and validate input
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const validatedData = createRoomSchema.parse(body);
 
       // Check if a similar room already exists
@@ -281,11 +283,13 @@ export const POST = withRoles(
 );
 
 // PUT /api/community/chat-rooms - Update a chat room (Moderator only)
-export const PUT = withRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER], async (req: AuthenticatedRequest) => {
+export async function PUT(req: NextRequest) {
+  return withRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER], async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const roomId = searchParams.get("id");
 
@@ -421,12 +425,14 @@ export const PUT = withRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HEL
 });
 
 // DELETE /api/community/chat-rooms - Delete/deactivate a chat room (Admin only)
-export const DELETE = withRoles(
+export async function DELETE(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN],
   async (req: AuthenticatedRequest) => {
     try {
       const userId = req.user!.id;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const roomId = searchParams.get("id");
       const permanent = searchParams.get("permanent") === "true";

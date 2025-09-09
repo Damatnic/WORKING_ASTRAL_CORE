@@ -57,11 +57,13 @@ const updateReportSchema = z.object({
 });
 
 // GET /api/crisis/reports - Get reports with filters
-export const GET = withRateLimit(60, 60000)(
+export async function GET(req: NextRequest) {
+  return withRateLimit(60, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       
       // Check permissions
@@ -244,11 +246,13 @@ export const GET = withRateLimit(60, 60000)(
 );
 
 // POST /api/crisis/reports - Create new report
-export const POST = withRateLimit(5, 60000)(
+export async function POST(req: NextRequest) {
+  return withRateLimit(5, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       
       // Validate request
       const validation = createReportSchema.safeParse(body);
@@ -381,10 +385,12 @@ export const POST = withRateLimit(5, 60000)(
 );
 
 // PUT /api/crisis/reports/[id] - Update report
-export const PUT = withRateLimit(30, 60000)(
+export async function PUT(req: NextRequest) {
+  return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const reportId = searchParams.get('id');

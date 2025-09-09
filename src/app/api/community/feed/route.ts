@@ -49,10 +49,12 @@ function calculateContentScore(
 }
 
 // GET /api/community/feed - Get personalized community feed
-export const GET = withAuth(async (req: AuthenticatedRequest) => {
+export async function GET(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const params = feedQuerySchema.parse({
       page: searchParams.get("page"),

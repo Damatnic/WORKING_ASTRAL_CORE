@@ -19,10 +19,12 @@ const createInterventionSchema = z.object({
 });
 
 // GET /api/crisis/interventions - Get active interventions
-export const GET = withRateLimit(60, 60000)(
+export async function GET(req: NextRequest) {
+  return withRateLimit(60, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const status = searchParams.get('status') || 'active';
       const userId = searchParams.get('userId');
@@ -85,10 +87,12 @@ export const GET = withRateLimit(60, 60000)(
 );
 
 // POST /api/crisis/interventions - Create intervention
-export const POST = withRateLimit(10, 60000)(
+export async function POST(req: NextRequest) {
+  return withRateLimit(10, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const validation = createInterventionSchema.safeParse(body);
       
       if (!validation.success) {
@@ -218,10 +222,12 @@ export const POST = withRateLimit(10, 60000)(
 );
 
 // PUT /api/crisis/interventions/[id] - Update intervention
-export const PUT = withRateLimit(30, 60000)(
+export async function PUT(req: NextRequest) {
+  return withRateLimit(30, 60000)(
   withCrisisCounselor(async (req: AuthenticatedRequest) => {
     try {
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const interventionId = searchParams.get('id');

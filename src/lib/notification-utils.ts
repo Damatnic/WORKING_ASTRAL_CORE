@@ -5,15 +5,22 @@ import webpush from 'web-push';
 import { NotificationTemplate, NotificationPreference, User } from '@prisma/client';
 
 // Initialize services
-const emailTransporter = nodemailer.createTransporter({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
+let emailTransporter: nodemailer.Transporter | null = null;
+
+function getEmailTransporter() {
+  if (!emailTransporter) {
+    emailTransporter = nodemailer.createTransporter({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    });
   }
-});
+  return emailTransporter;
+}
 
 const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
   ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
@@ -104,7 +111,7 @@ export async function sendEmailNotification(
   text?: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const info = await emailTransporter.sendMail({
+    const info = await getEmailTransporter().sendMail({
       from: process.env.SMTP_FROM || 'noreply@example.com',
       to,
       subject,

@@ -75,11 +75,13 @@ const updateSafetyPlanSchema = z.object({
 });
 
 // GET /api/crisis/safety-plans - Get safety plans
-export const GET = withRateLimit(60, 60000)(
+export async function GET(req: NextRequest) {
+  return withRateLimit(60, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       
       // Check permissions
@@ -258,11 +260,13 @@ export const GET = withRateLimit(60, 60000)(
 );
 
 // POST /api/crisis/safety-plans - Create new safety plan
-export const POST = withRateLimit(5, 60000)(
+export async function POST(req: NextRequest) {
+  return withRateLimit(5, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       
       // Validate request
       const validation = createSafetyPlanSchema.safeParse(body);
@@ -399,11 +403,13 @@ export const POST = withRateLimit(5, 60000)(
 );
 
 // PUT /api/crisis/safety-plans/[id] - Update safety plan
-export const PUT = withRateLimit(30, 60000)(
+export async function PUT(req: NextRequest) {
+  return withRateLimit(30, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const url = (req as any).url || req.nextUrl?.toString();
     const { searchParams } = new URL(url);
       const planId = searchParams.get('id');
@@ -579,11 +585,13 @@ export const PUT = withRateLimit(30, 60000)(
 );
 
 // DELETE /api/crisis/safety-plans/[id] - Delete safety plan
-export const DELETE = withRateLimit(10, 60000)(
+export async function DELETE(req: NextRequest) {
+  return withRateLimit(10, 60000)(
   withAuth(async (req: AuthenticatedRequest) => {
     try {
       const user = req.user!;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const planId = searchParams.get('id');
 

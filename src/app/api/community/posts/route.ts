@@ -179,7 +179,8 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/community/posts - Create a new post
-export const POST = withAuth(async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
 
@@ -188,7 +189,8 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
       return NextResponse.json(
         { error: "Rate limit exceeded. Please wait before posting again." },
         { status: 429 }
-      );
+      )(req);
+}
     }
 
     // Parse and validate input
@@ -364,10 +366,12 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // PUT /api/community/posts - Update a post
-export const PUT = withAuth(async (req: AuthenticatedRequest) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const postId = searchParams.get("id");
 
@@ -464,11 +468,13 @@ export const PUT = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // DELETE /api/community/posts - Delete a post
-export const DELETE = withAuth(async (req: AuthenticatedRequest) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const userRole = req.user!.role;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const postId = searchParams.get("id");
 

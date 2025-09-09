@@ -41,13 +41,15 @@ const querySchema = z.object({
 });
 
 // GET /api/community/moderation - Get moderation queue and actions
-export const GET = withRoles(
+export async function GET(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST],
   async (req: AuthenticatedRequest) => {
     try {
       const moderatorId = req.user!.id;
       const moderatorRole = req.user!.role;
-      const url = (req as any).url || req.nextUrl?.toString();
+      const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
       const params = querySchema.parse({
         page: searchParams.get("page"),
@@ -245,7 +247,8 @@ export const GET = withRoles(
 );
 
 // POST /api/community/moderation - Create moderation action
-export const POST = withRoles(
+export async function POST(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST, UserRole.CRISIS_COUNSELOR],
   async (req: AuthenticatedRequest) => {
     try {
@@ -253,7 +256,8 @@ export const POST = withRoles(
       const moderatorRole = req.user!.role;
 
       // Parse and validate input
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const validatedData = moderationActionSchema.parse(body);
 
       // Check if target user exists
@@ -448,14 +452,16 @@ export const POST = withRoles(
 );
 
 // PUT /api/community/moderation - Review and update moderated content
-export const PUT = withRoles(
+export async function PUT(req: NextRequest) {
+  return withRoles(
   [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.HELPER, UserRole.THERAPIST],
   async (req: AuthenticatedRequest) => {
     try {
       const moderatorId = req.user!.id;
       
       // Parse and validate input
-      const body = await (req as any).json();
+      const body = await (req as any).json()(req);
+}
       const validatedData = reviewContentSchema.parse(body);
 
       let result: any = {};

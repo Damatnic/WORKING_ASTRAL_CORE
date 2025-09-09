@@ -34,10 +34,12 @@ const querySchema = z.object({
 });
 
 // GET /api/messaging/conversations - Get user's conversations
-export const GET = withAuth(async (req: AuthenticatedRequest) => {
+export async function GET(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const params = querySchema.parse({
       page: searchParams.get("page"),
@@ -210,12 +212,14 @@ export const GET = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // POST /api/messaging/conversations - Create a new conversation
-export const POST = withAuth(async (req: AuthenticatedRequest) => {
+export async function POST(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     
     // Parse and validate input
-    const body = await (req as any).json();
+    const body = await (req as any).json()(req);
+}
     const validatedData = createConversationSchema.parse(body);
 
     // Ensure user is included in participants
@@ -395,10 +399,12 @@ export const POST = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // PUT /api/messaging/conversations - Update conversation settings
-export const PUT = withAuth(async (req: AuthenticatedRequest) => {
+export async function PUT(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const conversationId = searchParams.get("id");
     const action = searchParams.get("action"); // mute, unmute, leave, etc.
@@ -536,10 +542,12 @@ export const PUT = withAuth(async (req: AuthenticatedRequest) => {
 });
 
 // DELETE /api/messaging/conversations - Delete conversation (for user)
-export const DELETE = withAuth(async (req: AuthenticatedRequest) => {
+export async function DELETE(req: NextRequest) {
+  return withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
-    const url = (req as any).url || req.nextUrl?.toString();
+    const url = (req as any).url || req.nextUrl?.toString()(req);
+}
     const { searchParams } = new URL(url);
     const conversationId = searchParams.get("id");
 
