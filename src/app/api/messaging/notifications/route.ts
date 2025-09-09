@@ -31,8 +31,7 @@ const querySchema = z.object({
 });
 
 // GET /api/messaging/notifications - Get user's notifications
-export async function GET(request: NextRequest) {
-  return withAuth(request, async (req: AuthenticatedRequest) => {
+export const GET = withAuth(async (req: AuthenticatedRequest) => {
   try {
     const userId = req.user!.id;
     const url = (req as any).url || req.nextUrl?.toString();
