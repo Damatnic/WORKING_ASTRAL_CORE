@@ -520,4 +520,5 @@ export async function DELETE(req: NextRequest) {
     console.error('Admin user deletion error:', error);
     return errorResponse('Failed to delete user', 500);
   }
-});
+  });
+}

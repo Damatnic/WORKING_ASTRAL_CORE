@@ -474,4 +474,5 @@ export async function POST(req: NextRequest) {
     console.error('Report creation error:', error);
     return errorResponse('Failed to create report', 500);
   }
-});
+  });
+}

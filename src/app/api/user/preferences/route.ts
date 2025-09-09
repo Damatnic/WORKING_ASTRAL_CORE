@@ -251,4 +251,5 @@ export async function PUT(req: NextRequest) {
     console.error('User preferences update error:', error);
     return errorResponse('Failed to update preferences', 500);
   }
-});
+  });
+}

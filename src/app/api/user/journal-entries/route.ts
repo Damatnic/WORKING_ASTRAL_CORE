@@ -415,4 +415,5 @@ export async function DELETE(req: NextRequest) {
     console.error('Journal entry deletion error:', error);
     return errorResponse('Failed to delete journal entry', 500);
   }
-});
+  });
+}

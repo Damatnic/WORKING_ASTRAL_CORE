@@ -420,4 +420,5 @@ export async function DELETE(req: NextRequest) {
     console.error('Mood entry deletion error:', error);
     return errorResponse('Failed to delete mood entry', 500);
   }
-});
+  });
+}

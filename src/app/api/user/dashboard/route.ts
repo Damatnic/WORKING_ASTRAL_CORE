@@ -292,7 +292,8 @@ export async function GET(req: NextRequest) {
     console.error('Dashboard data fetch error:', error);
     return errorResponse('Failed to fetch dashboard data', 500);
   }
-});
+  });
+}
 
 // Helper function to calculate trend
 function calculateTrend(values: number[]): 'improving' | 'stable' | 'declining' | null {
