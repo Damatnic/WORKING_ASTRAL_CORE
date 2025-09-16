@@ -8,7 +8,7 @@
 
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
-import { VariableSizeList as List } from 'react-window';
+import { VariableSizeList as List, ListChildComponentProps } from 'react-window';
 import { MessageCircle, Check, CheckCheck, Clock, AlertCircle, Heart } from 'lucide-react';
 import { useVirtualScroll, useScrollRestoration, useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
 import { cn } from '@/lib/utils';

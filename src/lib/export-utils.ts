@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { Parser } from 'json2csv';
+const { Parser } = require('json2csv');
 import PDFDocument from 'pdfkit';
 import archiver from 'archiver';
 import fs from 'fs/promises';
