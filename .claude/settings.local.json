@@ -91,7 +91,8 @@
       "Bash(cmd /c \"dir src\\app\\about\\page.tsx\")",
       "Bash(attrib:*)",
       "Bash(timeout 30 npm run build)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(git remote remove:*)"
     ],
     "deny": [],
     "ask": []
