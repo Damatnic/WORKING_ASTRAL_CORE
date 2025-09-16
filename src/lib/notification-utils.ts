@@ -5,7 +5,7 @@ import webpush from 'web-push';
 import { NotificationTemplate, NotificationPreference, User } from '@prisma/client';
 
 // Initialize services
-let emailTransporter: nodemailer.Transporter | null = null;
+let emailTransporter: any | null = null;
 
 function getEmailTransporter() {
   if (!emailTransporter) {
@@ -181,7 +181,7 @@ export async function sendSMSNotification(
 
 // Send push notification
 export async function sendPushNotification(
-  subscription: webpush.PushSubscription,
+  subscription: any,
   payload: {
     title: string;
     body: string;

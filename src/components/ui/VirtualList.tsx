@@ -7,7 +7,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState, useMemo, CSSProperties } from 'react';
-import { VariableSizeList as List, ListChildComponentProps } from 'react-window';
+import { VariableSizeList as List } from 'react-window';
+import type { ListChildComponentProps } from 'react-window';
 import { useInView } from 'react-intersection-observer';
 import { Loader2 } from 'lucide-react';
 import { useVirtualKeyboardNavigation } from '@/hooks/useVirtualScroll';
@@ -308,7 +309,7 @@ export function VirtualList<T>({
   
   // Enhanced row renderer with accessibility and selection support
   const Row = useCallback(
-    ({ index, style }: ListChildComponentProps) => {
+    ({ index, style }: { index: number; style: React.CSSProperties }) => {
       const item = items[index];
       const isLastItem = index === items.length - 1;
       const isFocused = currentFocusedIndex === index;

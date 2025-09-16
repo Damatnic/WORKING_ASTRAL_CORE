@@ -39,7 +39,7 @@ if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
 }
 
 // Email transporter with graceful fallback
-let emailTransporter: nodemailer.Transporter | null = null;
+let emailTransporter: any | null = null;
 
 // Initialize email transporter only if credentials are available
 if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
