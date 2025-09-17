@@ -92,7 +92,9 @@
       "Bash(attrib:*)",
       "Bash(timeout 30 npm run build)",
       "Bash(taskkill:*)",
-      "Bash(git remote remove:*)"
+      "Bash(git remote remove:*)",
+      "WebFetch(domain:working-astral-core-q51mhjqur-astral-productions.vercel.app)",
+      "Bash(timeout 30 curl -I https://working-astral-core.vercel.app)"
     ],
     "deny": [],
     "ask": []

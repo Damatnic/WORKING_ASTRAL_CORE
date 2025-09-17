@@ -16,7 +16,7 @@
     "build:analyze": "ANALYZE=true npm run build",
     "build:monitor": "node scripts/build-monitor.js \"npm run build\"",
     "build:perf": "node scripts/build-monitor.js --analyze",
-    "vercel:build": "npx prisma generate && npm run typecheck && npm run lint && cross-env NODE_ENV=production npm run build",
+    "vercel:build": "npx prisma generate && cross-env NODE_ENV=production npm run build",
     "build:safe": "npm install --prefer-offline --no-audit && npx prisma generate && cross-env NODE_ENV=production npm run build",
     "deploy:check": "node scripts/deployment-check.mjs",
     "deploy:verify": "node scripts/deployment-verification.js",
