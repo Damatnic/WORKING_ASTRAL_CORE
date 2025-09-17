@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
-const { twMerge } = require("tailwind-merge");
+import { twMerge } from "tailwind-merge";
 
 /**
  * Utility function for merging Tailwind CSS classes
